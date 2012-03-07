@@ -20,6 +20,7 @@ public class Type_cours implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String nom;
 
     public Long getId() {
         return id;
@@ -52,6 +53,20 @@ public class Type_cours implements Serializable {
     @Override
     public String toString() {
         return "edt.Type_cours[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the nom
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * @param nom the nom to set
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
     }
     
 }

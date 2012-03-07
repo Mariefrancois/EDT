@@ -20,6 +20,8 @@ public class Salle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String nom;
+    private int capacite;
 
     public Long getId() {
         return id;
@@ -52,6 +54,34 @@ public class Salle implements Serializable {
     @Override
     public String toString() {
         return "edt.Salle[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the nom
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * @param nom the nom to set
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    /**
+     * @return the capacite
+     */
+    public int getCapacite() {
+        return capacite;
+    }
+
+    /**
+     * @param capacite the capacite to set
+     */
+    public void setCapacite(int capacite) {
+        this.capacite = capacite;
     }
     
 }

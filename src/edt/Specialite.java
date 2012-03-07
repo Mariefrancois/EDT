@@ -20,6 +20,8 @@ public class Specialite implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String nom;
+    private String intitule;
 
     public Long getId() {
         return id;
@@ -52,6 +54,34 @@ public class Specialite implements Serializable {
     @Override
     public String toString() {
         return "edt.Specialite[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the nom
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * @param nom the nom to set
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    /**
+     * @return the intitule
+     */
+    public String getIntitule() {
+        return intitule;
+    }
+
+    /**
+     * @param intitule the intitule to set
+     */
+    public void setIntitule(String intitule) {
+        this.intitule = intitule;
     }
     
 }
