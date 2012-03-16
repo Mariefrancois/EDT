@@ -5,10 +5,14 @@
 package edt;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -25,7 +29,10 @@ public class Intervenant implements Serializable {
     private String email;
     private String telephone;
     private String notificationsactives;
-    private String actif;
+    private boolean actif;
+    @OneToMany(mappedBy = "Creneau_Intervenant", cascade = {CascadeType.ALL})
+    private Set<Creneau_Intervenant> creneau_inter = new HashSet<Creneau_Intervenant>(); 
+    
 
     public Long getId() {
         return id;
@@ -133,14 +140,14 @@ public class Intervenant implements Serializable {
     /**
      * @return the actif
      */
-    public String getActif() {
+    public boolean getActif() {
         return actif;
     }
 
     /**
      * @param actif the actif to set
      */
-    public void setActif(String actif) {
+    public void setActif(boolean actif) {
         this.actif = actif;
     }
     

@@ -10,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -17,12 +20,17 @@ import java.sql.Timestamp;
  */
 @Entity
 public class Creneau_Intervenant implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Timestamp tsDebut;
     private Timestamp tsFin;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inter_id", nullable = false)
+    private Intervenant inter;
+    
 
     public Long getId() {
         return id;
@@ -83,6 +91,15 @@ public class Creneau_Intervenant implements Serializable {
      */
     public void setTsFin(Timestamp tsFin) {
         this.tsFin = tsFin;
+    }
+
+    @Id
+    public Long getID() {
+        return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
     }
     
 }
