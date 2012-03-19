@@ -16,7 +16,7 @@ import java.awt.Color;
  * @author Marie
  */
 @Entity
-public class couleur_Type_Cours implements Serializable {
+public class Couleur_Type_Cours implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,10 +43,10 @@ public class couleur_Type_Cours implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof couleur_Type_Cours)) {
+        if (!(object instanceof Couleur_Type_Cours)) {
             return false;
         }
-        couleur_Type_Cours other = (couleur_Type_Cours) object;
+        Couleur_Type_Cours other = (Couleur_Type_Cours) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
