@@ -5,20 +5,13 @@
 package edt;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 
 /**
  *
  * @author Marie
  */
-@Entity
-public class Batiment implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class Batiment  {
     private Long id;
     private String nom;
     private double lat;
@@ -31,31 +24,6 @@ public class Batiment implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Batiment)) {
-            return false;
-        }
-        Batiment other = (Batiment) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "edt.Batiment[ id=" + id + " ]";
     }
 
     /**

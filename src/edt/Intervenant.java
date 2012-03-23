@@ -4,25 +4,12 @@
  */
 package edt;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  *
  * @author Marie
  */
-@Entity
-public class Intervenant implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class Intervenant {
     private Long id;
     private String nom;
     private String prenom;
@@ -30,8 +17,8 @@ public class Intervenant implements Serializable {
     private String telephone;
     private String notificationsactives;
     private boolean actif;
-    @OneToMany(mappedBy = "Creneau_Intervenant", cascade = {CascadeType.ALL})
-    private Set<Creneau_Intervenant> creneau_inter = new HashSet<Creneau_Intervenant>(); 
+  //  @OneToMany(mappedBy = "Creneau_Intervenant", cascade = {CascadeType.ALL})
+  //  private Set<Creneau_Intervenant> creneau_inter = new HashSet<Creneau_Intervenant>(); 
     
 
     public Long getId() {
@@ -40,31 +27,6 @@ public class Intervenant implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Intervenant)) {
-            return false;
-        }
-        Intervenant other = (Intervenant) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "edt.Intervenant[ id=" + id + " ]";
     }
 
     /**

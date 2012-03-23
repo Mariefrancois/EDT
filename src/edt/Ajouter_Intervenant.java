@@ -137,17 +137,20 @@ public class Ajouter_Intervenant extends javax.swing.JFrame {
 
         table_intervenant.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Jour", "Date début", "Date fin", "Heure début", "Heure fin"
+                "Date ", "Heure début", "Heure fin"
             }
         ));
         table_intervenant.setName(""); // NOI18N
         jScrollPane1.setViewportView(table_intervenant);
+        table_intervenant.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("table_intervenant.columnModel.title2")); // NOI18N
+        table_intervenant.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("table_intervenant.columnModel.title3")); // NOI18N
+        table_intervenant.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("table_intervenant.columnModel.title4")); // NOI18N
 
         ajouter_date.setText(resourceMap.getString("ajouter_date.text")); // NOI18N
         ajouter_date.setName("ajouter_date"); // NOI18N
