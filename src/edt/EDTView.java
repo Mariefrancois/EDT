@@ -4,6 +4,8 @@
 
 package edt;
 
+import edt.EDTAboutBox;
+import edt.EDTApp;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -15,11 +17,14 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import edt.Frame.Ajouter_Etudiant;
+
 
 /**
  * The application's main frame.
  */
 public class EDTView extends FrameView {
+    public Ajouter_Etudiant etu;
 
     public EDTView(SingleFrameApplication app) {
         super(app);
@@ -135,6 +140,11 @@ public class EDTView extends FrameView {
         Etudiants.setMaximumSize(new java.awt.Dimension(75, 23));
         Etudiants.setMinimumSize(new java.awt.Dimension(75, 23));
         Etudiants.setName("Etudiants"); // NOI18N
+        Etudiants.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EtudiantsActionPerformed(evt);
+            }
+        });
 
         Intervenants.setText(resourceMap.getString("Intervenants.text")); // NOI18N
         Intervenants.setName("Intervenants"); // NOI18N
@@ -263,6 +273,12 @@ public class EDTView extends FrameView {
         setMenuBar(menuBar);
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void EtudiantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EtudiantsActionPerformed
+        // TODO add your handling code here:
+        etu = new Ajouter_Etudiant();
+        etu.setVisible(true);
+    }//GEN-LAST:event_EtudiantsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Etudiants;

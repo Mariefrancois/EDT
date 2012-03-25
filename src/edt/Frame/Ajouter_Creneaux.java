@@ -8,8 +8,7 @@
  *
  * Created on 23 mars 2012, 10:47:49
  */
-package edt;
-
+package edt.Frame;
 /**
  *
  * @author Marie

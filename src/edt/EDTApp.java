@@ -7,6 +7,7 @@ package edt;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
+
 /**
  * The main class of the application.
  */

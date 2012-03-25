@@ -8,7 +8,7 @@
  *
  * Created on 19 mars 2012, 21:09:50
  */
-package edt;
+package edt.Frame;
 
 /**
  *
@@ -50,7 +50,7 @@ public class Ajouter_Etudiant extends javax.swing.JFrame {
         valider = new javax.swing.JButton();
         annuler = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+     //   setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(edt.EDTApp.class).getContext().getResourceMap(Ajouter_Etudiant.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N

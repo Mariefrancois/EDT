@@ -8,7 +8,7 @@
  *
  * Created on 15 mars 2012, 13:03:01
  */
-package edt;
+package edt.Frame;
 
 /**
  *
