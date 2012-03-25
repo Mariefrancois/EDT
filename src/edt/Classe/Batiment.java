@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edt;
+package edt.Classe;
 
-import java.io.Serializable;
+
 
 
 /**
