@@ -25,11 +25,15 @@ import edt.Frame.Ajouter_Etudiant;
  */
 public class EDTView extends FrameView {
     public Ajouter_Etudiant etu;
-
+    public void init(){
+        etat = etat.Debut;
+    }
     public EDTView(SingleFrameApplication app) {
         super(app);
 
         initComponents();
+        init();
+        this.donner1.setVisible(false);
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -114,14 +118,14 @@ public class EDTView extends FrameView {
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
-        donner1 = new edt.view.donner();
+        donner1 = new edt.view.Donner();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
-        statusPanelSeparator = new javax.swing.JSeparator();
+        javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
@@ -195,7 +199,7 @@ public class EDTView extends FrameView {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1237, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1338, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
@@ -204,9 +208,9 @@ public class EDTView extends FrameView {
                     .addComponent(Etudiants, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(UE, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1057, Short.MAX_VALUE)
-                    .addComponent(donner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(donner1, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE))
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
@@ -214,7 +218,7 @@ public class EDTView extends FrameView {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,9 +231,9 @@ public class EDTView extends FrameView {
                         .addComponent(Salles, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(donner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(525, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(donner1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(500, Short.MAX_VALUE))
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -268,11 +272,11 @@ public class EDTView extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 1338, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 659, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1168, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -297,24 +301,147 @@ public class EDTView extends FrameView {
 
     private void EtudiantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EtudiantsActionPerformed
         // TODO add your handling code here:
-        etu = new Ajouter_Etudiant();
-        etu.setVisible(true);
-        donner1.frame_Etudiant();
+        switch(etat){
+            case Debut:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                etat = etat.Etudiant;
+                break;
+            case UE:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                etat = etat.Etudiant;
+                break;
+            case Intervenant:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                etat = etat.Etudiant;
+                break;
+            case Salle:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                etat = etat.Etudiant;
+                break;
+            case Etudiant:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                etat = etat.Etudiant;
+                break;
+        }
     }//GEN-LAST:event_EtudiantsActionPerformed
 
     private void UEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UEActionPerformed
         // TODO add your handling code here:
-        donner1.frame_UE();
+        switch(etat){
+            case Debut:
+                this.donner1.frame_UE();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("UE");
+                etat = etat.UE;
+                break;
+            case UE:
+                this.donner1.frame_UE();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("UE");
+                etat = etat.UE;
+                break;
+            case Intervenant:
+                this.donner1.frame_UE();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("UE");
+                etat = etat.UE;
+                break;
+            case Salle:
+                this.donner1.frame_UE();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("UE");
+                etat = etat.UE;
+                break;
+            case Etudiant:
+                this.donner1.frame_UE();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("UE");
+                etat = etat.UE;
+                break;
+        }
     }//GEN-LAST:event_UEActionPerformed
 
     private void IntervenantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IntervenantsActionPerformed
         // TODO add your handling code here:
-        donner1.frame_Intervenant();
+        
+        switch(etat){
+            case Debut:
+                donner1.frame_Intervenant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Intervenant");
+                etat = etat.Intervenant;
+                break;
+            case UE:
+                donner1.frame_Intervenant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Intervenant");
+                etat = etat.Intervenant;
+                break;
+            case Intervenant:
+                donner1.frame_Intervenant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Intervenant");
+                etat = etat.Intervenant;
+                break;
+            case Salle:
+                donner1.frame_Intervenant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Intervenant");
+                etat = etat.Intervenant;
+                break;
+            case Etudiant:
+                donner1.frame_Intervenant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Intervenant");
+                etat = etat.Intervenant;
+                break;
+        }
     }//GEN-LAST:event_IntervenantsActionPerformed
 
     private void SallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SallesActionPerformed
         // TODO add your handling code here:
-        donner1.frame_Salle();
+        switch(etat){
+            case Debut:
+                donner1.frame_Salle();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Salle");
+                etat = etat.Salle;
+                break;
+            case UE:
+                donner1.frame_Salle();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Salle");
+                etat = etat.Salle;
+                break;
+            case Intervenant:
+                donner1.frame_Salle();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Salle");
+                etat = etat.Salle;
+                break;
+            case Salle:
+                donner1.frame_Salle();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Salle");
+                etat = etat.Salle;
+                break;
+            case Etudiant:
+                donner1.frame_Salle();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Salle");
+                etat = etat.Salle;
+                break;
+        }
     }//GEN-LAST:event_SallesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -322,7 +449,7 @@ public class EDTView extends FrameView {
     private javax.swing.JButton Intervenants;
     private javax.swing.JButton Salles;
     private javax.swing.JButton UE;
-    private edt.view.donner donner1;
+    private edt.view.Donner donner1;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
@@ -333,7 +460,6 @@ public class EDTView extends FrameView {
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
-    private javax.swing.JSeparator statusPanelSeparator;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
@@ -343,4 +469,15 @@ public class EDTView extends FrameView {
     private int busyIconIndex = 0;
 
     private JDialog aboutBox;
+    private enum Etat{
+        UE,
+        Intervenant,
+        Salle,
+        Etudiant,
+        Debut
+        
+            
+                
+    }
+    private Etat etat;
 }

@@ -57,7 +57,7 @@ public class Ajouter_cour extends javax.swing.JFrame {
         valider = new javax.swing.JButton();
         annuler = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(edt.EDTApp.class).getContext().getResourceMap(Ajouter_cour.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N

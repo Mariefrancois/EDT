@@ -41,7 +41,7 @@ public class Ajouter_UE extends javax.swing.JFrame {
         annuler = new javax.swing.JButton();
         valider = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(edt.EDTApp.class).getContext().getResourceMap(Ajouter_UE.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N

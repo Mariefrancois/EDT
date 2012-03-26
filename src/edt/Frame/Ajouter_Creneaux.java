@@ -47,7 +47,7 @@ public class Ajouter_Creneaux extends javax.swing.JFrame {
         salle = new java.awt.Choice();
         cour_prec = new java.awt.Choice();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(edt.EDTApp.class).getContext().getResourceMap(Ajouter_Creneaux.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N

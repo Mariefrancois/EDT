@@ -56,7 +56,7 @@ public class Ajouter_Salle extends javax.swing.JFrame {
         valider = new java.awt.Button();
         annuler = new java.awt.Button();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(edt.EDTApp.class).getContext().getResourceMap(Ajouter_Salle.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
