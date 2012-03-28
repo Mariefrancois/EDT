@@ -4,6 +4,8 @@
  */
 package edt.Classe;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 /**
  *
@@ -16,6 +18,15 @@ public class Promotion {
     private Timestamp tsDebut;
     private Timestamp tsFin;
     
+    public Promotion(int id) throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Promotion WHERE id="+id);
+        rs.next();
+        this.id = rs.getLong("id");
+        this.nom = rs.getString("nom");
+        this.annee = rs.getInt("annee");
+        //this.tsDebut = rs.getString("tsDebut");
+        //this.tsFin = rs.getString("tsFin");
+    }
 
     public Long getId() {
         return id;

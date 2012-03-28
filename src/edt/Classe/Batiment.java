@@ -4,6 +4,9 @@
  */
 package edt.Classe;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 
 
@@ -17,7 +20,15 @@ public class Batiment  {
     private double lat;
     private double lon;
     
-
+    public Batiment(int id) throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Batiment WHERE id="+id);
+        rs.next();
+        this.id = rs.getLong("id");
+        this.nom = rs.getString("nom");
+        this.lat = rs.getDouble("lat");
+        this.lon = rs.getDouble("lon");
+    }
+    
     public Long getId() {
         return id;
     }

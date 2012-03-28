@@ -4,6 +4,9 @@
  */
 package edt.Classe;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -12,6 +15,13 @@ package edt.Classe;
 public class Type_cours {
     private Long id;
     private String nom;
+    
+    public Type_cours(int id) throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Type_cours WHERE id="+id);
+        rs.next();
+        this.id = rs.getLong("id");
+        this.nom = rs.getString("nom");
+    }
 
     public Long getId() {
         return id;

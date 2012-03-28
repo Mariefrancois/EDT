@@ -4,6 +4,8 @@
  */
 package edt.Classe;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -19,6 +21,13 @@ public class Creneau_Intervenant {
  //   @JoinColumn(name = "inter_id", nullable = false)
  //   private Intervenant inter;
     
+    public Creneau_Intervenant(int id) throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Creneau_Intervenant WHERE id="+id);
+        rs.next();
+        this.id = rs.getLong("id");
+        //this.tsDebut = rs.getString("tsDebut");
+        //this.tsFin = rs.getString("tsFin");
+    }
 
     public Long getId() {
         return id;

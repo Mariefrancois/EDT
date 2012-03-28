@@ -4,6 +4,8 @@
  */
 package edt.Classe;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -15,6 +17,15 @@ public class JourNomOuvrable {
     private String type;
     private Timestamp tsDebut;
     private Timestamp tsFin;
+    
+    public JourNomOuvrable(int id) throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM JourNomOuvrable WHERE id="+id);
+        rs.next();
+        this.id = rs.getLong("id");
+        this.type = rs.getString("type");
+        //this.tsDebut = rs.getString("tsDebut");
+        //this.tsFin = rs.getString("tsFin");
+    }
 
     public Long getId() {
         return id;

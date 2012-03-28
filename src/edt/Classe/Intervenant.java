@@ -4,6 +4,9 @@
  */
 package edt.Classe;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -19,6 +22,18 @@ public class Intervenant {
     private boolean actif;
   //  @OneToMany(mappedBy = "Creneau_Intervenant", cascade = {CascadeType.ALL})
   //  private Set<Creneau_Intervenant> creneau_inter = new HashSet<Creneau_Intervenant>(); 
+    
+    public Intervenant(int id) throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Intervenant WHERE id="+id);
+        rs.next();
+        this.id = rs.getLong("id");
+        this.nom = rs.getString("nom");
+        this.prenom = rs.getString("prenom");
+        this.email = rs.getString("email");
+        this.telephone = rs.getString("telephone");
+        this.notificationsactives = rs.getString("notificationsactives");
+        this.actif = rs.getBoolean("actif");
+    }
     
 
     public Long getId() {

@@ -4,6 +4,9 @@
  */
 package edt.Classe;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -18,6 +21,18 @@ public class UE{
     private int nbHeuresTP;
     private int ECTS;
 
+    public UE(int id) throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM UE WHERE id="+id);
+        rs.next();
+        this.id = rs.getLong("id");
+        this.nom = rs.getString("nom");
+        this.intitule = rs.getString("intitule");
+        this.nbHeuresCours = rs.getInt("nbHeuresCours");
+        this.nbHeuresTD = rs.getInt("nbHeuresTD");
+        this.nbHeuresTP = rs.getInt("nbHeuresTP");
+        this.ECTS = rs.getInt("ECTS");
+    }
+    
     public Long getId() {
         return id;
     }

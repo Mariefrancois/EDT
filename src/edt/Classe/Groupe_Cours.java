@@ -4,6 +4,9 @@
  */
 package edt.Classe;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -14,6 +17,14 @@ public class Groupe_Cours {
     private String nom;
     private String identifiant;
 
+    public Groupe_Cours(int id) throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Groupe_Cours WHERE id="+id);
+        rs.next();
+        this.id = rs.getLong("id");
+        this.nom = rs.getString("nom");
+        this.identifiant = rs.getString("identifiant");
+    }
+    
     public Long getId() {
         return id;
     }

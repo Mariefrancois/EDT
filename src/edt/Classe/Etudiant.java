@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public class Etudiant  {
     
-    private long id;
+    private Long id;
     private int numeroEtudiant;
     private String prenom;
     private String nom;
@@ -26,7 +26,7 @@ public class Etudiant  {
     public Etudiant(int idEtudiant) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Etudiant WHERE id="+idEtudiant);
         rs.next();
-        this.id = rs.getInt("id");
+        this.id = rs.getLong("id");
         this.numeroEtudiant = rs.getInt("numeroEtudiant");
         this.prenom = rs.getString("prenom");
         this.nom = rs.getString("nom");

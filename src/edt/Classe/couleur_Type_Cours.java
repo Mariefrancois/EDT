@@ -5,6 +5,8 @@
 package edt.Classe;
 
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -15,6 +17,15 @@ public class couleur_Type_Cours {
     private String nomCouleur;
     private Color couleurTexte;
     private Color couleurFond;
+    
+    /*public couleur_Type_Cours(int id) throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM couleur_Type_Cours WHERE id="+id);
+        rs.next();
+        this.id = rs.getLong("id");
+        this.nomCouleur = rs.getString("nomCouleur");
+        //this.couleurFond = rs.getString("couleurFond");
+        //sudthis.couleurTexte = rs.getString("couleurTexte");
+    }*/
 
     public Long getId() {
         return id;
