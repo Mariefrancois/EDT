@@ -12,11 +12,19 @@ import java.sql.Timestamp;
  * @author Marie
  */
 public class Promotion {
-    private Long id;
+    private long id;
     private String nom;
     private int annee;
     private Timestamp tsDebut;
     private Timestamp tsFin;
+    
+    public Promotion(String nom, int annee,Timestamp tsDebut, Timestamp tsFin){
+        this.id = 0;
+        this.nom = nom;
+        this.annee = annee;
+        this.tsDebut = tsDebut;
+        this.tsFin = tsFin;
+    }
     
     public Promotion(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Promotion WHERE id="+id);

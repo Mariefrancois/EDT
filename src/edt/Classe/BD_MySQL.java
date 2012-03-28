@@ -15,7 +15,7 @@ public class BD_MySQL {
     static String serveur_BD = "127.0.0.1";
     static String nom_BD = "UPS_EDT";
     static String utilisateur_BD = "root";
-    static String motDePasse_BD = "rose";
+    static String motDePasse_BD = "";
 
     static String classForName = "com.mysql.jdbc.Driver";
     static String connectionUrl = 

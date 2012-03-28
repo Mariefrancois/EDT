@@ -72,9 +72,19 @@ public class Ajouter_UE extends javax.swing.JFrame {
 
         annuler.setText(resourceMap.getString("annuler.text")); // NOI18N
         annuler.setName("annuler"); // NOI18N
+        annuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                annulerActionPerformed(evt);
+            }
+        });
 
         valider.setText(resourceMap.getString("valider.text")); // NOI18N
         valider.setName("valider"); // NOI18N
+        valider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                validerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,6 +140,20 @@ public class Ajouter_UE extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
+        // TODO add your handling code here:
+        
+        this.nb_h_cours.setText("");
+        this.nb_h_td.setText("");
+        this.nb_h_tp.setText("");
+        this.nom.setText("");
+    }//GEN-LAST:event_validerActionPerformed
+
+    private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_annulerActionPerformed
 
     /**
      * @param args the command line arguments

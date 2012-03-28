@@ -308,12 +308,18 @@
         <Property name="text" type="java.lang.String" resourceKey="annuler.text"/>
         <Property name="name" type="java.lang.String" value="annuler" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="annulerActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="valider">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="valider.text"/>
         <Property name="name" type="java.lang.String" value="valider" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="validerActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
@@ -366,6 +372,9 @@
         <Property name="text" type="java.lang.String" resourceKey="ajouter_date.text"/>
         <Property name="name" type="java.lang.String" value="ajouter_date" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ajouter_dateActionPerformed"/>
+      </Events>
     </Component>
     <Component class="java.awt.Label" name="label3">
       <Properties>

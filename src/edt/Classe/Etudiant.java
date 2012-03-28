@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public class Etudiant  {
     
-    private Long id;
+    private long id;
     private int numeroEtudiant;
     private String prenom;
     private String nom;
@@ -23,6 +23,18 @@ public class Etudiant  {
     private int idPromotion;
     private int idSpecialite;
     
+    public Etudiant(int numeroEtudiant,String prenom,String nom,String email,String telephone,boolean notificationsActives,int idPromotion,int idSpecialite){
+    
+        this.id = 0;
+        this.numeroEtudiant = numeroEtudiant;
+        this.prenom = prenom;
+        this.nom = nom;
+        this.email = email;
+        this.telephone = telephone;
+        this.notificationsActives = notificationsActives;
+        this.idPromotion = idPromotion;
+        this.idSpecialite = idSpecialite;
+    }
     public Etudiant(int idEtudiant) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Etudiant WHERE id="+idEtudiant);
         rs.next();
@@ -35,6 +47,12 @@ public class Etudiant  {
         this.notificationsActives = rs.getBoolean("notificationsActives");
         this.idPromotion = rs.getInt("idPromotion");
         this.idSpecialite = rs.getInt("idSpecialite");
+    }
+    public void add() throws SQLException{
+        ResultSet rs = BD_MySQL.executer_requete("INSERT INTO Etudiant VALUES('',"
+        +this.numeroEtudiant+","+this.nom+","+this.prenom+","+this.email+","+this.telephone+
+                ",1,"+this.idPromotion+","+this.idSpecialite+")");
+        rs.next();
     }
 
     public String getEmail() {

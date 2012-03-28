@@ -13,6 +13,7 @@ import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
 
+
 /**
  * The main class of the application.
  */
@@ -50,8 +51,11 @@ public class EDTApp extends SingleFrameApplication {
         BD_MySQL.init();
         
         Etudiant etu;
+        Etudiant etu1;
+        
         try {
-            etu = new Etudiant(1);
+            etu1 = new Etudiant(21107326,"Marie","francois","bla","0258",false,0,0);
+            etu = new Etudiant(0);
             System.out.println(etu);
         } catch (SQLException ex) {
             Logger.getLogger(EDTApp.class.getName()).log(Level.SEVERE, null, ex);
