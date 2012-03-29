@@ -7,6 +7,7 @@ package edt;
 import edt.Classe.BD_MySQL;
 import edt.Classe.Etudiant;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdesktop.application.Application;
@@ -50,13 +51,11 @@ public class EDTApp extends SingleFrameApplication {
         
         BD_MySQL.init();
         
-        Etudiant etu;
-        Etudiant etu1;
-        
         try {
-            etu1 = new Etudiant(21107326,"Marie","francois","bla","0258",false,0,0);
-            etu = new Etudiant(0);
-            System.out.println(etu);
+            ArrayList<Etudiant> test = Etudiant.liste_etudiants_promotion(4);
+            for (Etudiant e : test){
+                System.out.println(e);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(EDTApp.class.getName()).log(Level.SEVERE, null, ex);
         }

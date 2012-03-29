@@ -6,6 +6,7 @@ package edt.Classe;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,36 +24,89 @@ public class Etudiant  {
     private int idPromotion;
     private int idSpecialite;
     
-    public Etudiant(int numeroEtudiant,String prenom,String nom,String email,String telephone,boolean notificationsActives,int idPromotion,int idSpecialite){
-    
-        this.id = 0;
-        this.numeroEtudiant = numeroEtudiant;
-        this.prenom = prenom;
-        this.nom = nom;
-        this.email = email;
-        this.telephone = telephone;
-        this.notificationsActives = notificationsActives;
-        this.idPromotion = idPromotion;
-        this.idSpecialite = idSpecialite;
-    }
-    public Etudiant(int idEtudiant) throws SQLException{
+    public Etudiant(long idEtudiant) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Etudiant WHERE id="+idEtudiant);
-        rs.next();
-        this.id = rs.getLong("id");
-        this.numeroEtudiant = rs.getInt("numeroEtudiant");
-        this.prenom = rs.getString("prenom");
-        this.nom = rs.getString("nom");
-        this.email = rs.getString("email");
-        this.telephone = rs.getString("telephone");
-        this.notificationsActives = rs.getBoolean("notificationsActives");
-        this.idPromotion = rs.getInt("idPromotion");
-        this.idSpecialite = rs.getInt("idSpecialite");
+        // Recuperer le nombre de ligne
+        int taille = BD_MySQL.taille_resultSet(rs);
+        switch(taille){
+            case 0:
+                // Etudiant inexistant;
+                break;
+            case 1:
+                rs.next();
+                this.id = rs.getLong("id");
+                this.numeroEtudiant = rs.getInt("numeroEtudiant");
+                this.prenom = rs.getString("prenom");
+                this.nom = rs.getString("nom");
+                this.email = rs.getString("email");
+                this.telephone = rs.getString("telephone");
+                this.notificationsActives = rs.getBoolean("notificationsActives");
+                this.idPromotion = rs.getInt("idPromotion");
+                this.idSpecialite = rs.getInt("idSpecialite");
+                break;
+            default:
+                // Plusieurs etudiant avec la meme ID;
+                break;
+        }    
     }
-    public void add() throws SQLException{
-        ResultSet rs = BD_MySQL.executer_requete("INSERT INTO Etudiant VALUES('',"
-        +this.numeroEtudiant+","+this.nom+","+this.prenom+","+this.email+","+this.telephone+
-                ",1,"+this.idPromotion+","+this.idSpecialite+")");
-        rs.next();
+    
+    public Etudiant(int numeroEtudiant, String nom, String prenom, String email, String telephone, int idPromotion, int idSpecialite) throws SQLException {
+        String requete = "SELECT * FROM Etudiant WHERE "
+                + "numeroEtudiant="+numeroEtudiant+" AND "
+                + "prenom='"+prenom+"';";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        int taille = BD_MySQL.taille_resultSet(rs);
+        switch(taille){
+            case 0:
+                // Etudiant inexistant;
+                break;
+            case 1:
+                rs.next();
+                this.id = rs.getLong("id");
+                this.numeroEtudiant = rs.getInt("numeroEtudiant");
+                this.prenom = rs.getString("prenom");
+                this.nom = rs.getString("nom");
+                this.email = rs.getString("email");
+                this.telephone = rs.getString("telephone");
+                this.notificationsActives = rs.getBoolean("notificationsActives");
+                this.idPromotion = rs.getInt("idPromotion");
+                this.idSpecialite = rs.getInt("idSpecialite");
+                rs.close();
+                break;
+            default:
+                // Plusieurs etudiant avec la meme ID;
+                break;
+        }   
+    }
+    
+    public static long ajouter_etudiant(int numeroEtudiant, String nom, String prenom, String email,String telephone, int idPromotion,int idSpecialite) throws SQLException{
+        String requete = ""
+                + "INSERT INTO `Etudiant` (`numeroEtudiant`, `nom`, `prenom`, `email`, `telephone`, `notificationsActives`, `idPromotion`, `idSpecialite`) VALUES "
+                + "(" + numeroEtudiant + ", '"
+                + nom + "','" + prenom + "', '"
+                + email + "','" + telephone
+                + "', 1, " + idPromotion + ", " + idSpecialite + ");";
+        BD_MySQL.executer_update(requete);
+        return new Etudiant(numeroEtudiant, nom, prenom, email, telephone, idPromotion, idSpecialite).getId();
+    }
+    
+    public static ArrayList<Long> liste_id_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<Long> liste_id_etudiants_promotion = new ArrayList();
+        String requete = "SELECT id FROM Etudiant WHERE idPromotion="+idPromotion+" ORDER BY nom, prenom;";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        while(rs.next()){
+            liste_id_etudiants_promotion.add(rs.getLong("id"));
+        }
+        return liste_id_etudiants_promotion;
+    }
+    
+    public static ArrayList<Etudiant> liste_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<Etudiant> liste_etudiants_promotion = new ArrayList();
+        ArrayList<Long> liste_id_etudiants_promotion = Etudiant.liste_id_etudiants_promotion(idPromotion);
+        for (long l : liste_id_etudiants_promotion) {
+            liste_etudiants_promotion.add(new Etudiant(l));
+        }
+        return liste_etudiants_promotion;
     }
 
     public String getEmail() {

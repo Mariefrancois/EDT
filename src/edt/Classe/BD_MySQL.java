@@ -14,8 +14,8 @@ public class BD_MySQL {
 
     static String serveur_BD = "127.0.0.1";
     static String nom_BD = "UPS_EDT";
-    static String utilisateur_BD = "root";
-    static String motDePasse_BD = "";
+    static String utilisateur_BD = "marie";
+    static String motDePasse_BD = "jeremythebest";
 
     static String classForName = "com.mysql.jdbc.Driver";
     static String connectionUrl = 
@@ -80,6 +80,23 @@ public class BD_MySQL {
         }
         return rs;
     }
+    
+    /**
+     * Renvois le ResultSet correspond à la requete en paramètre
+     * @param requete Correspond à la requete SQL
+     * @return ResultSet du resultat de la requete
+     */
+    public static void executer_update(String requete){
+        if (BD_MySQL.debug){
+            System.out.println("DEBUG : REQUETE : "+requete);
+        }
+        try {
+            BD_MySQL.stmt.executeUpdate(requete);
+        } catch (SQLException ex) {
+            Logger.getLogger(BD_MySQL.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * Affiche le resultSet en System.out (utile pour le DEBUG)
@@ -111,5 +128,14 @@ public class BD_MySQL {
                         .log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public static int taille_resultSet(ResultSet rs) throws SQLException{
+        int taille = 0;
+        while(rs.next()){
+            taille++;
+        }
+        rs.beforeFirst();
+        return taille;
     }
 }
