@@ -26,7 +26,7 @@ public class Etudiant  {
     
     public Etudiant(long idEtudiant) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Etudiant WHERE id="+idEtudiant);
-        // Recuperer le nombre de ligne
+        
         int taille = BD_MySQL.taille_resultSet(rs);
         switch(taille){
             case 0:
@@ -87,7 +87,23 @@ public class Etudiant  {
                 + email + "','" + telephone
                 + "', 1, " + idPromotion + ", " + idSpecialite + ");";
         BD_MySQL.executer_update(requete);
+        //creer un utilisateur
         return new Etudiant(numeroEtudiant, nom, prenom, email, telephone, idPromotion, idSpecialite).getId();
+    }
+    public static void supprimer_etudiant(long id){
+            String requete = "DELETE FROM Etudiant WHERE id = " +id+ ";";
+            //supprimer un utilisateur
+            BD_MySQL.executer_update(requete);
+            
+    } 
+    
+    public static void modifier_etudiant(int idEtudiant, int numeroEtudiant, String nom, String prenom, String email,String telephone, int idPromotion,int idSpecialite){
+        String requete = "UPDATE Etudiant SET numeroEtudiant= "+ numeroEtudiant 
+                + ", nom= '"+ nom + "', prenom='" + prenom 
+                + "', email='"+ email + "', telephone='" + telephone
+                + "', notificationsActives=1, idPromotion=" + idPromotion 
+                + ", idSpecialite=" + idSpecialite + " WHERE id="+idEtudiant;
+        BD_MySQL.executer_update(requete);
     }
     
     public static ArrayList<Long> liste_id_etudiants_promotion(int idPromotion) throws SQLException{
