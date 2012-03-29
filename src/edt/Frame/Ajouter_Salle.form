@@ -37,37 +37,32 @@
                                   <Component id="label1" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Group type="102" alignment="0" attributes="1">
-                                          <Component id="h_fin" min="-2" pref="40" max="-2" attributes="1"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="m_fin" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="date" alignment="0" max="32767" attributes="1"/>
-                                              <Group type="102" alignment="0" attributes="1">
-                                                  <Component id="h_debut" min="-2" pref="40" max="-2" attributes="1"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="1">
+                                      <Component id="h_fin" min="-2" pref="40" max="-2" attributes="1"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="m_fin" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="date" alignment="0" max="32767" attributes="1"/>
+                                          <Group type="102" alignment="0" attributes="1">
+                                              <Component id="h_debut" min="-2" pref="40" max="-2" attributes="1"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="m_debut" min="-2" pref="43" max="-2" attributes="0"/>
                                       </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="m_debut" min="-2" pref="43" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="capacite" alignment="0" max="32767" attributes="1"/>
-                                      <Component id="nom" alignment="0" pref="88" max="32767" attributes="1"/>
-                                  </Group>
+                                  <Component id="capacite" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="nom" alignment="0" pref="88" max="32767" attributes="1"/>
                               </Group>
                           </Group>
                           <Component id="label4" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   </Group>
                   <Component id="label7" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -89,16 +84,16 @@
               <EmptySpace pref="57" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="325" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="annuler" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="valider" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="ajout_dispo" alignment="1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="313" max="32767" attributes="0"/>
+              <Component id="annuler" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <Component id="valider" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="293" max="32767" attributes="0"/>
+              <Component id="ajouter_dispo" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -117,7 +112,6 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="m_debut" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
@@ -134,6 +128,7 @@
                           <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="m_debut" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -155,11 +150,11 @@
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="137" max="-2" attributes="1"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="ajout_dispo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="valider" min="-2" max="-2" attributes="0"/>
-                  <Component id="annuler" min="-2" max="-2" attributes="0"/>
+              <Component id="ajouter_dispo" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="annuler" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="valider" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
           </Group>
@@ -326,26 +321,32 @@
         <Property name="name" type="java.lang.String" value="m_fin" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="java.awt.Button" name="ajout_dispo">
+    <Component class="javax.swing.JButton" name="ajouter_dispo">
       <Properties>
-        <Property name="label" type="java.lang.String" resourceKey="ajout_dispo.label"/>
-        <Property name="name" type="java.lang.String" value="ajout_dispo" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="ajouter_dispo.text"/>
+        <Property name="name" type="java.lang.String" value="ajouter_dispo" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ajouter_dispoActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="java.awt.Button" name="valider">
+    <Component class="javax.swing.JButton" name="annuler">
       <Properties>
-        <Property name="label" type="java.lang.String" resourceKey="valider.label"/>
+        <Property name="text" type="java.lang.String" resourceKey="annuler.text"/>
+        <Property name="name" type="java.lang.String" value="annuler" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="annulerActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="valider">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="valider.text"/>
         <Property name="name" type="java.lang.String" value="valider" noResource="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="validerActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="java.awt.Button" name="annuler">
-      <Properties>
-        <Property name="label" type="java.lang.String" resourceKey="annuler.label"/>
-        <Property name="name" type="java.lang.String" value="annuler" noResource="true"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

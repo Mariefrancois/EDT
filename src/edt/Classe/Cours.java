@@ -18,6 +18,10 @@ public class Cours implements Model_JDBC {
     private String type;
     private Timestamp tsDebut;
     private Timestamp tsFin;
+    private int idUE;
+    private int idSall;
+    private int idIntervenant;
+    private int idTypeCours;
     
     public Cours(String type, Timestamp tsDebut, Timestamp tsFin){
         this.type = type;
@@ -37,7 +41,6 @@ public class Cours implements Model_JDBC {
     public int getId() {
         return id;
     }
-
 
     /**
      * @return the type
@@ -96,4 +99,41 @@ public class Cours implements Model_JDBC {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
+     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cours other = (Cours) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.idUE != other.idUE) {
+            return false;
+        }
+        if (this.idSall != other.idSall) {
+            return false;
+        }
+        if (this.idIntervenant != other.idIntervenant) {
+            return false;
+        }
+        if (this.idTypeCours != other.idTypeCours) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 97 * hash + this.idUE;
+        hash = 97 * hash + this.idSall;
+        hash = 97 * hash + this.idIntervenant;
+        hash = 97 * hash + this.idTypeCours;
+        return hash;
+    }
 }

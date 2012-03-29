@@ -140,12 +140,18 @@
         <Property name="text" type="java.lang.String" resourceKey="annuler.text"/>
         <Property name="name" type="java.lang.String" value="annuler" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="annulerActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="valider">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="valider.text"/>
         <Property name="name" type="java.lang.String" value="valider" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="validerActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

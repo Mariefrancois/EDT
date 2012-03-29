@@ -6,6 +6,7 @@ package edt;
 
 import edt.EDTAboutBox;
 import edt.EDTApp;
+import edt.Frame.NewPromotion;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -17,14 +18,13 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import edt.Frame.Ajouter_Etudiant;
 
 
 /**
  * The application's main frame.
  */
 public class EDTView extends FrameView {
-    public Ajouter_Etudiant etu;
+    private NewPromotion newPromo;
     public void init(){
         etat = etat.Debut;
     }
@@ -111,6 +111,7 @@ public class EDTView extends FrameView {
 
         mainPanel = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
+        ajouter_promotion = new javax.swing.JButton();
         UE = new javax.swing.JButton();
         Etudiants = new javax.swing.JButton();
         Intervenants = new javax.swing.JButton();
@@ -136,7 +137,19 @@ public class EDTView extends FrameView {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(edt.EDTApp.class).getContext().getResourceMap(EDTView.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(EDTView.class);
+        ajouter_promotion.setText(resourceMap.getString("ajouter_promotion.text")); // NOI18N
+        ajouter_promotion.setFocusable(false);
+        ajouter_promotion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        ajouter_promotion.setName("ajouter_promotion"); // NOI18N
+        ajouter_promotion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ajouter_promotion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajouter_promotionActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(ajouter_promotion);
+
         UE.setText(resourceMap.getString("UE.text")); // NOI18N
         UE.setName("UE"); // NOI18N
         UE.addActionListener(new java.awt.event.ActionListener() {
@@ -241,7 +254,7 @@ public class EDTView extends FrameView {
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(edt.EDTApp.class).getContext().getActionMap(EDTView.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(EDTView.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
@@ -444,11 +457,43 @@ public class EDTView extends FrameView {
         }
     }//GEN-LAST:event_SallesActionPerformed
 
+    private void ajouter_promotionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouter_promotionActionPerformed
+        // TODO add your handling code here:
+        switch(etat){
+            case Debut:
+                newPromo = new NewPromotion();
+                newPromo.setVisible(true);
+                etat = etat.Debut;
+                break;
+            case UE:
+                newPromo = new NewPromotion();
+                newPromo.setVisible(true);
+                etat = etat.Debut;
+                break;
+            case Intervenant:
+                newPromo = new NewPromotion();
+                newPromo.setVisible(true);
+                etat = etat.Debut;
+                break;
+            case Salle:
+                newPromo = new NewPromotion();
+                newPromo.setVisible(true);
+                etat = etat.Debut;
+                break;
+            case Etudiant:
+                newPromo = new NewPromotion();
+                newPromo.setVisible(true);
+                etat = etat.Debut;
+                break;
+        }
+    }//GEN-LAST:event_ajouter_promotionActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Etudiants;
     private javax.swing.JButton Intervenants;
     private javax.swing.JButton Salles;
     private javax.swing.JButton UE;
+    private javax.swing.JButton ajouter_promotion;
     private edt.view.Donner donner1;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;

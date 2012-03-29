@@ -6,6 +6,7 @@ package edt.Classe;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.sql.SQLException;
  */
 public class Etudiant implements Model_JDBC  {
     
+
     private int id;
     private int numeroEtudiant;
     private String prenom;
