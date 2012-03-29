@@ -47,12 +47,14 @@ public class EDTApp extends SingleFrameApplication {
     /**
      * Main method launching the application.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         launch(EDTApp.class, args);
         
         BD_MySQL.init();
         
-            Options.ajouter_options("boo","0");
+          //  Options.ajouter_options("boo","0");
+            int nb = BD_MySQL.nombre_etudiants(4);
+            System.out.println(nb);
         
         BD_MySQL.close();
     }
