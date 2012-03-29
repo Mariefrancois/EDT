@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * @author Marie
  */
 public class Cours implements Model_JDBC {
-    private Long id;
+    private int id;
     private String type;
     private Timestamp tsDebut;
     private Timestamp tsFin;
@@ -25,21 +25,17 @@ public class Cours implements Model_JDBC {
         this.tsFin = tsFin;
     }
     
-    public Cours(Long id) throws SQLException{
+    public Cours(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Cours WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.type = rs.getString("type");
-        //this.tsDebut = rs.getString("tsDebut");
+        //this.tsDebut = (Timestamp) rs.getString("tsDebut");
         //this.tsFin = rs.getString("tsFin");
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
 

@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * @author Marie
  */
 public class Type_cours implements Model_JDBC {
-    private Long id;
+    private int id;
     private String nom;
     
     public Type_cours(String nom){
@@ -23,16 +23,12 @@ public class Type_cours implements Model_JDBC {
     public Type_cours(Long id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Type_cours WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**

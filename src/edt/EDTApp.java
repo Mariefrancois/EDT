@@ -57,6 +57,7 @@ public class EDTApp extends SingleFrameApplication {
             Logger.getLogger(EDTApp.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        
         BD_MySQL.close();
     }
 }

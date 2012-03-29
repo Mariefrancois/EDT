@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * @author Marie
  */
 public class Promotion implements Model_JDBC {
-    private Long id;
+    private int id;
     private String nom;
     private int annee;
     private Timestamp tsDebut;
@@ -25,22 +25,18 @@ public class Promotion implements Model_JDBC {
         this.tsFin = tsFin;
     }
     
-    public Promotion(Long id) throws SQLException{
+    public Promotion(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Promotion WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.annee = rs.getInt("annee");
         //this.tsDebut = rs.getString("tsDebut");
         //this.tsFin = rs.getString("tsFin");
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**

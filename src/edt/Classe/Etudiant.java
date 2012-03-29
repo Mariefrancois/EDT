@@ -13,15 +13,15 @@ import java.sql.SQLException;
  */
 public class Etudiant implements Model_JDBC  {
     
-    private Long id;
+    private int id;
     private int numeroEtudiant;
     private String prenom;
     private String nom;
     private String email;
     private String telephone;
     private boolean notificationsActives;
-    private Long idPromotion;
-    private Long idSpecialite;
+    private int idPromotion;
+    private int idSpecialite;
     
     public Etudiant(int num, String prenom, String nom, String email, String telephone, boolean notif, Promotion promo, Specialite spe){
         this.numeroEtudiant = num;
@@ -34,18 +34,18 @@ public class Etudiant implements Model_JDBC  {
         this.idSpecialite = spe.getId();
     }
     
-    public Etudiant(Long idEtudiant) throws SQLException{
+    public Etudiant(int idEtudiant) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Etudiant WHERE id="+idEtudiant);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.numeroEtudiant = rs.getInt("numeroEtudiant");
         this.prenom = rs.getString("prenom");
         this.nom = rs.getString("nom");
         this.email = rs.getString("email");
         this.telephone = rs.getString("telephone");
         this.notificationsActives = rs.getBoolean("notificationsActives");
-        this.idPromotion = rs.getLong("idPromotion");
-        this.idSpecialite = rs.getLong("idSpecialite");
+        this.idPromotion = rs.getInt("idPromotion");
+        this.idSpecialite = rs.getInt("idSpecialite");
     }
 
     public String getEmail() {
@@ -56,27 +56,23 @@ public class Etudiant implements Model_JDBC  {
         this.email = email;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Long getIdPromotion() {
+    public int getIdPromotion() {
         return idPromotion;
     }
 
-    public void setIdPromotion(Long idPromotion) {
+    public void setIdPromotion(int idPromotion) {
         this.idPromotion = idPromotion;
     }
 
-    public Long getIdSpecialite() {
+    public int getIdSpecialite() {
         return idSpecialite;
     }
 
-    public void setIdSpecialite(Long idSpecialite) {
+    public void setIdSpecialite(int idSpecialite) {
         this.idSpecialite = idSpecialite;
     }
 
@@ -184,7 +180,8 @@ public class Etudiant implements Model_JDBC  {
 
     @Override
     public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String values = this.numeroEtudiant+", "+this.nom+", "+this.prenom+", "+this.telephone+", "+this.email+", "+this.notificationsActives+", "+this.idPromotion+", "+this.idSpecialite;
+        BD_MySQL.executer_requete("INSERT INTO Etudiant (numeroEtudiant, nom, prenom, telephone, email, notificationsActives, idPromotion, idSpecialite) VALUES("+values+")");
     }
 
     @Override

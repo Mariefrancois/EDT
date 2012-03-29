@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * @author Marie
  */
 public class Batiment implements Model_JDBC {
-    private Long id;
+    private int id;
     private String nom;
     private double lat;
     private double lon;
@@ -23,21 +23,17 @@ public class Batiment implements Model_JDBC {
         this.lon = lon;
     }
     
-    public Batiment(Long id) throws SQLException{
+    public Batiment(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Batiment WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.lat = rs.getDouble("lat");
         this.lon = rs.getDouble("lon");
     }
     
-    public Long getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**

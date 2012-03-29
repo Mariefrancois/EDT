@@ -10,6 +10,7 @@
     <class>edt.Groupe_Administratif</class>
     <class>edt.Groupe_Etudiants</class>
     <class>edt.Couleur_Type_Cours</class>
+    <class>edt.Classe.Option</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>
       <property name="javax.persistence.jdbc.password" value="app"/>
