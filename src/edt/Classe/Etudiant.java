@@ -11,7 +11,7 @@ import java.sql.SQLException;
  *
  * @author Marie
  */
-public class Etudiant  {
+public class Etudiant implements Model_JDBC  {
     
     private Long id;
     private int numeroEtudiant;
@@ -20,10 +20,21 @@ public class Etudiant  {
     private String email;
     private String telephone;
     private boolean notificationsActives;
-    private int idPromotion;
-    private int idSpecialite;
+    private Long idPromotion;
+    private Long idSpecialite;
     
-    public Etudiant(int idEtudiant) throws SQLException{
+    public Etudiant(int num, String prenom, String nom, String email, String telephone, boolean notif, Promotion promo, Specialite spe){
+        this.numeroEtudiant = num;
+        this.prenom = prenom;
+        this.nom = nom;
+        this.email = email;
+        this.telephone = telephone;
+        this.notificationsActives = notif;
+        this.idPromotion = promo.getId();
+        this.idSpecialite = spe.getId();
+    }
+    
+    public Etudiant(Long idEtudiant) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Etudiant WHERE id="+idEtudiant);
         rs.next();
         this.id = rs.getLong("id");
@@ -33,8 +44,8 @@ public class Etudiant  {
         this.email = rs.getString("email");
         this.telephone = rs.getString("telephone");
         this.notificationsActives = rs.getBoolean("notificationsActives");
-        this.idPromotion = rs.getInt("idPromotion");
-        this.idSpecialite = rs.getInt("idSpecialite");
+        this.idPromotion = rs.getLong("idPromotion");
+        this.idSpecialite = rs.getLong("idSpecialite");
     }
 
     public String getEmail() {
@@ -53,19 +64,19 @@ public class Etudiant  {
         this.id = id;
     }
 
-    public int getIdPromotion() {
+    public Long getIdPromotion() {
         return idPromotion;
     }
 
-    public void setIdPromotion(int idPromotion) {
+    public void setIdPromotion(Long idPromotion) {
         this.idPromotion = idPromotion;
     }
 
-    public int getIdSpecialite() {
+    public Long getIdSpecialite() {
         return idSpecialite;
     }
 
-    public void setIdSpecialite(int idSpecialite) {
+    public void setIdSpecialite(Long idSpecialite) {
         this.idSpecialite = idSpecialite;
     }
 
@@ -158,8 +169,8 @@ public class Etudiant  {
         hash = 97 * hash + (this.email != null ? this.email.hashCode() : 0);
         hash = 97 * hash + (this.telephone != null ? this.telephone.hashCode() : 0);
         hash = 97 * hash + (this.notificationsActives ? 1 : 0);
-        hash = 97 * hash + this.idPromotion;
-        hash = 97 * hash + this.idSpecialite;
+        hash = 97 * hash + (int) (this.idPromotion ^ (this.idPromotion >>> 32));
+        hash = 97 * hash + (int) (this.idSpecialite ^ (this.idSpecialite >>> 32));
         return hash;
     }
     
@@ -169,5 +180,20 @@ public class Etudiant  {
     public String toString(){
         return ""+this.id+" "+this.numeroEtudiant+" "+this.prenom+" "+this.nom + " " + this.email +
                 " "+this.telephone+" "+this.notificationsActives+" "+this.idPromotion+" "+this.idSpecialite;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author Marie
  */
-public class Intervenant {
+public class Intervenant implements Model_JDBC {
     private Long id;
     private String nom;
     private String prenom;
@@ -23,7 +23,16 @@ public class Intervenant {
   //  @OneToMany(mappedBy = "Creneau_Intervenant", cascade = {CascadeType.ALL})
   //  private Set<Creneau_Intervenant> creneau_inter = new HashSet<Creneau_Intervenant>(); 
     
-    public Intervenant(int id) throws SQLException{
+    public Intervenant(String nom, String prenom, String email, String telephone, String notif, boolean actif){
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.telephone = telephone;
+        this.notificationsactives = notif;
+        this.actif = actif;
+    }
+    
+    public Intervenant(Long id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Intervenant WHERE id="+id);
         rs.next();
         this.id = rs.getLong("id");
@@ -126,6 +135,21 @@ public class Intervenant {
      */
     public void setActif(boolean actif) {
         this.actif = actif;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

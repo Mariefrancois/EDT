@@ -51,7 +51,7 @@ public class EDTApp extends SingleFrameApplication {
         
         Etudiant etu;
         try {
-            etu = new Etudiant(1);
+            etu = new Etudiant(new Long(1));
             System.out.println(etu);
         } catch (SQLException ex) {
             Logger.getLogger(EDTApp.class.getName()).log(Level.SEVERE, null, ex);

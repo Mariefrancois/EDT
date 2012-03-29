@@ -7,20 +7,23 @@ package edt.Classe;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-
-
 /**
  *
  * @author Marie
  */
-public class Batiment  {
+public class Batiment implements Model_JDBC {
     private Long id;
     private String nom;
     private double lat;
     private double lon;
     
-    public Batiment(int id) throws SQLException{
+    public Batiment (String nom, double lat, double lon){
+        this.nom = nom;
+        this.lat = lat;
+        this.lon = lon;
+    }
+    
+    public Batiment(Long id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Batiment WHERE id="+id);
         rs.next();
         this.id = rs.getLong("id");
@@ -77,6 +80,21 @@ public class Batiment  {
      */
     public void setLon(double lon) {
         this.lon = lon;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

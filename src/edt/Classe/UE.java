@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author Marie
  */
-public class UE{
+public class UE implements Model_JDBC {
     private Long id;
     private String nom;
     private String intitule;
@@ -20,8 +20,17 @@ public class UE{
     private int nbHeuresTD;
     private int nbHeuresTP;
     private int ECTS;
+    
+    public UE(String nom, String intitule, int nbHeuresCours, int nbHeuresTD, int nbHeuresTP, int ECTS){
+        this.nom = nom;
+        this.intitule = intitule;
+        this.nbHeuresCours = nbHeuresCours;
+        this.nbHeuresTD = nbHeuresTD;
+        this.nbHeuresTP = nbHeuresTP;
+        this.ECTS = ECTS;
+    }
 
-    public UE(int id) throws SQLException{
+    public UE(Long id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM UE WHERE id="+id);
         rs.next();
         this.id = rs.getLong("id");
@@ -124,6 +133,21 @@ public class UE{
      */
     public void setECTS(int ECTS) {
         this.ECTS = ECTS;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

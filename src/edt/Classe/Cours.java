@@ -13,13 +13,19 @@ import java.sql.SQLException;
  *
  * @author Marie
  */
-public class Cours {
+public class Cours implements Model_JDBC {
     private Long id;
     private String type;
     private Timestamp tsDebut;
     private Timestamp tsFin;
     
-    public Cours(int id) throws SQLException{
+    public Cours(String type, Timestamp tsDebut, Timestamp tsFin){
+        this.type = type;
+        this.tsDebut = tsDebut;
+        this.tsFin = tsFin;
+    }
+    
+    public Cours(Long id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Cours WHERE id="+id);
         rs.next();
         this.id = rs.getLong("id");
@@ -77,6 +83,21 @@ public class Cours {
      */
     public void setTsFin(Timestamp tsFin) {
         this.tsFin = tsFin;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

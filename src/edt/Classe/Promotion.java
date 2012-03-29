@@ -11,14 +11,21 @@ import java.sql.Timestamp;
  *
  * @author Marie
  */
-public class Promotion {
+public class Promotion implements Model_JDBC {
     private Long id;
     private String nom;
     private int annee;
     private Timestamp tsDebut;
     private Timestamp tsFin;
     
-    public Promotion(int id) throws SQLException{
+    public Promotion(String nom, int annee, Timestamp tsDebut, Timestamp tsFin){
+        this.nom = nom;
+        this.annee = annee;
+        this.tsDebut = tsDebut;
+        this.tsFin = tsFin;
+    }
+    
+    public Promotion(Long id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Promotion WHERE id="+id);
         rs.next();
         this.id = rs.getLong("id");
@@ -90,6 +97,21 @@ public class Promotion {
      */
     public void setTsFin(Timestamp tsFin) {
         this.tsFin = tsFin;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }
