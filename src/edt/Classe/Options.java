@@ -57,7 +57,7 @@ public class Options {
         this.valeur = valeur;
     }
     public static void ajouter_options(String nom, String valeur){
-        String requete = "INSERT INTO Options ('nom', 'valeur') VALUES ("+nom+", "+valeur+");";
+        String requete = "INSERT INTO Options ('nom', 'valeur') VALUES ('"+nom+"', '"+valeur+"');";
         BD_MySQL.executer_update(requete);
     }
 }

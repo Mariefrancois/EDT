@@ -12,9 +12,10 @@ import java.util.ArrayList;
  *
  * @author Marie
  */
-public class Etudiant  {
+public class Etudiant implements Model_JDBC  {
     
-    private long id;
+
+    private int id;
     private int numeroEtudiant;
     private String prenom;
     private String nom;
@@ -24,105 +25,29 @@ public class Etudiant  {
     private int idPromotion;
     private int idSpecialite;
     
-    public Etudiant(long idEtudiant) throws SQLException{
+    public Etudiant(int num, String prenom, String nom, String email, String telephone, boolean notif, Promotion promo, Specialite spe){
+        this.numeroEtudiant = num;
+        this.prenom = prenom;
+        this.nom = nom;
+        this.email = email;
+        this.telephone = telephone;
+        this.notificationsActives = notif;
+        this.idPromotion = promo.getId();
+        this.idSpecialite = spe.getId();
+    }
+    
+    public Etudiant(int idEtudiant) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Etudiant WHERE id="+idEtudiant);
-        
-        int taille = BD_MySQL.taille_resultSet(rs);
-        switch(taille){
-            case 0:
-                // Etudiant inexistant;
-                break;
-            case 1:
-                rs.next();
-                this.id = rs.getLong("id");
-                this.numeroEtudiant = rs.getInt("numeroEtudiant");
-                this.prenom = rs.getString("prenom");
-                this.nom = rs.getString("nom");
-                this.email = rs.getString("email");
-                this.telephone = rs.getString("telephone");
-                this.notificationsActives = rs.getBoolean("notificationsActives");
-                this.idPromotion = rs.getInt("idPromotion");
-                this.idSpecialite = rs.getInt("idSpecialite");
-                break;
-            default:
-                // Plusieurs etudiant avec la meme ID;
-                break;
-        }    
-    }
-    
-    public Etudiant(int numeroEtudiant, String nom, String prenom, String email, String telephone, int idPromotion, int idSpecialite) throws SQLException {
-        String requete = "SELECT * FROM Etudiant WHERE "
-                + "numeroEtudiant="+numeroEtudiant+" AND "
-                + "prenom='"+prenom+"';";
-        ResultSet rs = BD_MySQL.executer_requete(requete);
-        int taille = BD_MySQL.taille_resultSet(rs);
-        switch(taille){
-            case 0:
-                // Etudiant inexistant;
-                break;
-            case 1:
-                rs.next();
-                this.id = rs.getLong("id");
-                this.numeroEtudiant = rs.getInt("numeroEtudiant");
-                this.prenom = rs.getString("prenom");
-                this.nom = rs.getString("nom");
-                this.email = rs.getString("email");
-                this.telephone = rs.getString("telephone");
-                this.notificationsActives = rs.getBoolean("notificationsActives");
-                this.idPromotion = rs.getInt("idPromotion");
-                this.idSpecialite = rs.getInt("idSpecialite");
-                rs.close();
-                break;
-            default:
-                // Plusieurs etudiant avec la meme ID;
-                break;
-        }   
-    }
-    
-    public static long ajouter_etudiant(int numeroEtudiant, String nom, String prenom, String email,String telephone, int idPromotion,int idSpecialite) throws SQLException{
-        String requete = ""
-                + "INSERT INTO `Etudiant` (`numeroEtudiant`, `nom`, `prenom`, `email`, `telephone`, `notificationsActives`, `idPromotion`, `idSpecialite`) VALUES "
-                + "(" + numeroEtudiant + ", '"
-                + nom + "','" + prenom + "', '"
-                + email + "','" + telephone
-                + "', 1, " + idPromotion + ", " + idSpecialite + ");";
-        BD_MySQL.executer_update(requete);
-        //creer un utilisateur
-        return new Etudiant(numeroEtudiant, nom, prenom, email, telephone, idPromotion, idSpecialite).getId();
-    }
-    public static void supprimer_etudiant(long id){
-            String requete = "DELETE FROM Etudiant WHERE id = " +id+ ";";
-            //supprimer un utilisateur
-            BD_MySQL.executer_update(requete);
-            
-    } 
-    
-    public static void modifier_etudiant(int idEtudiant, int numeroEtudiant, String nom, String prenom, String email,String telephone, int idPromotion,int idSpecialite){
-        String requete = "UPDATE Etudiant SET numeroEtudiant= "+ numeroEtudiant 
-                + ", nom= '"+ nom + "', prenom='" + prenom 
-                + "', email='"+ email + "', telephone='" + telephone
-                + "', notificationsActives=1, idPromotion=" + idPromotion 
-                + ", idSpecialite=" + idSpecialite + " WHERE id="+idEtudiant;
-        BD_MySQL.executer_update(requete);
-    }
-    
-    public static ArrayList<Long> liste_id_etudiants_promotion(int idPromotion) throws SQLException{
-        ArrayList<Long> liste_id_etudiants_promotion = new ArrayList();
-        String requete = "SELECT id FROM Etudiant WHERE idPromotion="+idPromotion+" ORDER BY nom, prenom;";
-        ResultSet rs = BD_MySQL.executer_requete(requete);
-        while(rs.next()){
-            liste_id_etudiants_promotion.add(rs.getLong("id"));
-        }
-        return liste_id_etudiants_promotion;
-    }
-    
-    public static ArrayList<Etudiant> liste_etudiants_promotion(int idPromotion) throws SQLException{
-        ArrayList<Etudiant> liste_etudiants_promotion = new ArrayList();
-        ArrayList<Long> liste_id_etudiants_promotion = Etudiant.liste_id_etudiants_promotion(idPromotion);
-        for (long l : liste_id_etudiants_promotion) {
-            liste_etudiants_promotion.add(new Etudiant(l));
-        }
-        return liste_etudiants_promotion;
+        rs.next();
+        this.id = rs.getInt("id");
+        this.numeroEtudiant = rs.getInt("numeroEtudiant");
+        this.prenom = rs.getString("prenom");
+        this.nom = rs.getString("nom");
+        this.email = rs.getString("email");
+        this.telephone = rs.getString("telephone");
+        this.notificationsActives = rs.getBoolean("notificationsActives");
+        this.idPromotion = rs.getInt("idPromotion");
+        this.idSpecialite = rs.getInt("idSpecialite");
     }
 
     public String getEmail() {
@@ -133,12 +58,8 @@ public class Etudiant  {
         this.email = email;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public int getIdPromotion() {
@@ -246,8 +167,8 @@ public class Etudiant  {
         hash = 97 * hash + (this.email != null ? this.email.hashCode() : 0);
         hash = 97 * hash + (this.telephone != null ? this.telephone.hashCode() : 0);
         hash = 97 * hash + (this.notificationsActives ? 1 : 0);
-        hash = 97 * hash + this.idPromotion;
-        hash = 97 * hash + this.idSpecialite;
+        hash = 97 * hash + (int) (this.idPromotion ^ (this.idPromotion >>> 32));
+        hash = 97 * hash + (int) (this.idSpecialite ^ (this.idSpecialite >>> 32));
         return hash;
     }
     
@@ -257,5 +178,21 @@ public class Etudiant  {
     public String toString(){
         return ""+this.id+" "+this.numeroEtudiant+" "+this.prenom+" "+this.nom + " " + this.email +
                 " "+this.telephone+" "+this.notificationsActives+" "+this.idPromotion+" "+this.idSpecialite;
+    }
+
+    @Override
+    public void insert() {
+        String values = this.numeroEtudiant+", "+this.nom+", "+this.prenom+", "+this.telephone+", "+this.email+", "+this.notificationsActives+", "+this.idPromotion+", "+this.idSpecialite;
+        BD_MySQL.executer_requete("INSERT INTO Etudiant (numeroEtudiant, nom, prenom, telephone, email, notificationsActives, idPromotion, idSpecialite) VALUES("+values+")");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

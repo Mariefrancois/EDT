@@ -12,8 +12,8 @@ import java.sql.SQLException;
  *
  * @author Marie
  */
-public class UE{
-    private long id;
+public class UE implements Model_JDBC {
+    private int id;
     private String nom;
     private String intitule;
     private int nbHeuresCours;
@@ -22,10 +22,8 @@ public class UE{
     private int ECTS;
     private int idPromotion;
     private int idIntervenant;
-
     
-    public UE(String nom,String intitule, int nbHeuresCours,int nbHeuresTD,int nbHeuresTP,int ECTS,int idPromotion,int idIntervenant){
-        this.id = 0;
+    public UE(String nom, String intitule, int nbHeuresCours, int nbHeuresTD, int nbHeuresTP, int ECTS){
         this.nom = nom;
         this.intitule = intitule;
         this.nbHeuresCours = nbHeuresCours;
@@ -35,11 +33,12 @@ public class UE{
         this.idPromotion = idPromotion;
         this.idIntervenant = idIntervenant;
     }
+ 
     
     public UE(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM UE WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.intitule = rs.getString("intitule");
         this.nbHeuresCours = rs.getInt("nbHeuresCours");
@@ -50,14 +49,13 @@ public class UE{
         this.idIntervenant = rs.getInt("idIntervenant");
     }
     
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    /**
+     * @return the nom
+     */
     public String getNom() {
         return nom;
     }
@@ -105,18 +103,38 @@ public class UE{
     public void setECTS(int ECTS) {
         this.ECTS = ECTS;
     }
-     public int getIdPromotion() {
+    
+    public int getIdPromotion() {
         return idPromotion;
     }
+    
     public void setIdPromotion(int idPromotion) {
         this.idPromotion = idPromotion;
     }
+    
     public int getIdIntervenant() {
         return idIntervenant;
     }
+    
     public void setIdIntervenant(int idIntervenant) {
         this.idIntervenant = idIntervenant;
     }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

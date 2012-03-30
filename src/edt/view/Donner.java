@@ -10,10 +10,14 @@
  */
 package edt.view;
 
+import edt.Classe.BD_MySQL;
+import edt.Classe.Etudiant;
 import edt.Frame.Ajouter_Etudiant;
 import edt.Frame.Ajouter_Intervenant;
 import edt.Frame.Ajouter_Salle;
 import edt.Frame.Ajouter_UE;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -145,7 +149,7 @@ public class Donner extends javax.swing.JPanel {
         }
     } 
     
-    public void frame_UE(){
+    public void frame_UE() throws SQLException{
     this.titre.setText("UE");
     this.ajouter.setText("Ajouter une UE");
     jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -155,10 +159,12 @@ public class Donner extends javax.swing.JPanel {
                 {null, null, null, null},
                 {null, null, null, null}
             },
+            
             new String [] {
                 "Nom", "Nb heure Cours", "Nb heure TP", "Nb heure TD"
             }
         ));
+    
 }
 public void frame_Intervenant(){
     this.titre.setText("Intervenant");
@@ -175,11 +181,15 @@ public void frame_Intervenant(){
             }
         ));
     
-}public void frame_Etudiant(){
+}
+public void frame_Etudiant() throws SQLException{
     this.titre.setText("Etudiant");
     this.ajouter.setText("Ajouter un Etudiant");
+   // ArrayList<Etudiant> list = Etudiant.liste_etudiants_promotion(1);
+    //int nb = BD_MySQL.nombre_etudiants(4);
+    
     jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Etudiant [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -190,7 +200,8 @@ public void frame_Intervenant(){
             }
         ));
     
-}public void frame_Salle(){
+}
+public void frame_Salle(){
     this.titre.setText("Salle");
     this.ajouter.setText("Ajouter une Salle");
     jTable1.setModel(new javax.swing.table.DefaultTableModel(

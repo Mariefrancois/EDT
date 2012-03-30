@@ -12,23 +12,23 @@ import java.sql.SQLException;
  *
  * @author Marie
  */
-public class Groupe_Administratif {
-    private Long id;
+public class Groupe_Administratif implements Model_JDBC {
+    private int id;
     private String nom;
+    
+    public Groupe_Administratif(String nom){
+        this.nom = nom;
+    }
     
     public Groupe_Administratif(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Groupe_Administratif WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**
@@ -43,6 +43,21 @@ public class Groupe_Administratif {
      */
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

@@ -11,15 +11,14 @@ import java.sql.Timestamp;
  *
  * @author Marie
  */
-public class Promotion {
-    private long id;
+public class Promotion implements Model_JDBC {
+    private int id;
     private String nom;
     private int annee;
     private Timestamp tsDebut;
     private Timestamp tsFin;
     
-    public Promotion(String nom, int annee,Timestamp tsDebut, Timestamp tsFin){
-        this.id = 0;
+    public Promotion(String nom, int annee, Timestamp tsDebut, Timestamp tsFin){
         this.nom = nom;
         this.annee = annee;
         this.tsDebut = tsDebut;
@@ -29,19 +28,15 @@ public class Promotion {
     public Promotion(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Promotion WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.annee = rs.getInt("annee");
         //this.tsDebut = rs.getString("tsDebut");
         //this.tsFin = rs.getString("tsFin");
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**
@@ -98,6 +93,21 @@ public class Promotion {
      */
     public void setTsFin(Timestamp tsFin) {
         this.tsFin = tsFin;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

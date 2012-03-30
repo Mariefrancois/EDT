@@ -12,8 +12,8 @@ import java.sql.SQLException;
  *
  * @author Marie
  */
-public class Intervenant {
-    private Long id;
+public class Intervenant implements Model_JDBC {
+    private int id;
     private String nom;
     private String prenom;
     private String email;
@@ -21,10 +21,19 @@ public class Intervenant {
     private String notificationsactives;
     private boolean actif;
     
+    public Intervenant(String nom, String prenom, String email, String telephone, String notif, boolean actif){
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.telephone = telephone;
+        this.notificationsactives = notif;
+        this.actif = actif;
+    }
+    
     public Intervenant(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Intervenant WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.prenom = rs.getString("prenom");
         this.email = rs.getString("email");
@@ -34,14 +43,13 @@ public class Intervenant {
     }
     
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    /**
+     * @return the nom
+     */
     public String getNom() {
         return nom;
     }
@@ -88,6 +96,21 @@ public class Intervenant {
 
     public void setActif(boolean actif) {
         this.actif = actif;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

@@ -13,8 +13,9 @@ import java.sql.SQLException;
  *
  * @author Marie
  */
-public class Cours {
-    private long id;
+public class Cours implements Model_JDBC {
+    private int id;
+    private String type;
     private Timestamp tsDebut;
     private Timestamp tsFin;
     private int idUE;
@@ -22,37 +23,42 @@ public class Cours {
     private int idIntervenant;
     private int idTypeCours;
     
-    
-    public Cours(Timestamp tsDebut, Timestamp tsFin,int idUE,int idSall,int idIntervenant,int idTypeCours){
-        this.id = 0;
+    public Cours(String type, Timestamp tsDebut, Timestamp tsFin){
+        this.type = type;
         this.tsDebut = tsDebut;
         this.tsFin = tsFin;
-        this.idUE = idUE;
-        this.idSall = idSall;
-        this.idIntervenant = idIntervenant;
-        this.idTypeCours = idTypeCours;
     }
+    
     public Cours(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Cours WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
-       // this.tsDebut = rs.getString("tsDebut");
-       // this.tsFin = rs.getString("tsFin");
-        this.idUE = rs.getInt("idUE");
-        this.idSall = rs.getInt("idSall");
-        this.idIntervenant = rs.getInt("idIntervenant");
-        this.idTypeCours = rs.getInt("idTypeCours");
-        
+        this.id = rs.getInt("id");
+        this.type = rs.getString("type");
+        //this.tsDebut = (Timestamp) rs.getString("tsDebut");
+        //this.tsFin = rs.getString("tsFin");
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
     }
 
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * @return the tsDebut
+     */
     public Timestamp getTsDebut() {
         return tsDebut;
     }
@@ -78,61 +84,21 @@ public class Cours {
         this.tsFin = tsFin;
     }
 
-    /**
-     * @return the idUE
-     */
-    public int getIdUE() {
-        return idUE;
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    /**
-     * @param idUE the idUE to set
-     */
-    public void setIdUE(int idUE) {
-        this.idUE = idUE;
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    /**
-     * @return the idSall
-     */
-    public int getIdSall() {
-        return idSall;
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    /**
-     * @param idSall the idSall to set
-     */
-    public void setIdSall(int idSall) {
-        this.idSall = idSall;
-    }
-
-    /**
-     * @return the idIntervenant
-     */
-    public int getIdIntervenant() {
-        return idIntervenant;
-    }
-
-    /**
-     * @param idIntervenant the idIntervenant to set
-     */
-    public void setIdIntervenant(int idIntervenant) {
-        this.idIntervenant = idIntervenant;
-    }
-
-    /**
-     * @return the idTypeCours
-     */
-    public int getIdTypeCours() {
-        return idTypeCours;
-    }
-
-    /**
-     * @param idTypeCours the idTypeCours to set
-     */
-    public void setIdTypeCours(int idTypeCours) {
-        this.idTypeCours = idTypeCours;
-    }
+    
      @Override
     public boolean equals(Object obj) {
         if (obj == null) {

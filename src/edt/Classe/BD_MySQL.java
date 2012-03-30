@@ -138,4 +138,14 @@ public class BD_MySQL {
         rs.beforeFirst();
         return taille;
     }
+    
+    public static int nombre_etudiants(int idPromotion) throws SQLException{
+        int nb;
+        String requete = "SELECT COUNT(id) AS nb FROM Etudiant WHERE idPromotion="+idPromotion+";";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        rs.next();
+        nb = rs.getInt("nb");
+        rs.close();
+        return nb;
+    }
 }

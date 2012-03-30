@@ -41,7 +41,7 @@ public class NewPromotion extends javax.swing.JFrame {
         valider = new javax.swing.JButton();
         annuler = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Nom");
         jLabel1.setName("jLabel1"); // NOI18N

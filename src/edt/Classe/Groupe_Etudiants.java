@@ -12,25 +12,26 @@ import java.sql.SQLException;
  *
  * @author Marie
  */
-public class Groupe_Etudiants {
-    private Long id;
+public class Groupe_Etudiants implements Model_JDBC {
+    private int id;
     private String nom;
     private String identifiant;
+    
+    public Groupe_Etudiants (String nom, String identifiant){
+        this.nom = nom;
+        this.identifiant = identifiant;
+    }
 
     public Groupe_Etudiants(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Groupe_Etudiants WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.identifiant = rs.getString("identifiant");
     }
     
-    public Long getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**
@@ -59,6 +60,21 @@ public class Groupe_Etudiants {
      */
     public void setIdentifiant(String identifiant) {
         this.identifiant = identifiant;
+    }
+
+    @Override
+    public void insert() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }
