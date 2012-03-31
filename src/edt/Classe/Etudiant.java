@@ -24,19 +24,19 @@ public class Etudiant implements Model_JDBC  {
     private boolean notificationsActives;
     private int idPromotion;
     private int idSpecialite;
-    
-    public Etudiant(int num, String prenom, String nom, String email, String telephone, boolean notif, Promotion promo, Specialite spe){
+    //c'est plus simple pour moi de me promener avec les int promo et int spe que avec les objets
+    public Etudiant(int num, String prenom, String nom, String email, String telephone, boolean notif, int promo, int spe){
         this.numeroEtudiant = num;
         this.prenom = prenom;
         this.nom = nom;
         this.email = email;
         this.telephone = telephone;
         this.notificationsActives = notif;
-        this.idPromotion = promo.getId();
-        this.idSpecialite = spe.getId();
+        this.idPromotion = promo;//.getId();
+        this.idSpecialite = spe;//.getId();
     }
     
-    public Etudiant(int idEtudiant) throws SQLException{
+    public Etudiant(long idEtudiant) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Etudiant WHERE id="+idEtudiant);
         rs.next();
         this.id = rs.getInt("id");
@@ -179,11 +179,11 @@ public class Etudiant implements Model_JDBC  {
         return ""+this.id+" "+this.numeroEtudiant+" "+this.prenom+" "+this.nom + " " + this.email +
                 " "+this.telephone+" "+this.notificationsActives+" "+this.idPromotion+" "+this.idSpecialite;
     }
-
+    
     @Override
     public void insert() {
         String values = this.numeroEtudiant+", "+this.nom+", "+this.prenom+", "+this.telephone+", "+this.email+", "+this.notificationsActives+", "+this.idPromotion+", "+this.idSpecialite;
-        BD_MySQL.executer_requete("INSERT INTO Etudiant (numeroEtudiant, nom, prenom, telephone, email, notificationsActives, idPromotion, idSpecialite) VALUES("+values+")");
+        BD_MySQL.executer_update("INSERT INTO Etudiant (numeroEtudiant, nom, prenom, telephone, email, notificationsActives, idPromotion, idSpecialite) VALUES("+values+")");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package edt.Classe;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -145,7 +146,42 @@ public class BD_MySQL {
         ResultSet rs = BD_MySQL.executer_requete(requete);
         rs.next();
         nb = rs.getInt("nb");
-        rs.close();
         return nb;
+    }
+    public static ArrayList<Long> liste_id_etudiants_promotion(int idPromotion) throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Long> liste_id_etudiants_promotion = new ArrayList();
+        String requete = "SELECT id FROM Etudiant WHERE idPromotion="+idPromotion+" ORDER BY nom, prenom, email, telephone, notificationsActives, idPromotion ,idSpecialite;";
+        ResultSet rs = executer_requete(requete);
+        while(rs.next()){
+            liste_id_etudiants_promotion.add(rs.getLong("id"));
+        }
+        return liste_id_etudiants_promotion;
+    }
+    public static ArrayList<String> liste_nom_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<String> liste_etudiants_promotion = new ArrayList();
+        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
+        for (long l : liste_id_etudiants_promotion) {
+            Etudiant etu = new Etudiant(l);
+            liste_etudiants_promotion.add(etu.getNom());
+        }
+        return liste_etudiants_promotion;
+    }
+    public static ArrayList<String> liste_prenom_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<String> liste_etudiants_promotion = new ArrayList();
+        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
+        for (long l : liste_id_etudiants_promotion) {
+            Etudiant etu = new Etudiant(l);
+            liste_etudiants_promotion.add(etu.getPrenom());
+        }
+        return liste_etudiants_promotion;
+    }
+    public static ArrayList<Etudiant> liste_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<Etudiant> liste_etudiants_promotion = new ArrayList();
+        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
+        for (long l : liste_id_etudiants_promotion) {
+            liste_etudiants_promotion.add(new Etudiant(l));
+        }
+        return liste_etudiants_promotion;
     }
 }

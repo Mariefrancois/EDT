@@ -55,6 +55,8 @@ public class EDTApp extends SingleFrameApplication {
           //  Options.ajouter_options("boo","0");
             int nb = BD_MySQL.nombre_etudiants(4);
             System.out.println(nb);
+            ArrayList<String> list = BD_MySQL.liste_nom_etudiants_promotion(4);
+            System.out.println(list);
         
         BD_MySQL.close();
     }

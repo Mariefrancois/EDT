@@ -4,9 +4,13 @@
 
 package edt;
 
+import edt.Classe.BD_MySQL;
 import edt.EDTAboutBox;
 import edt.EDTApp;
 import edt.Frame.NewPromotion;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -316,31 +320,52 @@ public class EDTView extends FrameView {
         // TODO add your handling code here:
         switch(etat){
             case Debut:
-                this.donner1.frame_Etudiant();
+        try {
+            this.donner1.frame_Etudiant();
+        } catch (SQLException ex) {
+            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = etat.Etudiant;
                 break;
             case UE:
-                this.donner1.frame_Etudiant();
+        try {
+            this.donner1.frame_Etudiant();
+        } catch (SQLException ex) {
+            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = etat.Etudiant;
                 break;
             case Intervenant:
-                this.donner1.frame_Etudiant();
+        try {
+            this.donner1.frame_Etudiant();
+        } catch (SQLException ex) {
+            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = etat.Etudiant;
                 break;
             case Salle:
-                this.donner1.frame_Etudiant();
+        try {
+            this.donner1.frame_Etudiant();
+        } catch (SQLException ex) {
+            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = etat.Etudiant;
                 break;
             case Etudiant:
-                this.donner1.frame_Etudiant();
+        try {
+            this.donner1.frame_Etudiant();
+        } catch (SQLException ex) {
+            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = etat.Etudiant;

@@ -10,24 +10,29 @@
  */
 package edt.view;
 
+import com.sun.java.swing.plaf.windows.resources.windows;
 import edt.Classe.BD_MySQL;
 import edt.Classe.Etudiant;
-import edt.Frame.Ajouter_Etudiant;
 import edt.Frame.Ajouter_Intervenant;
 import edt.Frame.Ajouter_Salle;
-import edt.Frame.Ajouter_UE;
+import edt.Frame.New_Etudiant;
+import edt.Frame.New_UE;
+import java.awt.Frame;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Marie
  */
 public class Donner extends javax.swing.JPanel {
-    private Ajouter_UE ue;
+    private New_UE ued;
     private Ajouter_Intervenant inter;
     private Ajouter_Salle salle;
-    private Ajouter_Etudiant etu;
+    private New_Etudiant etud;
     /** Creates new form Donner */
     public Donner() {
         initComponents();
@@ -127,8 +132,9 @@ public class Donner extends javax.swing.JPanel {
         // TODO add your handling code here:
         switch(etat){
             case UE:
-                ue = new Ajouter_UE();
-                ue.setVisible(true);
+                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
+                
+                ued.setVisible(true);
                 etat = etat.UE;
                 break;
             case Intervenant:
@@ -142,14 +148,15 @@ public class Donner extends javax.swing.JPanel {
                 etat = etat.Salle;
                 break;
             case Etudiant:
-                etu = new Ajouter_Etudiant();
-                etu.setVisible(true);
+                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true);
+                
+                etud.setVisible(true);
                 etat = etat.Etudiant;
                 break;
         }
     } 
     
-    public void frame_UE() throws SQLException{
+    public void frame_UE(){
     this.titre.setText("UE");
     this.ajouter.setText("Ajouter une UE");
     jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -182,23 +189,34 @@ public void frame_Intervenant(){
         ));
     
 }
-public void frame_Etudiant() throws SQLException{
+public String prenom_bis() throws SQLException{
+
+            ArrayList<Etudiant> list = BD_MySQL.liste_etudiants_promotion(4);
+            System.out.println(list.get(1).getPrenom());
+            return list.get(1).getPrenom();
+}
+public void frame_Etudiant() throws SQLException {
     this.titre.setText("Etudiant");
     this.ajouter.setText("Ajouter un Etudiant");
-   // ArrayList<Etudiant> list = Etudiant.liste_etudiants_promotion(1);
-    //int nb = BD_MySQL.nombre_etudiants(4);
-    
-    jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Etudiant [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nom", "Prénom", "Email", "N° Etudiant","UE"
-            }
-        ));
+    DefaultTableModel modell = new DefaultTableModel(
+            new Object [4][5] ,
+            new String [] {});	
+    jTable1.setModel(modell);
+    List listenom = BD_MySQL.liste_nom_etudiants_promotion(4); 
+    modell.addColumn("Nom", listenom.toArray()); 
+    List listeprenom = BD_MySQL.liste_prenom_etudiants_promotion(4); 
+    modell.addColumn("Prénom", listeprenom.toArray()); 
+}
+public void refresh() throws SQLException{
+    this.jTable1.doLayout();
+    DefaultTableModel modell = new DefaultTableModel(
+            new Object [4][5] ,
+            new String [] {});	
+    jTable1.setModel(modell);
+    List listenom = BD_MySQL.liste_nom_etudiants_promotion(4); 
+    modell.addColumn("Nom", listenom.toArray()); 
+    List listeprenom = BD_MySQL.liste_prenom_etudiants_promotion(4); 
+    modell.addColumn("Prénom", listeprenom.toArray()); 
     
 }
 public void frame_Salle(){
@@ -217,6 +235,8 @@ public void frame_Salle(){
         ));
     
 }
+
+    
  private enum Etat{
         UE,
         Salle,
