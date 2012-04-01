@@ -14,13 +14,18 @@ import edt.Classe.BD_MySQL;
 import edt.Classe.Etudiant;
 import edt.view.Donner;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Marie
  */
 public class New_Etudiant extends javax.swing.JDialog {
-    
+    private Donner donner;
+    private long id;
+    private Etudiant etudiant;
     /** Creates new form New_Etudiant */
     public New_Etudiant(){
         super();
@@ -37,6 +42,20 @@ public class New_Etudiant extends javax.swing.JDialog {
         initComponents();
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     }
+    public New_Etudiant(java.awt.Frame parent,String titre, boolean modal,Donner donner) {
+        super(parent,titre, modal);
+        initComponents();
+        this.donner = donner;
+        this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
+    }
+    public New_Etudiant(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id) {
+        super(parent,titre, modal);
+        initComponents();
+        init(etat,id);
+        this.donner = donner;
+        this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -240,23 +259,52 @@ public class New_Etudiant extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+private void refresh(){
+    this.prenom.setText("");
+    this.nom.setText("");
+    this.email.setText("");
+    this.nEtudiant.setText("");
+    this.telephone.setText("");
+    try {
+        this.donner.refresh();
+     } catch (SQLException ex) {
+         Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+private Etudiant creer(){
+    Etudiant etu = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),"'"+this.prenom.getText()+"'","'"+this.nom.getText()+"'","'"+this.email.getText()+"'","'"+this.telephone.getText()+"'",true,4,1);
+    return etu;            
+}
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
         BD_MySQL.init();
-        Etudiant etu = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),"'"+this.prenom.getText()+"'","'"+this.nom.getText()+"'","'"+this.email.getText()+"'",this.telephone.getText(),true,4,1);
-        etu.insert();
-        this.prenom.setText("");
-        this.nom.setText("");
-        this.email.setText("");
-        this.nEtudiant.setText("");
-        this.telephone.setText("");
-        
+        Etudiant etu = null;
+        switch(etat){
+            case Etudiant:
+                etu = creer();
+                etu.insert();
+                refresh();
+                break;
+            case Etudiant1:
+                etu = creer();
+                etu.update();
+                this.dispose();
+                break;
+                
+        }
     }//GEN-LAST:event_validerActionPerformed
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        switch(etat){
+            case Etudiant:
+                this.dispose();
+                break;
+            case Etudiant1:
+                this.dispose();
+                break;
+                
+        }
     }//GEN-LAST:event_annulerActionPerformed
 
     /**
@@ -327,4 +375,24 @@ public class New_Etudiant extends javax.swing.JDialog {
     private javax.swing.JTextField telephone;
     private javax.swing.JButton valider;
     // End of variables declaration//GEN-END:variables
+
+private enum Etat{
+        Etudiant,
+        Etudiant1,
+            
+                
+    }
+    private Etat etat;
+    public void init(String n,long id){
+        if(n.equals("Etudiant"))
+            etat = Etat.Etudiant;
+        else if (n.equals("Etudiant1")){
+            etat = Etat.Etudiant1;
+            try {
+                this.etudiant = new Etudiant(id);
+            } catch (SQLException ex) {
+                Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

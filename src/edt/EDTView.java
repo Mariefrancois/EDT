@@ -328,7 +328,7 @@ public class EDTView extends FrameView {
         
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
-                etat = etat.Etudiant;
+                etat = Etat.Etudiant;
                 break;
             case UE:
         try {
@@ -338,7 +338,7 @@ public class EDTView extends FrameView {
         }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
-                etat = etat.Etudiant;
+                etat = Etat.Etudiant;
                 break;
             case Intervenant:
         try {
@@ -348,7 +348,7 @@ public class EDTView extends FrameView {
         }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
-                etat = etat.Etudiant;
+                etat = Etat.Etudiant;
                 break;
             case Salle:
         try {
@@ -358,7 +358,7 @@ public class EDTView extends FrameView {
         }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
-                etat = etat.Etudiant;
+                etat = Etat.Etudiant;
                 break;
             case Etudiant:
         try {
@@ -368,7 +368,7 @@ public class EDTView extends FrameView {
         }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
-                etat = etat.Etudiant;
+                etat = Etat.Etudiant;
                 break;
         }
     }//GEN-LAST:event_EtudiantsActionPerformed
@@ -380,31 +380,31 @@ public class EDTView extends FrameView {
                 this.donner1.frame_UE();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
-                etat = etat.UE;
+                etat = Etat.UE;
                 break;
             case UE:
                 this.donner1.frame_UE();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
-                etat = etat.UE;
+                etat = Etat.UE;
                 break;
             case Intervenant:
                 this.donner1.frame_UE();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
-                etat = etat.UE;
+                etat = Etat.UE;
                 break;
             case Salle:
                 this.donner1.frame_UE();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
-                etat = etat.UE;
+                etat = Etat.UE;
                 break;
             case Etudiant:
                 this.donner1.frame_UE();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
-                etat = etat.UE;
+                etat = Etat.UE;
                 break;
         }
     }//GEN-LAST:event_UEActionPerformed
@@ -417,31 +417,31 @@ public class EDTView extends FrameView {
                 donner1.frame_Intervenant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Intervenant");
-                etat = etat.Intervenant;
+                etat = Etat.Intervenant;
                 break;
             case UE:
                 donner1.frame_Intervenant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Intervenant");
-                etat = etat.Intervenant;
+                etat = Etat.Intervenant;
                 break;
             case Intervenant:
                 donner1.frame_Intervenant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Intervenant");
-                etat = etat.Intervenant;
+                etat = Etat.Intervenant;
                 break;
             case Salle:
                 donner1.frame_Intervenant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Intervenant");
-                etat = etat.Intervenant;
+                etat = Etat.Intervenant;
                 break;
             case Etudiant:
                 donner1.frame_Intervenant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Intervenant");
-                etat = etat.Intervenant;
+                etat = Etat.Intervenant;
                 break;
         }
     }//GEN-LAST:event_IntervenantsActionPerformed
@@ -453,31 +453,31 @@ public class EDTView extends FrameView {
                 donner1.frame_Salle();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Salle");
-                etat = etat.Salle;
+                etat = Etat.Salle;
                 break;
             case UE:
                 donner1.frame_Salle();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Salle");
-                etat = etat.Salle;
+                etat = Etat.Salle;
                 break;
             case Intervenant:
                 donner1.frame_Salle();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Salle");
-                etat = etat.Salle;
+                etat = Etat.Salle;
                 break;
             case Salle:
                 donner1.frame_Salle();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Salle");
-                etat = etat.Salle;
+                etat = Etat.Salle;
                 break;
             case Etudiant:
                 donner1.frame_Salle();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Salle");
-                etat = etat.Salle;
+                etat = Etat.Salle;
                 break;
         }
     }//GEN-LAST:event_SallesActionPerformed
@@ -488,27 +488,27 @@ public class EDTView extends FrameView {
             case Debut:
                 newPromo = new NewPromotion();
                 newPromo.setVisible(true);
-                etat = etat.Debut;
+                etat = Etat.Debut;
                 break;
             case UE:
                 newPromo = new NewPromotion();
                 newPromo.setVisible(true);
-                etat = etat.Debut;
+                etat = Etat.Debut;
                 break;
             case Intervenant:
                 newPromo = new NewPromotion();
                 newPromo.setVisible(true);
-                etat = etat.Debut;
+                etat = Etat.Debut;
                 break;
             case Salle:
                 newPromo = new NewPromotion();
                 newPromo.setVisible(true);
-                etat = etat.Debut;
+                etat = Etat.Debut;
                 break;
             case Etudiant:
                 newPromo = new NewPromotion();
                 newPromo.setVisible(true);
-                etat = etat.Debut;
+                etat = Etat.Debut;
                 break;
         }
     }//GEN-LAST:event_ajouter_promotionActionPerformed
