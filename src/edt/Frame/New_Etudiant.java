@@ -10,7 +10,7 @@
  */
 package edt.Frame;
 
-import edt.Classe.BD_MySQL;
+import edt.mysql.BD_MySQL;
 import edt.Classe.Etudiant;
 import edt.view.Donner;
 import java.awt.Toolkit;
@@ -245,7 +245,7 @@ public class New_Etudiant extends javax.swing.JDialog {
         // TODO add your handling code here:
         BD_MySQL.init();
         Etudiant etu = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),"'"+this.prenom.getText()+"'","'"+this.nom.getText()+"'","'"+this.email.getText()+"'",this.telephone.getText(),true,4,1);
-        etu.insert();
+        etu.save();
         this.prenom.setText("");
         this.nom.setText("");
         this.email.setText("");

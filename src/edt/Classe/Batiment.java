@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -18,6 +19,7 @@ public class Batiment implements Model_JDBC {
     private double lon;
     
     public Batiment (String nom, double lat, double lon){
+        this.id = 0;
         this.nom = nom;
         this.lat = lat;
         this.lon = lon;
@@ -79,18 +81,30 @@ public class Batiment implements Model_JDBC {
     }
 
     @Override
-    public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
+
+    @Override
+    public void save() {
+        String requete;
+        
+        if(this.id == 0){
+            requete = "INSERT INTO Batiment (nom, lat, lon) "
+                    + "VALUES ('"+this.nom
+                    +"', '"+this.lat
+                    +"', '"+this.lon+"')";
+        }else{
+            requete = "UPDATE Batiment SET "
+                    + "nom='"+this.nom
+                    +"', lat='"+this.lat
+                    +"', lon='"+this.lon
+                    +"' WHERE id='"+this.id+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
+    }
+    
+    
     
 }

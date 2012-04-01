@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -19,6 +20,7 @@ public class Promotion implements Model_JDBC {
     private Timestamp tsFin;
     
     public Promotion(String nom, int annee, Timestamp tsDebut, Timestamp tsFin){
+        this.id = 0;
         this.nom = nom;
         this.annee = annee;
         this.tsDebut = tsDebut;
@@ -96,13 +98,26 @@ public class Promotion implements Model_JDBC {
     }
 
     @Override
-    public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void save() {
+         String requete;
+        
+        if(this.id == 0){
+            requete = "INSERT INTO Promotion (nom, annee, tsDebut, tsFin) "
+                    + "VALUES ('"+this.nom
+                    +"', '"+this.annee
+                    +"', '"+this.tsDebut
+                    +"', '"+this.tsFin
+                    +"')";
+        }else{
+            requete = "UPDATE Promotion SET "
+                    + "nom='"+this.nom
+                    +"', annee='"+this.annee
+                    +"', tsDebut='"+this.tsDebut
+                    +"', tsFin='"+this.tsFin
+                    +"' WHERE id='"+this.id+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
 
     @Override

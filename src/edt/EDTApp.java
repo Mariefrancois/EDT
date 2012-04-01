@@ -4,9 +4,9 @@
 
 package edt;
 
-import edt.Classe.BD_MySQL;
+import edt.mysql.BD_MySQL;
+import edt.Classe.Batiment;
 import edt.Classe.Etudiant;
-import edt.Classe.Options;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -52,11 +52,7 @@ public class EDTApp extends SingleFrameApplication {
         
         BD_MySQL.init();
         
-          //  Options.ajouter_options("boo","0");
-            int nb = BD_MySQL.nombre_etudiants(4);
-            System.out.println(nb);
-            ArrayList<String> list = BD_MySQL.liste_nom_etudiants_promotion(4);
-            System.out.println(list);
+        //traitement
         
         BD_MySQL.close();
     }

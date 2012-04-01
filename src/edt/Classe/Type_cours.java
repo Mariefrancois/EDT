@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,6 +18,7 @@ public class Type_cours implements Model_JDBC {
     private String nom;
     
     public Type_cours(String nom){
+        this.id = 0;
         this.nom = nom;
     }
     
@@ -46,18 +48,26 @@ public class Type_cours implements Model_JDBC {
     }
 
     @Override
-    public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void save() {
+        String requete;
+        
+        if(this.id == 0){
+            requete = "INSERT INTO Type_cours (nom) "
+                    + "VALUES ('"+this.nom
+                    +"')";
+        }else{
+            requete = "UPDATE Type_cours SET "
+                    + "nom='"+this.nom
+                    +"' WHERE id='"+this.id+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
 
     @Override
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
     
 }

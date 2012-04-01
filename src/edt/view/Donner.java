@@ -11,7 +11,7 @@
 package edt.view;
 
 import com.sun.java.swing.plaf.windows.resources.windows;
-import edt.Classe.BD_MySQL;
+import edt.mysql.BD_MySQL;
 import edt.Classe.Etudiant;
 import edt.Frame.Ajouter_Intervenant;
 import edt.Frame.Ajouter_Salle;

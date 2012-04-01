@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,6 +18,7 @@ public class Option implements Model_JDBC{
     private String valeur;
     
     public Option(String nom, String valeur){
+        this.id = 0;
         this.nom = nom;
         this.valeur = valeur;
     }
@@ -27,21 +29,6 @@ public class Option implements Model_JDBC{
         this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.valeur = rs.getString("valeur");
-    }
-
-    @Override
-    public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /**
@@ -77,6 +64,30 @@ public class Option implements Model_JDBC{
      */
     public void setValeur(String valeur) {
         this.valeur = valeur;
+    }
+
+    @Override
+    public void save() {
+        String requete;
+        
+        if(this.id == 0){
+            requete = "INSERT INTO Option (nom, valeur) "
+                    + "VALUES ('"+this.nom
+                    +"', '"+this.valeur
+                    +"')";
+        }else{
+            requete = "UPDATE Option SET "
+                    + "nom='"+this.nom
+                    +"', valeur='"+this.valeur
+                    +"' WHERE id='"+this.id+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     

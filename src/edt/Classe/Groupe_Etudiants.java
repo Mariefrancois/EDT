@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -18,6 +19,7 @@ public class Groupe_Etudiants implements Model_JDBC {
     private String identifiant;
     
     public Groupe_Etudiants (String nom, String identifiant){
+        this.id = 0;
         this.nom = nom;
         this.identifiant = identifiant;
     }
@@ -63,13 +65,22 @@ public class Groupe_Etudiants implements Model_JDBC {
     }
 
     @Override
-    public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void save() {
+        String requete;
+        
+        if(this.id == 0){
+            requete = "INSERT INTO Groupe_Etudiants (nom, identifiant) "
+                    + "VALUES ('"+this.nom
+                    +"', '"+this.identifiant
+                    +"')";
+        }else{
+            requete = "UPDATE Groupe_Etudiants SET "
+                    + "nom='"+this.nom
+                    +"', identifiant='"+this.identifiant
+                    +"' WHERE id='"+this.id+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
 
     @Override

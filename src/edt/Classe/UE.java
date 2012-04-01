@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -24,6 +25,7 @@ public class UE implements Model_JDBC {
     private int idIntervenant;
     
     public UE(String nom, String intitule, int nbHeuresCours, int nbHeuresTD, int nbHeuresTP, int ECTS){
+        this.id = 0;
         this.nom = nom;
         this.intitule = intitule;
         this.nbHeuresCours = nbHeuresCours;
@@ -119,21 +121,6 @@ public class UE implements Model_JDBC {
     public void setIdIntervenant(int idIntervenant) {
         this.idIntervenant = idIntervenant;
     }
-
-    @Override
-    public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
     
     @Override
     public boolean equals(Object obj) {
@@ -187,5 +174,41 @@ public class UE implements Model_JDBC {
         hash = 97 * hash + this.idPromotion;
         hash = 97 * hash + this.idIntervenant;
         return hash;
+    }
+
+    @Override
+    public void save() {
+         String requete;
+        
+        if(this.getId() == 0){
+            requete = "INSERT INTO UE (nom, intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS, idPromotion, idIntervenant) "
+                    + "VALUES ('"+this.nom
+                    +"', '"+this.intitule
+                    +"', '"+this.nbHeuresCours
+                    +"', '"+this.nbHeuresTD
+                    +"', '"+this.nbHeuresTP
+                    +"', '"+this.ECTS
+                    +"', '"+this.idPromotion
+                    +"', '"+this.idIntervenant
+                    +"')";
+        }else{
+            requete = "UPDATE UE SET "
+                    + "nom='"+this.nom
+                    +"', intitule='"+this.intitule
+                    +"', nbHeuresCours='"+this.nbHeuresCours
+                    +"', nbHeuresTD='"+this.nbHeuresTD
+                    +"', nbHeuresTP='"+this.nbHeuresTP
+                    +"', ECTS='"+this.ECTS
+                    +"', idPromotion='"+this.idPromotion
+                    +"', idIntervenant='"+this.idIntervenant
+                    +"' WHERE id='"+this.getId()+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

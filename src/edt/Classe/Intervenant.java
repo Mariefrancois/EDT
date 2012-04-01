@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -22,6 +23,7 @@ public class Intervenant implements Model_JDBC {
     private boolean actif;
     
     public Intervenant(String nom, String prenom, String email, String telephone, String notif, boolean actif){
+        this.id = 0;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
@@ -99,13 +101,30 @@ public class Intervenant implements Model_JDBC {
     }
 
     @Override
-    public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void save() {
+        String requete;
+        
+        if(this.getId() == 0){
+            requete = "INSERT INTO Intervenant (nom, prenom, email, telephone, notificationsactives, actif) "
+                    + "VALUES ('"+this.nom
+                    +"', '"+this.prenom
+                    +"', '"+this.email
+                    +"', '"+this.telephone
+                    +"', '"+this.notificationsactives
+                    +"', '"+this.actif
+                    +"')";
+        }else{
+            requete = "UPDATE Intervenant SET "
+                    + "nom='"+this.nom
+                    +"', prenom='"+this.prenom
+                    +"', email='"+this.email
+                    +"', telephone='"+this.telephone
+                    +"', notificationsactives='"+this.notificationsactives
+                    +"', idTypeCours='"+this.actif
+                    +"' WHERE id='"+this.getId()+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
 
     @Override

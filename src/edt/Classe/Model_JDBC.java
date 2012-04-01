@@ -10,8 +10,7 @@ package edt.Classe;
  */
 public interface Model_JDBC {
     
-    public void insert();
-    public void update();
+    public void save();
     public void delete();
     
 }

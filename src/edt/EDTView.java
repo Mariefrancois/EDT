@@ -4,7 +4,7 @@
 
 package edt;
 
-import edt.Classe.BD_MySQL;
+import edt.mysql.BD_MySQL;
 import edt.EDTAboutBox;
 import edt.EDTApp;
 import edt.Frame.NewPromotion;

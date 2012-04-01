@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,8 +25,10 @@ public class Etudiant implements Model_JDBC  {
     private boolean notificationsActives;
     private int idPromotion;
     private int idSpecialite;
+    
     //c'est plus simple pour moi de me promener avec les int promo et int spe que avec les objets
     public Etudiant(int num, String prenom, String nom, String email, String telephone, boolean notif, int promo, int spe){
+        this.id = 0;
         this.numeroEtudiant = num;
         this.prenom = prenom;
         this.nom = nom;
@@ -179,20 +182,41 @@ public class Etudiant implements Model_JDBC  {
         return ""+this.id+" "+this.numeroEtudiant+" "+this.prenom+" "+this.nom + " " + this.email +
                 " "+this.telephone+" "+this.notificationsActives+" "+this.idPromotion+" "+this.idSpecialite;
     }
-    
-    @Override
-    public void insert() {
-        String values = this.numeroEtudiant+", "+this.nom+", "+this.prenom+", "+this.telephone+", "+this.email+", "+this.notificationsActives+", "+this.idPromotion+", "+this.idSpecialite;
-        BD_MySQL.executer_update("INSERT INTO Etudiant (numeroEtudiant, nom, prenom, telephone, email, notificationsActives, idPromotion, idSpecialite) VALUES("+values+")");
-    }
 
     @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void save() {
+        String requete;
+        
+        if(this.getId() == 0){
+            requete = "INSERT INTO Etudiant (numeroEtudiant, prenom, nom, email, telephone, notificationsActives, idPromotion, idSpecialite) "
+                    + "VALUES ('"+this.numeroEtudiant
+                    +"', '"+this.prenom
+                    +"', '"+this.nom
+                    +"', '"+this.email
+                    +"', '"+this.telephone
+                    +"', '"+this.notificationsActives
+                    +"', '"+this.idPromotion
+                    +"', '"+this.idSpecialite
+                    +"')";
+        }else{
+            requete = "UPDATE Etudiant SET "
+                    + "numeroEtudiant='"+this.numeroEtudiant
+                    +"', prenom='"+this.prenom
+                    +"', nom='"+this.nom
+                    +"', email='"+this.email
+                    +"', telephone='"+this.telephone
+                    +"', notificationsActives='"+this.notificationsActives
+                    +"', idPromotion='"+this.idPromotion
+                    +"', idSpecialite='"+this.idSpecialite
+                    +"' WHERE id='"+this.getId()+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
 
     @Override
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+  
 }

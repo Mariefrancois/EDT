@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,7 +18,8 @@ public class Specialite implements Model_JDBC {
     private String nom;
     private String intitule;
     
-    public Specialite(){
+    public Specialite(String nom, String intitule){
+        this.id = 0;
         this.nom = nom;
         this.intitule = intitule;
     }
@@ -64,13 +66,22 @@ public class Specialite implements Model_JDBC {
     }
 
     @Override
-    public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void save() {
+        String requete;
+        
+        if(this.id == 0){
+            requete = "INSERT INTO Specialite (nom, intitule) "
+                    + "VALUES ('"+this.nom
+                    +"', '"+this.intitule
+                    +"')";
+        }else{
+            requete = "UPDATE Specialite SET "
+                    + "nom='"+this.nom
+                    +"', intitule='"+this.intitule
+                    +"' WHERE id='"+this.id+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
 
     @Override

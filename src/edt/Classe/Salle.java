@@ -4,6 +4,7 @@
  */
 package edt.Classe;
 
+import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -24,11 +25,6 @@ public class Salle implements Model_JDBC {
         this.nom = nom;
         this.capacite = capacite;
         this.idBatiment = idBatiment;
-    }
-    
-    public Salle (String nom, int capacite){
-        this.nom= nom;
-        this.capacite = capacite;
     }
     
     public Salle(int id) throws SQLException{
@@ -76,22 +72,6 @@ public class Salle implements Model_JDBC {
     public void setIdBatiment(int idBatiment) {
         this.idBatiment = idBatiment;
     }
-
-
-    @Override
-    public void insert() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
     
      @Override
     public boolean equals(Object obj) {
@@ -125,5 +105,31 @@ public class Salle implements Model_JDBC {
         hash = 97 * hash + this.capacite;
         hash = 97 * hash + this.getIdBatiment();
         return hash;
+    }
+
+    @Override
+    public void save() {
+        String requete;
+        
+        if(this.id == 0){
+            requete = "INSERT INTO Salle (nom, capacite, idBatiment) "
+                    + "VALUES ('"+this.nom
+                    +"', '"+this.capacite
+                    +"', '"+this.idBatiment
+                    +"')";
+        }else{
+            requete = "UPDATE Salle SET "
+                    + "nom='"+this.nom
+                    +"', capacite='"+this.capacite
+                    +"', idBatiment='"+this.idBatiment
+                    +"' WHERE id='"+this.id+"'";
+        }
+        
+        this.id = BD_MySQL.executer_update(requete);
+    }
+
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
