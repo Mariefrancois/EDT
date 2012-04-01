@@ -21,6 +21,8 @@ import java.awt.Frame;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -66,15 +68,30 @@ public class Donner extends javax.swing.JPanel {
 
         
         jTable1.setName("jTable1"); // NOI18N
+		jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         modifier.setText(resourceMap.getString("modifier.text")); // NOI18N
         modifier.setName("modifier"); // NOI18N
         modifier.setEnabled(false);
+		modifier.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifierActionPerformed(evt);
+            }
+        });
 
         supprimer.setText(resourceMap.getString("supprimer.text")); // NOI18N
         supprimer.setName("supprimer"); // NOI18N
         supprimer.setEnabled(false);
+		supprimer.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supprimerActionPerformed(evt);
+            }
+        });
 
         ajouter.setText(resourceMap.getString("ajouter.text")); // NOI18N
         ajouter.setName("ajouter"); // NOI18N
@@ -116,7 +133,7 @@ public class Donner extends javax.swing.JPanel {
                         .addComponent(supprimer)
                         .addGap(18, 18, 18)
                         .addComponent(ajouter))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -128,34 +145,152 @@ public class Donner extends javax.swing.JPanel {
     private javax.swing.JButton supprimer;
     private javax.swing.JLabel titre;
     // End of variables declaration//GEN-END:variables
+	
+ private void modifierActionPerformed(java.awt.event.ActionEvent evt) { 
+        switch(etat){
+            case UE:
+                //interdit
+                break;
+            case UE1:
+                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
+                ued.setVisible(true);
+                etat = Etat.UE;
+                break;
+            case Intervenant:
+                inter = new Ajouter_Intervenant();
+                inter.setVisible(true);
+                etat = Etat.Intervenant;
+                break;
+            case Salle:
+                salle = new Ajouter_Salle();
+                salle.setVisible(true);
+                etat = Etat.Salle;
+                break;
+            case Etudiant:
+                //interdit
+                break;
+            case Etudiant1:
+                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
+                
+                etud.setVisible(true);
+                etat = Etat.Etudiant;
+                break;
+        }
+ }
+ 
+ private void supprimerActionPerformed(java.awt.event.ActionEvent evt) { 
+        switch(etat){
+            case UE:
+                //interdit
+                break;
+            case UE1:
+                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
+                ued.setVisible(true);
+                etat = Etat.UE;
+                break;
+            case Intervenant:
+                inter = new Ajouter_Intervenant();
+                inter.setVisible(true);
+                etat = Etat.Intervenant;
+                break;
+            case Salle:
+                salle = new Ajouter_Salle();
+                salle.setVisible(true);
+                etat = Etat.Salle;
+                break;
+            case Etudiant:
+                //interdit
+                break;
+            case Etudiant1:
+                Etudiant etu = null;
+                try {
+                   etu = new Etudiant(4);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                etu.delete();
+                etat = Etat.Etudiant;
+                break;
+        }
+ }
  private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {                                   
         // TODO add your handling code here:
         switch(etat){
             case UE:
                 ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
-                
                 ued.setVisible(true);
                 etat = etat.UE;
+                break;
+            case UE1:
+                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
+                ued.setVisible(true);
+                etat = Etat.UE;
                 break;
             case Intervenant:
                 inter = new Ajouter_Intervenant();
                 inter.setVisible(true);
-                etat = etat.Intervenant;
+                etat = Etat.Intervenant;
                 break;
             case Salle:
                 salle = new Ajouter_Salle();
                 salle.setVisible(true);
-                etat = etat.Salle;
+                etat = Etat.Salle;
                 break;
             case Etudiant:
-                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true);
+                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
                 
                 etud.setVisible(true);
-                etat = etat.Etudiant;
+                etat = Etat.Etudiant;
+                break;
+            case Etudiant1:
+                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
+                
+                etud.setVisible(true);
+                etat = Etat.Etudiant;
                 break;
         }
     } 
-    
+   public void active_sup_modif(){
+       this.supprimer.setEnabled(true);
+       this.modifier.setEnabled(true);
+   }
+    public void desactive_sup_modif(){
+       this.supprimer.setEnabled(false);
+       this.modifier.setEnabled(false);
+   }
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        System.out.println("coucou");
+        int ligne = jTable1.getSelectedRow();//Si tu veut la cellule selectionnée, sinon une autre valeur
+        int colonne = jTable1.getSelectedColumn();//Si tu veut la cellule selectionnée, sinon une autre valeur
+        Object cellule = jTable1.getValueAt(ligne,colonne);
+        System.out.println(cellule);
+	switch(etat){
+            case UE:
+                //récupére l'id de l'etudiant selectionner
+                active_sup_modif();
+                break;
+            case UE1:
+                active_sup_modif();
+                break;
+            case Intervenant:
+                active_sup_modif();
+                
+                break;
+            case Salle:
+                active_sup_modif();
+                
+                break;
+            case Etudiant:
+                active_sup_modif();
+                
+                break;
+            case Etudiant1:
+                active_sup_modif();
+                
+                break;
+        }
+    }
     public void frame_UE(){
     this.titre.setText("UE");
     this.ajouter.setText("Ajouter une UE");
@@ -239,8 +374,10 @@ public void frame_Salle(){
     
  private enum Etat{
         UE,
+        UE1,
         Salle,
         Etudiant,
+        Etudiant1,
         Intervenant
             
                 
@@ -248,12 +385,12 @@ public void frame_Salle(){
     private Etat etat;
     public void setEtat(String n){
         if(n.equals("UE"))
-            etat = etat.UE;
+            etat = Etat.UE;
         else if(n.equals("Salle"))
-            etat = etat.Salle;
+            etat = Etat.Salle;
         else if(n.equals("Intervenant"))
-            etat = etat.Intervenant;
+            etat = Etat.Intervenant;
         else if(n.equals("Etudiant"))
-            etat = etat.Etudiant;
+            etat = Etat.Etudiant;
     }
 }
