@@ -29,8 +29,26 @@ import javax.swing.JFrame;
  */
 public class EDTView extends FrameView {
     private NewPromotion newPromo;
+    private int id_promo;
     public void init(){
+        BD_MySQL.init();
+        int nb = 0;
+        try {
+            nb = BD_MySQL.nombre_Promotion();
+        } catch (SQLException ex) {
+            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(nb);
+        if(nb == 1)
+            desactiveBouton();
         etat = etat.Debut;
+        
+    }
+    public void desactiveBouton(){
+        this.UE.setEnabled(false);
+        this.Etudiants.setEnabled(false);
+        this.Intervenants.setEnabled(false);
+        this.Salles.setEnabled(false);
     }
     public EDTView(SingleFrameApplication app) {
         super(app);
@@ -320,52 +338,52 @@ public class EDTView extends FrameView {
         // TODO add your handling code here:
         switch(etat){
             case Debut:
-        try {
-            this.donner1.frame_Etudiant();
-        } catch (SQLException ex) {
-            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                try {
+                    this.donner1.frame_Etudiant();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+                }
         
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = Etat.Etudiant;
                 break;
             case UE:
-        try {
-            this.donner1.frame_Etudiant();
-        } catch (SQLException ex) {
-            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                try {
+                    this.donner1.frame_Etudiant();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = Etat.Etudiant;
                 break;
             case Intervenant:
-        try {
-            this.donner1.frame_Etudiant();
-        } catch (SQLException ex) {
-            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                try {
+                    this.donner1.frame_Etudiant();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = Etat.Etudiant;
                 break;
             case Salle:
-        try {
-            this.donner1.frame_Etudiant();
-        } catch (SQLException ex) {
-            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                try {
+                    this.donner1.frame_Etudiant();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = Etat.Etudiant;
                 break;
             case Etudiant:
-        try {
-            this.donner1.frame_Etudiant();
-        } catch (SQLException ex) {
-            Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                try {
+                    this.donner1.frame_Etudiant();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 etat = Etat.Etudiant;
@@ -486,27 +504,27 @@ public class EDTView extends FrameView {
         // TODO add your handling code here:
         switch(etat){
             case Debut:
-                newPromo = new NewPromotion();
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
                 etat = Etat.Debut;
                 break;
             case UE:
-                newPromo = new NewPromotion();
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
                 etat = Etat.Debut;
                 break;
             case Intervenant:
-                newPromo = new NewPromotion();
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
                 etat = Etat.Debut;
                 break;
             case Salle:
-                newPromo = new NewPromotion();
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
                 etat = Etat.Debut;
                 break;
             case Etudiant:
-                newPromo = new NewPromotion();
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
                 etat = Etat.Debut;
                 break;

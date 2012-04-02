@@ -99,15 +99,16 @@ public class Promotion implements Model_JDBC {
 
     @Override
     public void save() {
-         String requete;
+         String requete;                                      
+        BD_MySQL.init();
         
         if(this.id == 0){
             requete = "INSERT INTO Promotion (nom, annee, tsDebut, tsFin) "
                     + "VALUES ('"+this.nom
-                    +"', '"+this.annee
-                    +"', '"+this.tsDebut
+                    +"', "+this.annee
+                    +", '"+this.tsDebut
                     +"', '"+this.tsFin
-                    +"')";
+                    +"');";
         }else{
             requete = "UPDATE Promotion SET "
                     + "nom='"+this.nom

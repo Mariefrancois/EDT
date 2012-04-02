@@ -30,7 +30,7 @@ public class New_Etudiant extends javax.swing.JDialog {
     public New_Etudiant(){
         super();
         initComponents();
-        this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().height-this.getHeight(), Toolkit.getDefaultToolkit().getScreenSize().height-this.getHeight());
+        this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     }
     public New_Etudiant(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -271,20 +271,30 @@ private void refresh(){
          Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
-private Etudiant creer(){
-    Etudiant etu = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),"'"+this.prenom.getText()+"'","'"+this.nom.getText()+"'","'"+this.email.getText()+"'","'"+this.telephone.getText()+"'",true,4,1);
-    return etu;            
+private void creer(){
+        this.etudiant.setNom(this.nom.getText());
+        this.etudiant.setPrenom(this.prenom.getText());
+        this.etudiant.setTelephone(this.telephone.getText());
+        this.etudiant.setEmail(this.email.getText());
 }
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
-        // TODO add your handling code here:
         BD_MySQL.init();
-        Etudiant etu = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),"'"+this.prenom.getText()+"'","'"+this.nom.getText()+"'","'"+this.email.getText()+"'",this.telephone.getText(),true,4,1);
-        etu.save();
-        this.prenom.setText("");
-        this.nom.setText("");
-        this.email.setText("");
-        this.nEtudiant.setText("");
-        this.telephone.setText("");
+        switch(etat){
+            case Etudiant:
+                this.etudiant = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),this.prenom.getText(),this.nom.getText(),this.email.getText(),this.telephone.getText(),true,4,1);
+                this.etudiant.save();
+                refresh();
+                this.etudiant = null;
+                break;
+            case Etudiant1:
+                creer();
+                this.etudiant.save();
+                refresh();
+                this.dispose();
+                break;
+                
+        }
+        
     }//GEN-LAST:event_validerActionPerformed
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
@@ -386,6 +396,18 @@ private enum Etat{
             } catch (SQLException ex) {
                 Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        if(id != 0){
+            try {
+                this.etudiant = new Etudiant(id);
+            } catch (SQLException ex) {
+                Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.nom.setText(etudiant.getNom());
+            this.prenom.setText(etudiant.getPrenom());
+            this.email.setText(etudiant.getEmail());
+            this.telephone.setText(etudiant.getTelephone());
+            this.nEtudiant.setText(String.valueOf(etudiant.getNumeroEtudiant()));
         }
     }
 }

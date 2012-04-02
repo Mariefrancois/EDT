@@ -51,9 +51,8 @@ public class EDTApp extends SingleFrameApplication {
         launch(EDTApp.class, args);
         
         BD_MySQL.init();
-        
         //traitement
-        
+               
         BD_MySQL.close();
     }
 }

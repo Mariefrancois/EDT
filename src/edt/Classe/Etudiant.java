@@ -186,29 +186,27 @@ public class Etudiant implements Model_JDBC  {
     @Override
     public void save() {
         String requete;
-        
         if(this.getId() == 0){
             requete = "INSERT INTO Etudiant (numeroEtudiant, prenom, nom, email, telephone, notificationsActives, idPromotion, idSpecialite) "
-                    + "VALUES ('"+this.numeroEtudiant
-                    +"', '"+this.prenom
+                    + "VALUES ("+this.numeroEtudiant
+                    +", '"+this.prenom
                     +"', '"+this.nom
                     +"', '"+this.email
                     +"', '"+this.telephone
-                    +"', '"+this.notificationsActives
-                    +"', '"+this.idPromotion
-                    +"', '"+this.idSpecialite
-                    +"')";
+                    +"', "+this.notificationsActives
+                    +", "+this.idPromotion
+                    +", "+this.idSpecialite
+                    +")";
         }else{
             requete = "UPDATE Etudiant SET "
-                    + "numeroEtudiant='"+this.numeroEtudiant
-                    +"', prenom='"+this.prenom
+                    +" prenom='"+this.prenom
                     +"', nom='"+this.nom
                     +"', email='"+this.email
                     +"', telephone='"+this.telephone
-                    +"', notificationsActives='"+this.notificationsActives
-                    +"', idPromotion='"+this.idPromotion
-                    +"', idSpecialite='"+this.idSpecialite
-                    +"' WHERE id='"+this.getId()+"'";
+                    +"', notificationsActives="+this.notificationsActives
+                    +", idPromotion="+this.idPromotion
+                    +", idSpecialite="+this.idSpecialite
+                    +" WHERE id="+this.getId()+";";
         }
         
         this.id = BD_MySQL.executer_update(requete);

@@ -6,19 +6,32 @@
 /*
  * NewPromotion.java
  *
- * Created on 28 mars 2012, 19:44:57
+ * Created on 2 avr. 2012, 15:58:51
  */
 package edt.Frame;
+
+import edt.Classe.Promotion;
+import java.awt.Toolkit;
+import java.sql.Timestamp;
 
 /**
  *
  * @author Marie
  */
-public class NewPromotion extends javax.swing.JFrame {
-
+public class NewPromotion extends javax.swing.JDialog {
+    private Promotion promo;
     /** Creates new form NewPromotion */
-    public NewPromotion() {
+    public NewPromotion(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
+    
+    }
+    public NewPromotion(java.awt.Frame parent, String titre, boolean modal) {
+        super(parent, titre, modal);
+        initComponents();
+        this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
+    
     }
 
     /** This method is called from within the constructor to
@@ -31,23 +44,23 @@ public class NewPromotion extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        iLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         nom = new javax.swing.JTextField();
         annee = new javax.swing.JTextField();
-        date_debut = new javax.swing.JTextField();
-        date_fin = new javax.swing.JTextField();
+        d_debut = new javax.swing.JTextField();
+        d_fin = new javax.swing.JTextField();
         valider = new javax.swing.JButton();
         annuler = new javax.swing.JButton();
 
-        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Nom");
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jLabel2.setText("Annee");
-        jLabel2.setName("jLabel2"); // NOI18N
+        iLabel2.setText("Année");
+        iLabel2.setName("iLabel2"); // NOI18N
 
         jLabel3.setText("Date de début");
         jLabel3.setName("jLabel3"); // NOI18N
@@ -59,11 +72,11 @@ public class NewPromotion extends javax.swing.JFrame {
 
         annee.setName("annee"); // NOI18N
 
-        date_debut.setText("jj/mm");
-        date_debut.setName("date_debut"); // NOI18N
+        d_debut.setText("jj/mm/aaaa");
+        d_debut.setName("d_debut"); // NOI18N
 
-        date_fin.setText("jj/mm");
-        date_fin.setName("date_fin"); // NOI18N
+        d_fin.setText("jj/mm/aaaa");
+        d_fin.setName("d_fin"); // NOI18N
 
         valider.setText("Valider");
         valider.setName("valider"); // NOI18N
@@ -86,56 +99,51 @@ public class NewPromotion extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(annee)
-                            .addComponent(nom, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(date_fin)
-                            .addComponent(date_debut, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))))
-                .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addComponent(annuler)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(valider)
-                .addGap(30, 30, 30))
+                            .addComponent(d_fin)
+                            .addComponent(d_debut, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                            .addComponent(annee)
+                            .addComponent(nom, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(annuler)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(valider)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(annee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(date_debut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(annee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(date_fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(d_debut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(d_fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(valider)
                     .addComponent(annuler))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -144,13 +152,24 @@ public class NewPromotion extends javax.swing.JFrame {
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
         
+        String date = this.d_debut.getText();
+        int an = Integer.parseInt(date.substring(6, 10));
+        int mois = Integer.parseInt(date.substring(3, 5));
+        int jour = Integer.parseInt(date.substring(0, 2));
+        Timestamp tsDebut = new Timestamp(an-1900,mois-1,jour,0,0,0,0);
+        date = this.d_debut.getText();
+        an = Integer.parseInt(date.substring(6, 10));
+        mois = Integer.parseInt(date.substring(3, 5));
+        jour = Integer.parseInt(date.substring(0, 2));
+       Timestamp tsfin = new Timestamp(an,mois,jour,0,0,0,0);
+        this.promo = new Promotion(this.nom.getText(), Integer.parseInt(this.annee.getText()), tsDebut, tsfin);
+        this.promo.save();
         this.dispose();
     }//GEN-LAST:event_validerActionPerformed
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         // TODO add your handling code here:
-        
-        this.dispose();
+                this.dispose();
     }//GEN-LAST:event_annulerActionPerformed
 
     /**
@@ -180,21 +199,29 @@ public class NewPromotion extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new NewPromotion().setVisible(true);
+                NewPromotion dialog = new NewPromotion(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField annee;
     private javax.swing.JButton annuler;
-    private javax.swing.JTextField date_debut;
-    private javax.swing.JTextField date_fin;
+    private javax.swing.JTextField d_debut;
+    private javax.swing.JTextField d_fin;
+    private javax.swing.JLabel iLabel2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField nom;

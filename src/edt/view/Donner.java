@@ -35,10 +35,11 @@ public class Donner extends javax.swing.JPanel {
     private Ajouter_Intervenant inter;
     private Ajouter_Salle salle;
     private New_Etudiant etud;
+    private long id;
     /** Creates new form Donner */
     public Donner() {
         initComponents();
-        
+        this.id = 0;
         
     }
 
@@ -170,7 +171,7 @@ public class Donner extends javax.swing.JPanel {
                 //interdit
                 break;
             case Etudiant1:
-                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
+                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant1",id);
                 
                 etud.setVisible(true);
                 etat = Etat.Etudiant;
@@ -210,6 +211,7 @@ public class Donner extends javax.swing.JPanel {
                 }
                 etu.delete();
                 etat = Etat.Etudiant;
+                
                 break;
         }
  }
@@ -219,7 +221,7 @@ public class Donner extends javax.swing.JPanel {
             case UE:
                 ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
                 ued.setVisible(true);
-                etat = etat.UE;
+                etat = Etat.UE;
                 break;
             case UE1:
                 ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
@@ -243,7 +245,7 @@ public class Donner extends javax.swing.JPanel {
                 etat = Etat.Etudiant;
                 break;
             case Etudiant1:
-                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
+                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant1",0);
                 
                 etud.setVisible(true);
                 etat = Etat.Etudiant;
@@ -258,11 +260,12 @@ public class Donner extends javax.swing.JPanel {
        this.supprimer.setEnabled(false);
        this.modifier.setEnabled(false);
    }
+   
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         System.out.println("coucou");
-        int ligne = jTable1.getSelectedRow();//Si tu veut la cellule selectionnée, sinon une autre valeur
-        int colonne = jTable1.getSelectedColumn();//Si tu veut la cellule selectionnée, sinon une autre valeur
+        int ligne = jTable1.getSelectedRow();
+        int colonne = jTable1.getSelectedColumn();
         Object cellule = jTable1.getValueAt(ligne,colonne);
         System.out.println(cellule);
 	switch(etat){
@@ -282,10 +285,15 @@ public class Donner extends javax.swing.JPanel {
                 
                 break;
             case Etudiant:
-                active_sup_modif();
+                id = id_Etudiant();
+                System.out.println(id);
                 
+                active_sup_modif();
+                etat = Etat.Etudiant1;
                 break;
             case Etudiant1:
+                id = id_Etudiant();
+                System.out.println(id);
                 active_sup_modif();
                 
                 break;
@@ -341,6 +349,12 @@ public void frame_Etudiant() throws SQLException {
     modell.addColumn("Nom", listenom.toArray()); 
     List listeprenom = BD_MySQL.liste_prenom_etudiants_promotion(4); 
     modell.addColumn("Prénom", listeprenom.toArray()); 
+    List listeNEtudiant = BD_MySQL.liste_nEtudiant_etudiants_promotion(4) ;
+    modell.addColumn("N°Etudiant", listeNEtudiant.toArray()); 
+    List listeTelephone = BD_MySQL.liste_telephone_etudiants_promotion(4);
+    modell.addColumn("Téléphone", listeTelephone.toArray()); 
+    List listeEmail = BD_MySQL.liste_email_etudiants_promotion(4);
+    modell.addColumn("Email", listeEmail.toArray()); 
 }
 public void refresh() throws SQLException{
     this.jTable1.doLayout();
@@ -352,6 +366,12 @@ public void refresh() throws SQLException{
     modell.addColumn("Nom", listenom.toArray()); 
     List listeprenom = BD_MySQL.liste_prenom_etudiants_promotion(4); 
     modell.addColumn("Prénom", listeprenom.toArray()); 
+    List listeNEtudiant = BD_MySQL.liste_nEtudiant_etudiants_promotion(4) ;
+    modell.addColumn("N°Etudiant", listeNEtudiant.toArray()); 
+    List listeTelephone = BD_MySQL.liste_telephone_etudiants_promotion(4);
+    modell.addColumn("Téléphone", listeTelephone.toArray()); 
+    List listeEmail = BD_MySQL.liste_email_etudiants_promotion(4);
+    modell.addColumn("Email", listeEmail.toArray()); 
     
 }
 public void frame_Salle(){
@@ -370,6 +390,23 @@ public void frame_Salle(){
         ));
     
 }
+
+    private long id_Etudiant() {
+        long id = 0;
+        System.out.println("coucou");
+        int ligne = jTable1.getSelectedRow();
+        int colonne = jTable1.getSelectedColumn();
+        Object cellule = jTable1.getValueAt(ligne,colonne);
+        int netudiant = Integer.parseInt((jTable1.getValueAt(ligne,2)).toString());
+        String nom = (jTable1.getValueAt(ligne,0)).toString();
+        String prenom = (jTable1.getValueAt(ligne,1)).toString();
+        try {
+            id = BD_MySQL.id_etudiants_promotion(netudiant,nom,prenom,4);
+        } catch (SQLException ex) {
+            Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
 
     
  private enum Etat{

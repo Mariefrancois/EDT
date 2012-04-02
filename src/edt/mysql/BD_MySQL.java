@@ -17,8 +17,8 @@ public class BD_MySQL implements APIMain {
 
     static String serveur_BD = "127.0.0.1";
     static String nom_BD = "UPS_EDT";
-    static String utilisateur_BD = "root";
-    static String motDePasse_BD = "rose";
+    static String utilisateur_BD = "marie";
+    static String motDePasse_BD = "jeremythebest";
 
     static String classForName = "com.mysql.jdbc.Driver";
     static String connectionUrl = 
@@ -162,6 +162,14 @@ public class BD_MySQL implements APIMain {
         nb = rs.getInt("nb");
         return nb;
     }
+    public static int nombre_Promotion() throws SQLException{
+        int nb;
+        String requete = "SELECT COUNT(id) AS nb FROM Promotion ;";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        rs.next();
+        nb = rs.getInt("nb");
+        return nb;
+    }
     public static ArrayList<Long> liste_id_etudiants_promotion(int idPromotion) throws SQLException{
         BD_MySQL.init();
         ArrayList<Long> liste_id_etudiants_promotion = new ArrayList();
@@ -172,12 +180,46 @@ public class BD_MySQL implements APIMain {
         }
         return liste_id_etudiants_promotion;
     }
+    public static long id_etudiants_promotion(int numeroEtudiant, String nom, String prenom, int idPromotion) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM Etudiant WHERE  numeroEtudiant="+numeroEtudiant+" AND nom='"+nom+"' AND prenom='"+prenom+"' AND idPromotion="+idPromotion+";";
+        ResultSet rs = executer_requete(requete);
+        rs.next();
+        return rs.getLong("id");
+    }
     public static ArrayList<String> liste_nom_etudiants_promotion(int idPromotion) throws SQLException{
         ArrayList<String> liste_etudiants_promotion = new ArrayList();
         ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
         for (long l : liste_id_etudiants_promotion) {
             Etudiant etu = new Etudiant(l);
             liste_etudiants_promotion.add(etu.getNom());
+        }
+        return liste_etudiants_promotion;
+    }
+    public static ArrayList<Integer> liste_nEtudiant_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<Integer> liste_etudiants_promotion = new ArrayList();
+        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
+        for (long l : liste_id_etudiants_promotion) {
+            Etudiant etu = new Etudiant(l);
+            liste_etudiants_promotion.add(etu.getNumeroEtudiant());
+        }
+        return liste_etudiants_promotion;
+    }
+    public static ArrayList<String> liste_email_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<String> liste_etudiants_promotion = new ArrayList();
+        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
+        for (long l : liste_id_etudiants_promotion) {
+            Etudiant etu = new Etudiant(l);
+            liste_etudiants_promotion.add(etu.getEmail());
+        }
+        return liste_etudiants_promotion;
+    }
+    public static ArrayList<String> liste_telephone_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<String> liste_etudiants_promotion = new ArrayList();
+        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
+        for (long l : liste_id_etudiants_promotion) {
+            Etudiant etu = new Etudiant(l);
+            liste_etudiants_promotion.add(etu.getTelephone());
         }
         return liste_etudiants_promotion;
     }
