@@ -265,6 +265,9 @@ private void refresh(){
     this.email.setText("");
     this.nEtudiant.setText("");
     this.telephone.setText("");
+    System.out.println("cocou");
+    this.donner.desactive_sup_modif();
+    this.etudiant = null;
     try {
         this.donner.refresh();
      } catch (SQLException ex) {
@@ -284,7 +287,7 @@ private void creer(){
                 this.etudiant = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),this.prenom.getText(),this.nom.getText(),this.email.getText(),this.telephone.getText(),true,4,1);
                 this.etudiant.save();
                 refresh();
-                this.etudiant = null;
+                etat = Etat.Etudiant;
                 break;
             case Etudiant1:
                 creer();
@@ -302,9 +305,11 @@ private void creer(){
         switch(etat){
             case Etudiant:
                 this.dispose();
+                this.donner.desactive_sup_modif();
                 break;
             case Etudiant1:
                 this.dispose();
+                this.donner.desactive_sup_modif();
                 break;
                 
         }
@@ -379,11 +384,9 @@ private void creer(){
     private javax.swing.JButton valider;
     // End of variables declaration//GEN-END:variables
 
-private enum Etat{
+    private enum Etat{
         Etudiant,
-        Etudiant1,
-            
-                
+        Etudiant1
     }
     private Etat etat;
     public void init(String n,long id){
@@ -391,13 +394,6 @@ private enum Etat{
             etat = Etat.Etudiant;
         else if (n.equals("Etudiant1")){
             etat = Etat.Etudiant1;
-            try {
-                this.etudiant = new Etudiant(id);
-            } catch (SQLException ex) {
-                Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if(id != 0){
             try {
                 this.etudiant = new Etudiant(id);
             } catch (SQLException ex) {

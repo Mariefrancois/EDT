@@ -1,6 +1,7 @@
 package edt.mysql;
 
 import edt.Classe.Etudiant;
+import edt.Classe.Promotion;
 import edt.sma_interface.APIMain;
 import java.sql.*;
 import java.util.ArrayList;
@@ -180,57 +181,31 @@ public class BD_MySQL implements APIMain {
         }
         return liste_id_etudiants_promotion;
     }
+    public static ArrayList<Long> liste_id_promotion() throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Long> liste_id_etudiants_promotion = new ArrayList();
+        String requete = "SELECT id FROM Promotion ORDER BY nom, annee, tsDebut, tsFin;";
+        ResultSet rs = executer_requete(requete);
+        while(rs.next()){
+            liste_id_etudiants_promotion.add(rs.getLong("id"));
+        }
+        return liste_id_etudiants_promotion;
+    }
+    public static ArrayList<String> liste_nom_promotion() throws SQLException{
+        ArrayList<String> liste_promotion = new ArrayList();
+        ArrayList<Long> liste_id_promotion = liste_id_promotion();
+        for (long l : liste_id_promotion) {
+            Promotion promo = new Promotion(l);
+            liste_promotion.add(promo.getNom());
+        }
+        return liste_promotion;
+    }
     public static long id_etudiants_promotion(int numeroEtudiant, String nom, String prenom, int idPromotion) throws SQLException{
         BD_MySQL.init();
         String requete = "SELECT id FROM Etudiant WHERE  numeroEtudiant="+numeroEtudiant+" AND nom='"+nom+"' AND prenom='"+prenom+"' AND idPromotion="+idPromotion+";";
         ResultSet rs = executer_requete(requete);
         rs.next();
         return rs.getLong("id");
-    }
-    public static ArrayList<String> liste_nom_etudiants_promotion(int idPromotion) throws SQLException{
-        ArrayList<String> liste_etudiants_promotion = new ArrayList();
-        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
-        for (long l : liste_id_etudiants_promotion) {
-            Etudiant etu = new Etudiant(l);
-            liste_etudiants_promotion.add(etu.getNom());
-        }
-        return liste_etudiants_promotion;
-    }
-    public static ArrayList<Integer> liste_nEtudiant_etudiants_promotion(int idPromotion) throws SQLException{
-        ArrayList<Integer> liste_etudiants_promotion = new ArrayList();
-        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
-        for (long l : liste_id_etudiants_promotion) {
-            Etudiant etu = new Etudiant(l);
-            liste_etudiants_promotion.add(etu.getNumeroEtudiant());
-        }
-        return liste_etudiants_promotion;
-    }
-    public static ArrayList<String> liste_email_etudiants_promotion(int idPromotion) throws SQLException{
-        ArrayList<String> liste_etudiants_promotion = new ArrayList();
-        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
-        for (long l : liste_id_etudiants_promotion) {
-            Etudiant etu = new Etudiant(l);
-            liste_etudiants_promotion.add(etu.getEmail());
-        }
-        return liste_etudiants_promotion;
-    }
-    public static ArrayList<String> liste_telephone_etudiants_promotion(int idPromotion) throws SQLException{
-        ArrayList<String> liste_etudiants_promotion = new ArrayList();
-        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
-        for (long l : liste_id_etudiants_promotion) {
-            Etudiant etu = new Etudiant(l);
-            liste_etudiants_promotion.add(etu.getTelephone());
-        }
-        return liste_etudiants_promotion;
-    }
-    public static ArrayList<String> liste_prenom_etudiants_promotion(int idPromotion) throws SQLException{
-        ArrayList<String> liste_etudiants_promotion = new ArrayList();
-        ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
-        for (long l : liste_id_etudiants_promotion) {
-            Etudiant etu = new Etudiant(l);
-            liste_etudiants_promotion.add(etu.getPrenom());
-        }
-        return liste_etudiants_promotion;
     }
     public static ArrayList<Etudiant> liste_etudiants_promotion(int idPromotion) throws SQLException{
         ArrayList<Etudiant> liste_etudiants_promotion = new ArrayList();

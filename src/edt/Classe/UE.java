@@ -14,17 +14,17 @@ import java.sql.SQLException;
  * @author Marie
  */
 public class UE implements Model_JDBC {
-    private int id;
+    private long id;
     private String nom;
     private String intitule;
     private int nbHeuresCours;
     private int nbHeuresTD;
     private int nbHeuresTP;
     private int ECTS;
-    private int idPromotion;
+    private long idPromotion;
     private int idIntervenant;
     
-    public UE(String nom, String intitule, int nbHeuresCours, int nbHeuresTD, int nbHeuresTP, int ECTS){
+    public UE(String nom, String intitule, int nbHeuresCours, int nbHeuresTD, int nbHeuresTP, int ECTS, long idPromotion){
         this.id = 0;
         this.nom = nom;
         this.intitule = intitule;
@@ -33,11 +33,11 @@ public class UE implements Model_JDBC {
         this.nbHeuresTP = nbHeuresTP;
         this.ECTS = ECTS;
         this.idPromotion = idPromotion;
-        this.idIntervenant = idIntervenant;
+        this.idIntervenant = 1;
     }
  
     
-    public UE(int id) throws SQLException{
+    public UE(long id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM UE WHERE id="+id);
         rs.next();
         this.id = rs.getInt("id");
@@ -51,7 +51,7 @@ public class UE implements Model_JDBC {
         this.idIntervenant = rs.getInt("idIntervenant");
     }
     
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -106,7 +106,7 @@ public class UE implements Model_JDBC {
         this.ECTS = ECTS;
     }
     
-    public int getIdPromotion() {
+    public long getIdPromotion() {
         return idPromotion;
     }
     
@@ -171,7 +171,7 @@ public class UE implements Model_JDBC {
         hash = 97 * hash + this.nbHeuresTD;
         hash = 97 * hash + this.nbHeuresTP;
         hash = 97 * hash + this.ECTS;
-        hash = 97 * hash + this.idPromotion;
+        hash = (int) (97 * hash + this.idPromotion);
         hash = 97 * hash + this.idIntervenant;
         return hash;
     }
@@ -181,16 +181,16 @@ public class UE implements Model_JDBC {
          String requete;
         
         if(this.getId() == 0){
-            requete = "INSERT INTO UE (nom, intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS, idPromotion, idIntervenant) "
+            requete = "INSERT INTO UE (nom, intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS, idResponsable, idPromotion) "
                     + "VALUES ('"+this.nom
                     +"', '"+this.intitule
-                    +"', '"+this.nbHeuresCours
-                    +"', '"+this.nbHeuresTD
-                    +"', '"+this.nbHeuresTP
-                    +"', '"+this.ECTS
-                    +"', '"+this.idPromotion
-                    +"', '"+this.idIntervenant
-                    +"')";
+                    +"', "+this.nbHeuresCours
+                    +", "+this.nbHeuresTD
+                    +", "+this.nbHeuresTP
+                    +", "+this.ECTS
+                    +", "+this.idIntervenant
+                    +", "+this.idPromotion
+                    +");";
         }else{
             requete = "UPDATE UE SET "
                     + "nom='"+this.nom

@@ -13,6 +13,7 @@ package edt.view;
 import com.sun.java.swing.plaf.windows.resources.windows;
 import edt.mysql.BD_MySQL;
 import edt.Classe.Etudiant;
+import edt.Classe.Promotion;
 import edt.Frame.Ajouter_Intervenant;
 import edt.Frame.Ajouter_Salle;
 import edt.Frame.New_Etudiant;
@@ -36,6 +37,7 @@ public class Donner extends javax.swing.JPanel {
     private Ajouter_Salle salle;
     private New_Etudiant etud;
     private long id;
+    private ArrayList<Etudiant> list_etu;
     /** Creates new form Donner */
     public Donner() {
         initComponents();
@@ -153,7 +155,7 @@ public class Donner extends javax.swing.JPanel {
                 //interdit
                 break;
             case UE1:
-                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
+                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE1",id);
                 ued.setVisible(true);
                 etat = Etat.UE;
                 break;
@@ -219,12 +221,12 @@ public class Donner extends javax.swing.JPanel {
         // TODO add your handling code here:
         switch(etat){
             case UE:
-                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
+                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0);
                 ued.setVisible(true);
                 etat = Etat.UE;
                 break;
             case UE1:
-                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true);
+                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0);
                 ued.setVisible(true);
                 etat = Etat.UE;
                 break;
@@ -240,13 +242,11 @@ public class Donner extends javax.swing.JPanel {
                 break;
             case Etudiant:
                 etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
-                
                 etud.setVisible(true);
                 etat = Etat.Etudiant;
                 break;
             case Etudiant1:
-                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant1",0);
-                
+                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
                 etud.setVisible(true);
                 etat = Etat.Etudiant;
                 break;
@@ -287,7 +287,6 @@ public class Donner extends javax.swing.JPanel {
             case Etudiant:
                 id = id_Etudiant();
                 System.out.println(id);
-                
                 active_sup_modif();
                 etat = Etat.Etudiant1;
                 break;
@@ -332,11 +331,40 @@ public void frame_Intervenant(){
         ));
     
 }
-public String prenom_bis() throws SQLException{
-
-            ArrayList<Etudiant> list = BD_MySQL.liste_etudiants_promotion(4);
-            System.out.println(list.get(1).getPrenom());
-            return list.get(1).getPrenom();
+public ArrayList<String> list_nom_etudiant(ArrayList<Etudiant> liste_etu){
+     ArrayList<String> liste_etudiants_promotion = new ArrayList();
+     for (Etudiant l : liste_etu) {
+            liste_etudiants_promotion.add(l.getNom());
+        }
+     return liste_etudiants_promotion;
+}
+public ArrayList<String> list_prenom_etudiant(ArrayList<Etudiant> liste_etu){
+     ArrayList<String> liste_etudiants_promotion = new ArrayList();
+     for (Etudiant l : liste_etu) {
+            liste_etudiants_promotion.add(l.getPrenom());
+        }
+     return liste_etudiants_promotion;
+}
+public ArrayList<Integer> list_NEtudiant_etudiant(ArrayList<Etudiant> liste_etu){
+     ArrayList<Integer> liste_etudiants_promotion = new ArrayList();
+     for (Etudiant l : liste_etu) {
+            liste_etudiants_promotion.add(l.getNumeroEtudiant());
+        }
+     return liste_etudiants_promotion;
+}
+public ArrayList<String> list_telephone_etudiant(ArrayList<Etudiant> liste_etu){
+     ArrayList<String> liste_etudiants_promotion = new ArrayList();
+     for (Etudiant l : liste_etu) {
+            liste_etudiants_promotion.add(l.getTelephone());
+        }
+     return liste_etudiants_promotion;
+}
+public ArrayList<String> list_email_etudiant(ArrayList<Etudiant> liste_etu){
+     ArrayList<String> liste_etudiants_promotion = new ArrayList();
+     for (Etudiant l : liste_etu) {
+            liste_etudiants_promotion.add(l.getEmail());
+        }
+     return liste_etudiants_promotion;
 }
 public void frame_Etudiant() throws SQLException {
     this.titre.setText("Etudiant");
@@ -345,15 +373,16 @@ public void frame_Etudiant() throws SQLException {
             new Object [4][5] ,
             new String [] {});	
     jTable1.setModel(modell);
-    List listenom = BD_MySQL.liste_nom_etudiants_promotion(4); 
+    this.list_etu = BD_MySQL.liste_etudiants_promotion(4);
+    ArrayList<String> listenom = list_nom_etudiant(this.list_etu); 
     modell.addColumn("Nom", listenom.toArray()); 
-    List listeprenom = BD_MySQL.liste_prenom_etudiants_promotion(4); 
+    ArrayList<String> listeprenom = list_prenom_etudiant(this.list_etu); 
     modell.addColumn("Prénom", listeprenom.toArray()); 
-    List listeNEtudiant = BD_MySQL.liste_nEtudiant_etudiants_promotion(4) ;
+    ArrayList<Integer> listeNEtudiant = list_NEtudiant_etudiant(this.list_etu); 
     modell.addColumn("N°Etudiant", listeNEtudiant.toArray()); 
-    List listeTelephone = BD_MySQL.liste_telephone_etudiants_promotion(4);
+    ArrayList<String> listeTelephone = list_telephone_etudiant(this.list_etu); 
     modell.addColumn("Téléphone", listeTelephone.toArray()); 
-    List listeEmail = BD_MySQL.liste_email_etudiants_promotion(4);
+    ArrayList<String> listeEmail = list_email_etudiant(this.list_etu); 
     modell.addColumn("Email", listeEmail.toArray()); 
 }
 public void refresh() throws SQLException{
@@ -362,16 +391,17 @@ public void refresh() throws SQLException{
             new Object [4][5] ,
             new String [] {});	
     jTable1.setModel(modell);
-    List listenom = BD_MySQL.liste_nom_etudiants_promotion(4); 
+    this.list_etu = BD_MySQL.liste_etudiants_promotion(4);
+    ArrayList<String> listenom = list_nom_etudiant(this.list_etu); 
     modell.addColumn("Nom", listenom.toArray()); 
-    List listeprenom = BD_MySQL.liste_prenom_etudiants_promotion(4); 
+    ArrayList<String> listeprenom = list_prenom_etudiant(this.list_etu); 
     modell.addColumn("Prénom", listeprenom.toArray()); 
-    List listeNEtudiant = BD_MySQL.liste_nEtudiant_etudiants_promotion(4) ;
+    ArrayList<Integer> listeNEtudiant = list_NEtudiant_etudiant(this.list_etu); 
     modell.addColumn("N°Etudiant", listeNEtudiant.toArray()); 
-    List listeTelephone = BD_MySQL.liste_telephone_etudiants_promotion(4);
+    ArrayList<String> listeTelephone = list_telephone_etudiant(this.list_etu); 
     modell.addColumn("Téléphone", listeTelephone.toArray()); 
-    List listeEmail = BD_MySQL.liste_email_etudiants_promotion(4);
-    modell.addColumn("Email", listeEmail.toArray()); 
+    ArrayList<String> listeEmail = list_email_etudiant(this.list_etu); 
+    modell.addColumn("Email", listeEmail.toArray());
     
 }
 public void frame_Salle(){
@@ -393,7 +423,6 @@ public void frame_Salle(){
 
     private long id_Etudiant() {
         long id = 0;
-        System.out.println("coucou");
         int ligne = jTable1.getSelectedRow();
         int colonne = jTable1.getSelectedColumn();
         Object cellule = jTable1.getValueAt(ligne,colonne);

@@ -161,7 +161,7 @@ public class NewPromotion extends javax.swing.JDialog {
         an = Integer.parseInt(date.substring(6, 10));
         mois = Integer.parseInt(date.substring(3, 5));
         jour = Integer.parseInt(date.substring(0, 2));
-       Timestamp tsfin = new Timestamp(an,mois,jour,0,0,0,0);
+       Timestamp tsfin = new Timestamp(an-1900,mois-1,jour,0,0,0,0);
         this.promo = new Promotion(this.nom.getText(), Integer.parseInt(this.annee.getText()), tsDebut, tsfin);
         this.promo.save();
         this.dispose();

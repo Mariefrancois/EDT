@@ -9,14 +9,22 @@
  * Created on 30 mars 2012, 14:35:37
  */
 package edt.Frame;
+import edt.Classe.UE;
+import edt.mysql.BD_MySQL;
+import edt.view.Donner;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Marie
  */
 public class New_UE extends javax.swing.JDialog {
-
+    private Donner donner;
+    private long id;
+    private UE ue;
     /** Creates new form New_UE */
     public New_UE(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -28,6 +36,13 @@ public class New_UE extends javax.swing.JDialog {
         initComponents();
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     
+    }
+    public New_UE(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id) {
+        super(parent,titre, modal);
+        initComponents();
+        init(etat,id);
+        this.donner = donner;
+        this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     }
 
     /** This method is called from within the constructor to
@@ -74,9 +89,19 @@ public class New_UE extends javax.swing.JDialog {
 
         valider.setText("Valider");
         valider.setName("valider"); // NOI18N
+        valider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                validerActionPerformed(evt);
+            }
+        });
 
         annuler.setText("Annuler");
         annuler.setName("annuler"); // NOI18N
+        annuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                annulerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,6 +157,59 @@ public class New_UE extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void refresh(){
+    this.nom.setText("");
+    this.nb_cour.setText("");
+    this.nb_td.setText("");
+    this.nb_tp.setText("");
+    this.donner.desactive_sup_modif();
+    this.ue = null;
+  /*  try {
+        this.donner.refresh();
+     } catch (SQLException ex) {
+         Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
+    }*/
+}
+private void creer(){
+        this.ue.setNom(this.nom.getText());
+        this.ue.setNbHeuresCours(Integer.parseInt(this.nb_cour.getText()));
+        this.ue.setNbHeuresTD(Integer.parseInt(this.nb_td.getText()));
+        this.ue.setNbHeuresTP(Integer.parseInt(this.nb_tp.getText()));
+}
+    private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
+        // TODO add your handling code here:
+        BD_MySQL.init();
+        switch(etat){
+            case UE:
+                this.ue = new UE(this.nom.getText(),"",Integer.parseInt(this.nb_cour.getText()),Integer.parseInt(this.nb_td.getText()),Integer.parseInt(this.nb_tp.getText()),3,4);
+                this.ue.save();
+                refresh();
+                etat = Etat.UE;
+                break;
+            case UE1:
+                creer();
+                this.ue.save();
+                refresh();
+                this.dispose();
+                break;
+                
+        }
+    }//GEN-LAST:event_validerActionPerformed
+
+    private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
+        // TODO add your handling code here:
+        switch(etat){
+            case UE:
+                this.dispose();
+                this.donner.desactive_sup_modif();
+                break;
+            case UE1:
+                this.dispose();
+                this.donner.desactive_sup_modif();
+                break;
+                
+        }
+    }//GEN-LAST:event_annulerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,4 +266,25 @@ public class New_UE extends javax.swing.JDialog {
     private javax.swing.JTextField nom;
     private javax.swing.JButton valider;
     // End of variables declaration//GEN-END:variables
+    private enum Etat{
+        UE,
+        UE1    
+    }
+    private Etat etat;
+    public void init(String n,long id){
+        if(n.equals("UE"))
+            etat = Etat.UE;
+        else if (n.equals("UE1")){
+            etat = Etat.UE;
+            try {
+                this.ue = new UE(id);
+            } catch (SQLException ex) {
+                Logger.getLogger(New_UE.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.nom.setText(this.ue.getNom());
+            this.nb_cour.setText(String.valueOf(this.ue.getNbHeuresCours()));
+            this.nb_td.setText(String.valueOf(this.ue.getNbHeuresTD()));
+            this.nb_tp.setText(String.valueOf(this.ue.getNbHeuresTP()));
+        }
+    }
 }
