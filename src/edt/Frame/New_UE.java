@@ -64,6 +64,8 @@ public class New_UE extends javax.swing.JDialog {
         nb_td = new javax.swing.JTextField();
         valider = new javax.swing.JButton();
         annuler = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        intitule = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -103,40 +105,59 @@ public class New_UE extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setText("Intitulé");
+        jLabel5.setName("jLabel5"); // NOI18N
+
+        intitule.setName("intitule"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(nb_cour, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-                        .addComponent(nb_tp, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-                        .addComponent(nb_td, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
-                    .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel5))
+                        .addGap(5, 5, 5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE))
+                            .addComponent(intitule, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(nb_tp, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                            .addComponent(nb_td)
+                            .addComponent(nb_cour))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)))
+                .addGap(75, 75, 75))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(80, 80, 80)
                 .addComponent(annuler)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(valider)
-                .addGap(31, 31, 31))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(intitule, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nb_cour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -148,11 +169,11 @@ public class New_UE extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(nb_td, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(valider)
-                    .addComponent(annuler))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(annuler)
+                    .addComponent(valider))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,26 +183,24 @@ private void refresh(){
     this.nb_cour.setText("");
     this.nb_td.setText("");
     this.nb_tp.setText("");
+    this.intitule.setText("");
     this.donner.desactive_sup_modif();
     this.ue = null;
-  /*  try {
-        this.donner.refresh();
-     } catch (SQLException ex) {
-         Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
-    }*/
+    this.donner.refreshUE();
 }
 private void creer(){
         this.ue.setNom(this.nom.getText());
         this.ue.setNbHeuresCours(Integer.parseInt(this.nb_cour.getText()));
         this.ue.setNbHeuresTD(Integer.parseInt(this.nb_td.getText()));
         this.ue.setNbHeuresTP(Integer.parseInt(this.nb_tp.getText()));
+        this.ue.setIntitule(this.intitule.getText());
 }
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
         BD_MySQL.init();
         switch(etat){
             case UE:
-                this.ue = new UE(this.nom.getText(),"",Integer.parseInt(this.nb_cour.getText()),Integer.parseInt(this.nb_td.getText()),Integer.parseInt(this.nb_tp.getText()),3,4);
+                this.ue = new UE(this.nom.getText(),this.intitule.getText(),Integer.parseInt(this.nb_cour.getText()),Integer.parseInt(this.nb_td.getText()),Integer.parseInt(this.nb_tp.getText()),3,4);
                 this.ue.save();
                 refresh();
                 etat = Etat.UE;
@@ -256,10 +275,12 @@ private void creer(){
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton annuler;
+    private javax.swing.JTextField intitule;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField nb_cour;
     private javax.swing.JTextField nb_td;
     private javax.swing.JTextField nb_tp;
@@ -275,7 +296,7 @@ private void creer(){
         if(n.equals("UE"))
             etat = Etat.UE;
         else if (n.equals("UE1")){
-            etat = Etat.UE;
+            etat = Etat.UE1;
             try {
                 this.ue = new UE(id);
             } catch (SQLException ex) {
@@ -285,6 +306,7 @@ private void creer(){
             this.nb_cour.setText(String.valueOf(this.ue.getNbHeuresCours()));
             this.nb_td.setText(String.valueOf(this.ue.getNbHeuresTD()));
             this.nb_tp.setText(String.valueOf(this.ue.getNbHeuresTP()));
+            this.intitule.setText(String.valueOf(this.ue.getIntitule()));
         }
     }
 }

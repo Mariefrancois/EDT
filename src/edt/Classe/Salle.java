@@ -14,29 +14,29 @@ import java.sql.SQLException;
  * @author Marie
  */
 public class Salle implements Model_JDBC {
-    private int id;
+    private long id;
     private String nom;
     private int capacite;
-    private int idBatiment;
+    private String batiment;
     
     
-    public Salle(String nom, int capacite,int idBatiment){
+    public Salle(String nom, int capacite,String batiment){
         this.id = 0;
         this.nom = nom;
         this.capacite = capacite;
-        this.idBatiment = idBatiment;
+        this.batiment = batiment;
     }
     
-    public Salle(int id) throws SQLException{
+    public Salle(long id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Salle WHERE id="+id);
         rs.next();
         this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.capacite = rs.getInt("capacite");
-        this.idBatiment = rs.getInt("idBatiment");
+        this.batiment = rs.getString("nomBatiment");
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -62,15 +62,15 @@ public class Salle implements Model_JDBC {
      /**
      * @return the idBatiment
      */
-    public int getIdBatiment() {
-        return idBatiment;
+    public String getBatiment() {
+        return batiment;
     }
 
     /**
      * @param idBatiment the idBatiment to set
      */
-    public void setIdBatiment(int idBatiment) {
-        this.idBatiment = idBatiment;
+    public void setBatiment(String batiment) {
+        this.batiment = batiment;
     }
     
      @Override
@@ -91,7 +91,7 @@ public class Salle implements Model_JDBC {
         if (this.capacite != other.capacite) {
             return false;
         }
-        if (this.getIdBatiment() != other.getIdBatiment()) {
+        if (this.getBatiment() != other.getBatiment()) {
             return false;
         }
         return true;
@@ -103,7 +103,7 @@ public class Salle implements Model_JDBC {
         hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
         hash = 97 * hash + (this.nom != null ? this.nom.hashCode() : 0);
         hash = 97 * hash + this.capacite;
-        hash = 97 * hash + this.getIdBatiment();
+        hash = 97 * hash + (this.batiment != null ? this.batiment.hashCode() : 0);
         return hash;
     }
 
@@ -112,16 +112,16 @@ public class Salle implements Model_JDBC {
         String requete;
         
         if(this.id == 0){
-            requete = "INSERT INTO Salle (nom, capacite, idBatiment) "
+            requete = "INSERT INTO Salle (nom, capacite, nomBatiment) "
                     + "VALUES ('"+this.nom
                     +"', '"+this.capacite
-                    +"', '"+this.idBatiment
+                    +"', '"+this.batiment
                     +"')";
         }else{
             requete = "UPDATE Salle SET "
                     + "nom='"+this.nom
                     +"', capacite='"+this.capacite
-                    +"', idBatiment='"+this.idBatiment
+                    +"', nomBatiment='"+this.batiment
                     +"' WHERE id='"+this.id+"'";
         }
         

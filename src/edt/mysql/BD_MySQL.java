@@ -2,6 +2,7 @@ package edt.mysql;
 
 import edt.Classe.Etudiant;
 import edt.Classe.Promotion;
+import edt.Classe.UE;
 import edt.sma_interface.APIMain;
 import java.sql.*;
 import java.util.ArrayList;
@@ -181,6 +182,16 @@ public class BD_MySQL implements APIMain {
         }
         return liste_id_etudiants_promotion;
     }
+    public static ArrayList<Long> liste_id_UE_promotion(int idPromotion) throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Long> liste_id_UE_promotion = new ArrayList();
+        String requete = "SELECT id FROM UE WHERE idPromotion="+idPromotion+" ORDER BY nom, intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS;";
+        ResultSet rs = executer_requete(requete);
+        while(rs.next()){
+            liste_id_UE_promotion.add(rs.getLong("id"));
+        }
+        return liste_id_UE_promotion;
+    }
     public static ArrayList<Long> liste_id_promotion() throws SQLException{
         BD_MySQL.init();
         ArrayList<Long> liste_id_etudiants_promotion = new ArrayList();
@@ -206,6 +217,21 @@ public class BD_MySQL implements APIMain {
         ResultSet rs = executer_requete(requete);
         rs.next();
         return rs.getLong("id");
+    }
+    public static long id_UE_promotion(String nom, int idPromotion) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM UE WHERE nom='"+nom+"'AND idPromotion="+idPromotion+";";
+        ResultSet rs = executer_requete(requete);
+        rs.next();
+        return rs.getLong("id");
+    }
+    public static ArrayList<UE> liste_UE_promotion(int idPromotion) throws SQLException{
+        ArrayList<UE> liste_UE_promotion = new ArrayList();
+        ArrayList<Long> liste_id_UE_promotion = liste_id_UE_promotion(idPromotion);
+        for (long l : liste_id_UE_promotion) {
+            liste_UE_promotion.add(new UE(l));
+        }
+        return liste_UE_promotion;
     }
     public static ArrayList<Etudiant> liste_etudiants_promotion(int idPromotion) throws SQLException{
         ArrayList<Etudiant> liste_etudiants_promotion = new ArrayList();

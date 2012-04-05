@@ -47,8 +47,8 @@ public class UE implements Model_JDBC {
         this.nbHeuresTD = rs.getInt("nbHeuresTD");
         this.nbHeuresTP = rs.getInt("nbHeuresTP");
         this.ECTS = rs.getInt("ECTS");
+        this.idIntervenant = rs.getInt("idResponsable");
         this.idPromotion = rs.getInt("idPromotion");
-        this.idIntervenant = rs.getInt("idIntervenant");
     }
     
     public long getId() {
@@ -194,13 +194,13 @@ public class UE implements Model_JDBC {
         }else{
             requete = "UPDATE UE SET "
                     + "nom='"+this.nom
-                    +"', intitule='"+this.intitule
-                    +"', nbHeuresCours='"+this.nbHeuresCours
+                    +"', intitule="+this.intitule
+                    +", nbHeuresCours='"+this.nbHeuresCours
                     +"', nbHeuresTD='"+this.nbHeuresTD
                     +"', nbHeuresTP='"+this.nbHeuresTP
                     +"', ECTS='"+this.ECTS
                     +"', idPromotion='"+this.idPromotion
-                    +"', idIntervenant='"+this.idIntervenant
+                    +"', idResponsable='"+this.idIntervenant
                     +"' WHERE id='"+this.getId()+"'";
         }
         
