@@ -52,7 +52,7 @@
                           <Component id="donner1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="500" max="32767" attributes="0"/>
+                  <EmptySpace pref="379" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

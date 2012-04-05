@@ -476,6 +476,9 @@ public class EDTView extends FrameView {
         
         switch(etat){
             case Debut:
+                //interdit
+                break;
+            case Debut1:
                 donner1.frame_Intervenant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Intervenant");
@@ -522,6 +525,9 @@ public class EDTView extends FrameView {
         // TODO add your handling code here:
         switch(etat){
             case Debut:
+                //interdit
+                break;
+            case Debut1:
                 donner1.frame_Salle();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Salle");

@@ -2,6 +2,7 @@ package edt.mysql;
 
 import edt.Classe.Etudiant;
 import edt.Classe.Promotion;
+import edt.Classe.Salle;
 import edt.Classe.UE;
 import edt.sma_interface.APIMain;
 import java.sql.*;
@@ -192,6 +193,16 @@ public class BD_MySQL implements APIMain {
         }
         return liste_id_UE_promotion;
     }
+    public static ArrayList<Long> liste_id_Salle_promotion() throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Long> liste_id_Salle_promotion = new ArrayList();
+        String requete = "SELECT id FROM Salle ORDER BY nom, nomBatiment;";
+        ResultSet rs = executer_requete(requete);
+        while(rs.next()){
+            liste_id_Salle_promotion.add(rs.getLong("id"));
+        }
+        return liste_id_Salle_promotion;
+    }
     public static ArrayList<Long> liste_id_promotion() throws SQLException{
         BD_MySQL.init();
         ArrayList<Long> liste_id_etudiants_promotion = new ArrayList();
@@ -232,6 +243,21 @@ public class BD_MySQL implements APIMain {
             liste_UE_promotion.add(new UE(l));
         }
         return liste_UE_promotion;
+    }
+    public static long id_Salle(String nom, String nomBatiment, int Capacite) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM Salle WHERE nom='"+nom+"' AND nomBatiment='"+nomBatiment+"' AND capacite="+Capacite+";";
+        ResultSet rs = executer_requete(requete);
+        rs.next();
+        return rs.getLong("id");
+    }
+    public static ArrayList<Salle> liste_Salle_promotion() throws SQLException{
+        ArrayList<Salle> liste_Salle_promotion = new ArrayList();
+        ArrayList<Long> liste_id_Salle_promotion = liste_id_Salle_promotion();
+        for (long l : liste_id_Salle_promotion) {
+            liste_Salle_promotion.add(new Salle(l));
+        }
+        return liste_Salle_promotion;
     }
     public static ArrayList<Etudiant> liste_etudiants_promotion(int idPromotion) throws SQLException{
         ArrayList<Etudiant> liste_etudiants_promotion = new ArrayList();

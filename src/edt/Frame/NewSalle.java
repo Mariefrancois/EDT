@@ -35,6 +35,7 @@ public class NewSalle extends javax.swing.JDialog {
     public NewSalle(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id) {
         super(parent, titre, modal);
         initComponents(); 
+        this.donner = donner;
         init(etat,id);
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     
@@ -336,23 +337,18 @@ private void refresh(){
     this.recurrence.setSelected(false);
     this.donner.desactive_sup_modif();
     this.salle = null;
-    try {
-        this.donner.refresh();
-     } catch (SQLException ex) {
-         Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
-    }
+    this.donner.refreshSalle();
 }
 private void creer(){
         this.salle.setNom(this.nom.getText());
         this.salle.setCapacite(Integer.parseInt(this.capacite.getText()));
-        this.salle.setBatiment(this.batiment.getToolTipText());
+        this.salle.setBatiment("1A");
 }
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
         BD_MySQL.init();
         switch(etat){
             case salle:
-                System.out.println("coucou");
                 this.salle = new Salle(this.nom.getText(),Integer.parseInt(this.capacite.getText()),"1A");
                 this.salle.save();
                 refresh();
@@ -466,6 +462,7 @@ private enum Etat{
         if(n.equals("Salle"))
             etat = Etat.salle;
         else if (n.equals("Salle1")){
+            System.out.println("coucou  salle1");
             etat = Etat.salle1;
             try {
                 this.salle = new Salle(id);
@@ -474,7 +471,6 @@ private enum Etat{
             }
             this.nom.setText(salle.getNom());
             this.capacite.setText(String.valueOf(salle.getCapacite()));
-            this.batiment.setToolTipText("coucou");
         }
     }
 }

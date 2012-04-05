@@ -265,11 +265,10 @@ private void refresh(){
     this.email.setText("");
     this.nEtudiant.setText("");
     this.telephone.setText("");
-    System.out.println("cocou");
     this.donner.desactive_sup_modif();
     this.etudiant = null;
     try {
-        this.donner.refresh();
+        this.donner.refreshEtudiant();
      } catch (SQLException ex) {
          Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
     }
