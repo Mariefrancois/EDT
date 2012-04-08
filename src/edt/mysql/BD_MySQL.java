@@ -200,6 +200,16 @@ public class BD_MySQL implements APIMain {
         }
         return liste_id_Salle_promotion;
     }
+    public static ArrayList<Long> liste_id_Batiment() throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Long> liste_id_Batiment = new ArrayList();
+        String requete = "SELECT id FROM Batiment ORDER BY nom, lat, lon;";
+        ResultSet rs = executer_requete(requete);
+        while(rs.next()){
+            liste_id_Batiment.add(rs.getLong("id"));
+        }
+        return liste_id_Batiment;
+    }
     public static ArrayList<Long> liste_id_Intervenant() throws SQLException{
         BD_MySQL.init();
         ArrayList<Long> liste_id_Intervenant = new ArrayList();
@@ -265,6 +275,13 @@ public class BD_MySQL implements APIMain {
         rs.next();
         return rs.getLong("id");
     }
+    public static long id_Batiment(String nom) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM Batiment WHERE nom='"+nom+"';";
+        ResultSet rs = executer_requete(requete);
+        rs.next();
+        return rs.getLong("id");
+    }
     public static ArrayList<Salle> liste_Salle_promotion() throws SQLException{
         ArrayList<Salle> liste_Salle_promotion = new ArrayList();
         ArrayList<Long> liste_id_Salle_promotion = liste_id_Salle_promotion();
@@ -272,6 +289,14 @@ public class BD_MySQL implements APIMain {
             liste_Salle_promotion.add(new Salle(l));
         }
         return liste_Salle_promotion;
+    }
+    public static ArrayList<Batiment> liste_Batiment() throws SQLException{
+        ArrayList<Batiment> liste_Batiment = new ArrayList();
+        ArrayList<Long> liste_id_Batiment = liste_id_Batiment();
+        for (long l : liste_id_Batiment) {
+            liste_Batiment.add(new Batiment(l));
+        }
+        return liste_Batiment;
     }
     public static ArrayList<Intervenant> liste_Intervenant() throws SQLException{
         ArrayList<Intervenant> liste_intervenant = new ArrayList();

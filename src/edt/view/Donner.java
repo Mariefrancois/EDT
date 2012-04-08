@@ -12,11 +12,8 @@ package edt.view;
 
 import com.sun.java.swing.plaf.windows.resources.windows;
 import edt.Classe.*;
+import edt.Frame.*;
 import edt.mysql.BD_MySQL;
-import edt.Frame.NewSalle;
-import edt.Frame.New_Etudiant;
-import edt.Frame.New_Intervenant;
-import edt.Frame.New_UE;
 import java.awt.Frame;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,6 +32,7 @@ public class Donner extends javax.swing.JPanel {
     private New_Intervenant inter;
     private NewSalle salle;
     private New_Etudiant etud;
+    private New_Batiment batiment;
     private long id;
     private ArrayList<Etudiant> list_etu;
     private ArrayList<UE> list_ue;
@@ -185,6 +183,14 @@ public class Donner extends javax.swing.JPanel {
                 etud.setVisible(true);
                 etat = Etat.Etudiant;
                 break;
+            case Batiment:
+                //interdit
+                break;
+            case Batiment1:
+                this.batiment = new New_Batiment(new java.awt.Frame(),"Ajouter un Batiment",true,this,"Batiment1",this.id);
+                this.batiment.setVisible(true);
+                etat = Etat.Batiment;
+                break;
         }
  }
  
@@ -241,7 +247,19 @@ public class Donner extends javax.swing.JPanel {
                 }
                 etu.delete();
                 etat = Etat.Etudiant;
-                
+                break;
+            case Batiment:
+                //interdit
+                break;
+            case Batiment1:
+                Batiment bat = null;
+                try {
+                   bat = new Batiment(this.id);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                bat.delete();
+                etat = Etat.Batiment;
                 break;
         }
  }
@@ -249,44 +267,54 @@ public class Donner extends javax.swing.JPanel {
         // TODO add your handling code here:
         switch(etat){
             case UE:
-                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0);
-                ued.setVisible(true);
+                this.ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0);
+                this.ued.setVisible(true);
                 etat = Etat.UE;
                 break;
             case UE1:
-                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0);
-                ued.setVisible(true);
+                this.ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0);
+                this.ued.setVisible(true);
                 etat = Etat.UE;
                 break;
             case Intervenant:
-                inter = new New_Intervenant(new java.awt.Frame(),"Ajouter un Intervenant",true,this,"Intervenant",0);
-                inter.setVisible(true);
+                this.inter = new New_Intervenant(new java.awt.Frame(),"Ajouter un Intervenant",true,this,"Intervenant",0);
+                this.inter.setVisible(true);
                 etat = Etat.Intervenant;
                 break;
             case Intervenant1:
-                inter = new New_Intervenant(new java.awt.Frame(),"Ajouter un Intervenant",true,this,"Intervenant",0);
-                inter.setVisible(true);
+                this.inter = new New_Intervenant(new java.awt.Frame(),"Ajouter un Intervenant",true,this,"Intervenant",0);
+                this.inter.setVisible(true);
                 etat = Etat.Intervenant;
                 break;
             case Salle:
-                salle = new NewSalle(new java.awt.Frame(),"Ajouter une Salle",true,this,"Salle",0);
-                salle.setVisible(true);
+                this.salle = new NewSalle(new java.awt.Frame(),"Ajouter une Salle",true,this,"Salle",0);
+                this.salle.setVisible(true);
                 etat = Etat.Salle;
                 break;
             case Salle1:
-                salle = new NewSalle(new java.awt.Frame(),"Ajouter une Salle",true,this,"Salle",0);
-                salle.setVisible(true);
+                this.salle = new NewSalle(new java.awt.Frame(),"Ajouter une Salle",true,this,"Salle",0);
+                this.salle.setVisible(true);
                 etat = Etat.Salle;
                 break;
             case Etudiant:
-                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
-                etud.setVisible(true);
+                this.etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
+                this.etud.setVisible(true);
                 etat = Etat.Etudiant;
                 break;
             case Etudiant1:
-                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
-                etud.setVisible(true);
+                this.etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
+                this.etud.setVisible(true);
                 etat = Etat.Etudiant;
+                break;
+            case Batiment:
+                this.batiment = new New_Batiment(new java.awt.Frame(),"Ajouter un Batiment",true,this,"Batiment",0);
+                this.batiment.setVisible(true);
+                etat = Etat.Batiment;
+                break;
+            case Batiment1:
+                this.batiment = new New_Batiment(new java.awt.Frame(),"Ajouter un Batiment",true,this,"Batiment",0);
+                this.batiment.setVisible(true);
+                etat = Etat.Batiment;
                 break;
         }
     } 
@@ -342,6 +370,16 @@ public class Donner extends javax.swing.JPanel {
                 this.id = id_Etudiant();
                 active_sup_modif();
                 etat = Etat.Etudiant1;
+                break;
+            case Batiment:
+                this.id = id_Batiment();
+                active_sup_modif();
+                etat = Etat.Batiment1;
+                break;
+            case Batiment1:
+                this.id = id_Batiment();
+                active_sup_modif();
+                etat = Etat.Batiment1;
                 break;
         }
     }
@@ -502,18 +540,22 @@ public ArrayList<String> list_email_etudiant(ArrayList<Etudiant> liste_etu){
         }
      return liste_etudiants_promotion;
 }
-public void frame_Etudiant() throws SQLException {
+public void frame_Etudiant(){
     this.titre.setText("Etudiant");
     this.ajouter.setText("Ajouter un Etudiant");
     refreshEtudiant();
 }
-public void refreshEtudiant() throws SQLException{
+public void refreshEtudiant(){
     this.jTable1.doLayout();
     DefaultTableModel modell = new DefaultTableModel(
             new Object [4][5] ,
             new String [] {});	
     jTable1.setModel(modell);
-    this.list_etu = BD_MySQL.liste_etudiants_promotion(4);
+    try {
+        this.list_etu = BD_MySQL.liste_etudiants_promotion(4);
+    } catch (SQLException ex) {
+        Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+    }
     ArrayList<String> listenom = list_nom_etudiant(this.list_etu); 
     modell.addColumn("Nom", listenom.toArray()); 
     ArrayList<String> listeprenom = list_prenom_etudiant(this.list_etu); 
@@ -577,6 +619,56 @@ public void frame_Salle() {
 }
 //**********************
 
+//Tableau Batiment ************
+ public ArrayList<String> list_nom_Batiment(ArrayList<Batiment> list_bati){
+     ArrayList<String> liste_Batiment = new ArrayList();
+     for (Batiment l : list_bati) {
+            liste_Batiment.add(l.getNom());
+        }
+     return liste_Batiment;
+} 
+ public ArrayList<Double> list_longitude_Batiment(ArrayList<Batiment> list_bati){
+     ArrayList<Double> liste_Batiment = new ArrayList();
+     for (Batiment l : list_bati) {
+            liste_Batiment.add(l.getLon());
+        }
+     return liste_Batiment;
+}
+ public ArrayList<Double> list_latitude_Batiment(ArrayList<Batiment> list_bati){
+     ArrayList<Double> liste_Batiment = new ArrayList();
+     for (Batiment l : list_bati) {
+            liste_Batiment.add(l.getLat());
+        }
+     return liste_Batiment;
+}
+public void refreshBatiment() {
+    this.jTable1.doLayout();
+    DefaultTableModel modell = new DefaultTableModel(
+            new Object [4][5] ,
+            new String [] {});	
+    jTable1.setModel(modell);
+    ArrayList<Batiment> list_bati = null;
+    try {
+        list_bati = BD_MySQL.liste_Batiment();
+    } catch (SQLException ex) {
+        Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    ArrayList<String> listeNom = list_nom_Batiment(list_bati); 
+    modell.addColumn("Nom", listeNom.toArray()); 
+    ArrayList<Double> listeLatitude = list_latitude_Batiment(list_bati); 
+    modell.addColumn("Latitude", listeLatitude.toArray()); 
+    ArrayList<Double> listeLongitude = list_longitude_Batiment(list_bati); 
+    modell.addColumn("Longitude", listeLongitude.toArray()); 
+    
+}
+public void frame_Batiment() {
+    this.titre.setText("Batiment");
+    this.ajouter.setText("Ajouter un Batiment");
+    refreshBatiment();
+    
+}
+//**********************
+
     private long id_Etudiant() {
         long id = 0;
         int ligne = jTable1.getSelectedRow();
@@ -626,7 +718,18 @@ private long id_Intervenant() {
             Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
-    }   
+    } 
+private long id_Batiment() {
+        long id = 0;
+        int ligne = jTable1.getSelectedRow();
+        String nom = (jTable1.getValueAt(ligne,0)).toString();
+        try {
+            id = BD_MySQL.id_Batiment(nom);
+        } catch (SQLException ex) {
+            Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }  
  private enum Etat{
         UE,
         UE1,
@@ -635,7 +738,11 @@ private long id_Intervenant() {
         Etudiant,
         Etudiant1,
         Intervenant,
-        Intervenant1
+        Intervenant1,
+        Batiment,
+        Batiment1,
+        Creneau,
+        Creneau1
             
                 
     }
@@ -649,5 +756,9 @@ private long id_Intervenant() {
             etat = Etat.Intervenant;
         else if(n.equals("Etudiant"))
             etat = Etat.Etudiant;
+        else if(n.equals("Batiment"))
+            etat = Etat.Batiment;
+        else if(n.equals("Creneau"))
+            etat = Etat.Creneau;
     }
 }

@@ -152,10 +152,13 @@ public class EDTView extends FrameView {
         mainPanel = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         ajouter_promotion = new javax.swing.JButton();
+        ajouter_cours = new javax.swing.JButton();
         UE = new javax.swing.JButton();
         Etudiants = new javax.swing.JButton();
         Intervenants = new javax.swing.JButton();
         Salles = new javax.swing.JButton();
+		Batiment = new javax.swing.JButton();
+		Creneau = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
@@ -189,7 +192,20 @@ public class EDTView extends FrameView {
             }
         });
         jToolBar1.add(ajouter_promotion);
-
+		
+		
+		ajouter_cours.setText(resourceMap.getString("ajouter_cours.text")); // NOI18N
+        ajouter_cours.setFocusable(false);
+        ajouter_cours.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        ajouter_cours.setName("ajouter_cours"); // NOI18N
+        ajouter_cours.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ajouter_cours.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajouter_coursActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(ajouter_cours);
+		
         UE.setText(resourceMap.getString("UE.text")); // NOI18N
         UE.setName("UE"); // NOI18N
         UE.addActionListener(new java.awt.event.ActionListener() {
@@ -202,7 +218,7 @@ public class EDTView extends FrameView {
         Etudiants.setMaximumSize(new java.awt.Dimension(45, 23));
         Etudiants.setMinimumSize(new java.awt.Dimension(45, 23));
         Etudiants.setName("Etudiants"); // NOI18N
-        Etudiants.setPreferredSize(new java.awt.Dimension(45, 23));
+        Etudiants.setPreferredSize(new java.awt.Dimension(45, 15));
         Etudiants.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EtudiantsActionPerformed(evt);
@@ -230,7 +246,28 @@ public class EDTView extends FrameView {
                 SallesActionPerformed(evt);
             }
         });
-
+		
+		Batiment.setText(resourceMap.getString("Batiment.text")); // NOI18N
+        Batiment.setMaximumSize(new java.awt.Dimension(45, 23));
+        Batiment.setMinimumSize(new java.awt.Dimension(45, 23));
+        Batiment.setName("Batiment"); // NOI18N
+        Batiment.setPreferredSize(new java.awt.Dimension(45, 23));
+        Batiment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BatimentActionPerformed(evt);
+            }
+        });
+		
+		Creneau.setText(resourceMap.getString("Creneau.text")); // NOI18N
+        Creneau.setMaximumSize(new java.awt.Dimension(45, 23));
+        Creneau.setMinimumSize(new java.awt.Dimension(45, 23));
+        Creneau.setName("Creneau"); // NOI18N
+        Creneau.setPreferredSize(new java.awt.Dimension(45, 23));
+        Creneau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreneauActionPerformed(evt);
+            }
+        });
         jSeparator1.setName("jSeparator1"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -256,6 +293,8 @@ public class EDTView extends FrameView {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
+                    .addComponent(Creneau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Batiment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Salles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Intervenants, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Etudiants, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -281,7 +320,11 @@ public class EDTView extends FrameView {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Intervenants, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Salles, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Salles, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Batiment, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Creneau, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -359,12 +402,7 @@ public class EDTView extends FrameView {
                 //interdit
                 break;
             case Debut1:
-                try {
-                    this.donner1.frame_Etudiant();
-                } catch (SQLException ex) {
-                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        
+                this.donner1.frame_Etudiant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -372,11 +410,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case UE:
-                try {
-                    this.donner1.frame_Etudiant();
-                } catch (SQLException ex) {
-                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                this.donner1.frame_Etudiant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -384,11 +418,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Intervenant:
-                try {
-                    this.donner1.frame_Etudiant();
-                } catch (SQLException ex) {
-                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                this.donner1.frame_Etudiant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -396,11 +426,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Salle:
-                try {
-                    this.donner1.frame_Etudiant();
-                } catch (SQLException ex) {
-                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                this.donner1.frame_Etudiant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -408,11 +434,23 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Etudiant:
-                try {
-                    this.donner1.frame_Etudiant();
-                } catch (SQLException ex) {
-                    Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Etudiant;
+                activeBouton();
+                break;
+            case Creneau:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Etudiant;
+                activeBouton();
+                break;
+            case Batiment:
+                this.donner1.frame_Etudiant();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -461,6 +499,22 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Etudiant:
+                this.donner1.frame_UE();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("UE");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.UE;
+                activeBouton();
+                break;
+            case Creneau:
+                this.donner1.frame_UE();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("UE");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.UE;
+                activeBouton();
+                break;
+            case Batiment:
                 this.donner1.frame_UE();
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
@@ -518,6 +572,22 @@ public class EDTView extends FrameView {
                 etat = Etat.Intervenant;
                 activeBouton();
                 break;
+            case Creneau:
+                donner1.frame_Intervenant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Intervenant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Intervenant;
+                activeBouton();
+                break;
+            case Batiment:
+                donner1.frame_Intervenant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Intervenant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Intervenant;
+                activeBouton();
+                break;
         }
     }//GEN-LAST:event_IntervenantsActionPerformed
 
@@ -567,9 +637,156 @@ public class EDTView extends FrameView {
                 etat = Etat.Salle;
                 activeBouton();
                 break;
+            case Creneau:
+                donner1.frame_Salle();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Salle");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Salle;
+                activeBouton();
+                break;
+            case Batiment:
+                donner1.frame_Salle();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Salle");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Salle;
+                activeBouton();
+                break;
         }
     }//GEN-LAST:event_SallesActionPerformed
-
+	private void ajouter_coursActionPerformed(java.awt.event.ActionEvent evt) {   
+            
+	}
+	
+    private void CreneauActionPerformed(java.awt.event.ActionEvent evt) {      
+            // TODO add your handling code here:
+        switch(etat){
+            case Debut:
+                //interdit
+                break;
+            case Debut1:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Etudiant;
+                activeBouton();
+                break;
+            case UE:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Etudiant;
+                activeBouton();
+                break;
+            case Intervenant:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Etudiant;
+                activeBouton();
+                break;
+            case Salle:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Etudiant;
+                activeBouton();
+                break;
+            case Etudiant:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Etudiant;
+                activeBouton();
+                break;
+            case Creneau:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Etudiant;
+                activeBouton();
+                break;
+            case Batiment:
+                this.donner1.frame_Etudiant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Etudiant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Etudiant;
+                activeBouton();
+                break;
+        }
+    }
+    private void BatimentActionPerformed(java.awt.event.ActionEvent evt) { 
+            // TODO add your handling code here:
+        switch(etat){
+            case Debut:
+                //interdit
+                break;
+            case Debut1:
+                this.donner1.frame_Batiment();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Batiment");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Batiment;
+                activeBouton();
+                break;
+            case UE:
+                this.donner1.frame_Batiment();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Batiment");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Batiment;
+                activeBouton();
+                break;
+            case Intervenant:
+                this.donner1.frame_Batiment();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Batiment");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Batiment;
+                activeBouton();
+                break;
+            case Salle:
+                this.donner1.frame_Batiment();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Batiment");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Batiment;
+                activeBouton();
+                break;
+            case Etudiant:
+                this.donner1.frame_Batiment();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Batiment");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Batiment;
+                activeBouton();
+                break;
+            case Creneau:
+                this.donner1.frame_Batiment();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Batiment");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Batiment;
+                activeBouton();
+                break;
+            case Batiment:
+                this.donner1.frame_Batiment();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Batiment");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Batiment;
+                activeBouton();
+                break;
+        }
+}
     private void ajouter_promotionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouter_promotionActionPerformed
         // TODO add your handling code here:
         switch(etat){
@@ -621,6 +838,18 @@ public class EDTView extends FrameView {
                 etat = Etat.Debut1;
                 activeBouton();
                 break;
+            case Creneau:
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo.setVisible(true);
+                etat = Etat.Debut1;
+                activeBouton();
+                break;
+            case Batiment:
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo.setVisible(true);
+                etat = Etat.Debut1;
+                activeBouton();
+                break;
         }
     }//GEN-LAST:event_ajouter_promotionActionPerformed
 
@@ -628,8 +857,11 @@ public class EDTView extends FrameView {
     private javax.swing.JButton Etudiants;
     private javax.swing.JButton Intervenants;
     private javax.swing.JButton Salles;
+	private javax.swing.JButton Batiment;
+	private javax.swing.JButton Creneau;
     private javax.swing.JButton UE;
     private javax.swing.JButton ajouter_promotion;
+	private javax.swing.JButton ajouter_cours;
     private edt.view.Donner donner1;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -656,7 +888,9 @@ public class EDTView extends FrameView {
         Salle,
         Etudiant,
         Debut,
-        Debut1
+        Debut1,
+        Batiment,
+        Creneau
                
     }
     private Etat etat;

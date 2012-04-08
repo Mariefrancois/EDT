@@ -267,11 +267,7 @@ private void refresh(){
     this.telephone.setText("");
     this.donner.desactive_sup_modif();
     this.etudiant = null;
-    try {
-        this.donner.refreshEtudiant();
-     } catch (SQLException ex) {
-         Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
-    }
+    this.donner.refreshEtudiant();
 }
 private void creer(){
         this.etudiant.setNom(this.nom.getText());
