@@ -594,31 +594,31 @@ public class EDTView extends FrameView {
             case Debut1:
                 newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
-                etat = Etat.Debut;
+                etat = Etat.Debut1;
                 activeBouton();
                 break;
             case UE:
                 newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
-                etat = Etat.Debut;
+                etat = Etat.Debut1;
                 activeBouton();
                 break;
             case Intervenant:
                 newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
-                etat = Etat.Debut;
+                etat = Etat.Debut1;
                 activeBouton();
                 break;
             case Salle:
                 newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
-                etat = Etat.Debut;
+                etat = Etat.Debut1;
                 activeBouton();
                 break;
             case Etudiant:
                 newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
                 newPromo.setVisible(true);
-                etat = Etat.Debut;
+                etat = Etat.Debut1;
                 activeBouton();
                 break;
         }

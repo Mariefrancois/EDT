@@ -14,15 +14,15 @@ import java.sql.SQLException;
  * @author Marie
  */
 public class Intervenant implements Model_JDBC {
-    private int id;
+    private long id;
     private String nom;
     private String prenom;
     private String email;
     private String telephone;
-    private String notificationsactives;
+    private boolean notificationsactives;
     private boolean actif;
     
-    public Intervenant(String nom, String prenom, String email, String telephone, String notif, boolean actif){
+    public Intervenant(String nom, String prenom, String email, String telephone, boolean notif, boolean actif){
         this.id = 0;
         this.nom = nom;
         this.prenom = prenom;
@@ -32,7 +32,7 @@ public class Intervenant implements Model_JDBC {
         this.actif = actif;
     }
     
-    public Intervenant(int id) throws SQLException{
+    public Intervenant(long id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Intervenant WHERE id="+id);
         rs.next();
         this.id = rs.getInt("id");
@@ -40,12 +40,12 @@ public class Intervenant implements Model_JDBC {
         this.prenom = rs.getString("prenom");
         this.email = rs.getString("email");
         this.telephone = rs.getString("telephone");
-        this.notificationsactives = rs.getString("notificationsactives");
+        this.notificationsactives = rs.getBoolean("notificationsactives");
         this.actif = rs.getBoolean("actif");
     }
     
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -84,11 +84,11 @@ public class Intervenant implements Model_JDBC {
         this.telephone = telephone;
     }
 
-    public String getNotificationsactives() {
+    public boolean getNotificationsactives() {
         return notificationsactives;
     }
 
-    public void setNotificationsactives(String notificationsactives) {
+    public void setNotificationsactives(boolean notificationsactives) {
         this.notificationsactives = notificationsactives;
     }
 
@@ -110,18 +110,18 @@ public class Intervenant implements Model_JDBC {
                     +"', '"+this.prenom
                     +"', '"+this.email
                     +"', '"+this.telephone
-                    +"', '"+this.notificationsactives
-                    +"', '"+this.actif
-                    +"')";
+                    +"', "+this.notificationsactives
+                    +", "+this.actif
+                    +");";
         }else{
             requete = "UPDATE Intervenant SET "
                     + "nom='"+this.nom
                     +"', prenom='"+this.prenom
                     +"', email='"+this.email
                     +"', telephone='"+this.telephone
-                    +"', notificationsactives='"+this.notificationsactives
-                    +"', idTypeCours='"+this.actif
-                    +"' WHERE id='"+this.getId()+"'";
+                    +"', notificationsactives="+this.notificationsactives
+                    +", idTypeCours="+this.actif
+                    +" WHERE id="+this.getId()+";";
         }
         
         this.id = BD_MySQL.executer_update(requete);

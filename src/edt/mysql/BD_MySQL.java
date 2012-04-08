@@ -1,9 +1,6 @@
 package edt.mysql;
 
-import edt.Classe.Etudiant;
-import edt.Classe.Promotion;
-import edt.Classe.Salle;
-import edt.Classe.UE;
+import edt.Classe.*;
 import edt.sma_interface.APIMain;
 import java.sql.*;
 import java.util.ArrayList;
@@ -203,6 +200,16 @@ public class BD_MySQL implements APIMain {
         }
         return liste_id_Salle_promotion;
     }
+    public static ArrayList<Long> liste_id_Intervenant() throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Long> liste_id_Intervenant = new ArrayList();
+        String requete = "SELECT id FROM Intervenant ORDER BY nom, prenom, email;";
+        ResultSet rs = executer_requete(requete);
+        while(rs.next()){
+            liste_id_Intervenant.add(rs.getLong("id"));
+        }
+        return liste_id_Intervenant;
+    }
     public static ArrayList<Long> liste_id_promotion() throws SQLException{
         BD_MySQL.init();
         ArrayList<Long> liste_id_etudiants_promotion = new ArrayList();
@@ -251,6 +258,13 @@ public class BD_MySQL implements APIMain {
         rs.next();
         return rs.getLong("id");
     }
+    public static long id_Intervenant(String nom, String nomPrenom, String email) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM Intervenant WHERE nom='"+nom+"' AND prenom='"+nomPrenom+"' AND email='"+email+"';";
+        ResultSet rs = executer_requete(requete);
+        rs.next();
+        return rs.getLong("id");
+    }
     public static ArrayList<Salle> liste_Salle_promotion() throws SQLException{
         ArrayList<Salle> liste_Salle_promotion = new ArrayList();
         ArrayList<Long> liste_id_Salle_promotion = liste_id_Salle_promotion();
@@ -258,6 +272,14 @@ public class BD_MySQL implements APIMain {
             liste_Salle_promotion.add(new Salle(l));
         }
         return liste_Salle_promotion;
+    }
+    public static ArrayList<Intervenant> liste_Intervenant() throws SQLException{
+        ArrayList<Intervenant> liste_intervenant = new ArrayList();
+        ArrayList<Long> liste_id_intervenant = liste_id_Intervenant();
+        for (long l : liste_id_intervenant) {
+            liste_intervenant.add(new Intervenant(l));
+        }
+        return liste_intervenant;
     }
     public static ArrayList<Etudiant> liste_etudiants_promotion(int idPromotion) throws SQLException{
         ArrayList<Etudiant> liste_etudiants_promotion = new ArrayList();

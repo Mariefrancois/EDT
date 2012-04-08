@@ -11,15 +11,11 @@
 package edt.view;
 
 import com.sun.java.swing.plaf.windows.resources.windows;
+import edt.Classe.*;
 import edt.mysql.BD_MySQL;
-import edt.Classe.Etudiant;
-import edt.Classe.Promotion;
-import edt.Classe.Salle;
-import edt.Classe.UE;
-import edt.Frame.Ajouter_Intervenant;
-import edt.Frame.Ajouter_Salle;
 import edt.Frame.NewSalle;
 import edt.Frame.New_Etudiant;
+import edt.Frame.New_Intervenant;
 import edt.Frame.New_UE;
 import java.awt.Frame;
 import java.sql.SQLException;
@@ -36,13 +32,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Donner extends javax.swing.JPanel {
     private New_UE ued;
-    private Ajouter_Intervenant inter;
+    private New_Intervenant inter;
     private NewSalle salle;
     private New_Etudiant etud;
     private long id;
     private ArrayList<Etudiant> list_etu;
     private ArrayList<UE> list_ue;
     private ArrayList<Salle> list_salle;
+    private ArrayList<Intervenant> list_inter;
     /** Creates new form Donner */
     public Donner() {
         initComponents();
@@ -165,7 +162,10 @@ public class Donner extends javax.swing.JPanel {
                 etat = Etat.UE;
                 break;
             case Intervenant:
-                inter = new Ajouter_Intervenant();
+                //interdit
+                break;
+            case Intervenant1:
+                inter = new New_Intervenant(new java.awt.Frame(),"Ajouter un Intervenant",true,this,"Intervenant1",this.id);
                 inter.setVisible(true);
                 etat = Etat.Intervenant;
                 break;
@@ -204,11 +204,22 @@ public class Donner extends javax.swing.JPanel {
                 etat = Etat.UE;
                 break;
             case Intervenant:
-                inter = new Ajouter_Intervenant();
-                inter.setVisible(true);
+                //interdit
+                break;
+            case Intervenant1:
+                Intervenant inter = null;
+                try {
+                   inter = new Intervenant(this.id);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                inter.delete();
                 etat = Etat.Intervenant;
                 break;
             case Salle:
+                //interdit
+                break;
+            case Salle1:
                 Salle salle = null;
                 try {
                    salle = new Salle(this.id);
@@ -248,7 +259,12 @@ public class Donner extends javax.swing.JPanel {
                 etat = Etat.UE;
                 break;
             case Intervenant:
-                inter = new Ajouter_Intervenant();
+                inter = new New_Intervenant(new java.awt.Frame(),"Ajouter un Intervenant",true,this,"Intervenant",0);
+                inter.setVisible(true);
+                etat = Etat.Intervenant;
+                break;
+            case Intervenant1:
+                inter = new New_Intervenant(new java.awt.Frame(),"Ajouter un Intervenant",true,this,"Intervenant",0);
                 inter.setVisible(true);
                 etat = Etat.Intervenant;
                 break;
@@ -297,8 +313,14 @@ public class Donner extends javax.swing.JPanel {
                 etat = Etat.UE1;
                 break;
             case Intervenant:
+                this.id = id_Intervenant();
                 active_sup_modif();
-                
+                etat = Etat.Intervenant1;
+                break;
+            case Intervenant1:
+                this.id = id_Intervenant();
+                active_sup_modif();
+                etat = Etat.Intervenant1;
                 break;
             case Salle:
                 this.id = id_Salle();
@@ -360,7 +382,6 @@ public class Donner extends javax.swing.JPanel {
      return liste_UE_promotion;
 }
  public void refreshUE(){
-      System.out.println("coucouocu");
     this.jTable1.doLayout();
     DefaultTableModel modell = new DefaultTableModel(
             new Object [4][5] ,
@@ -390,20 +411,58 @@ public class Donner extends javax.swing.JPanel {
 //******************
 
  //Tableau Intervenant************
+ public ArrayList<String> list_nom_Intervenant(ArrayList<Intervenant> liste_inter){
+     ArrayList<String> list_nom_Intervenant = new ArrayList();
+     for (Intervenant l : liste_inter) {
+            list_nom_Intervenant.add(l.getNom());
+        }
+     return list_nom_Intervenant;
+}
+ public ArrayList<String> list_prenom_Intervenant(ArrayList<Intervenant> liste_inter){
+     ArrayList<String> list_nom_Intervenant = new ArrayList();
+     for (Intervenant l : liste_inter) {
+            list_nom_Intervenant.add(l.getPrenom());
+        }
+     return list_nom_Intervenant;
+}
+public ArrayList<String> list_email_Intervenant(ArrayList<Intervenant> liste_inter){
+     ArrayList<String> list_nom_Intervenant = new ArrayList();
+     for (Intervenant l : liste_inter) {
+            list_nom_Intervenant.add(l.getEmail());
+        }
+     return list_nom_Intervenant;
+}
+public ArrayList<String> list_telephone_Intervenant(ArrayList<Intervenant> liste_inter){
+     ArrayList<String> list_nom_Intervenant = new ArrayList();
+     for (Intervenant l : liste_inter) {
+            list_nom_Intervenant.add(l.getTelephone());
+        }
+     return list_nom_Intervenant;
+}
+ public void refreshIntervenant(){
+    this.jTable1.doLayout();
+    DefaultTableModel modell = new DefaultTableModel(
+            new Object [4][5] ,
+            new String [] {});	
+    jTable1.setModel(modell);
+    try {
+        this.list_inter = BD_MySQL.liste_Intervenant();
+    } catch (SQLException ex) {
+        Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    ArrayList<String> listenom = list_nom_Intervenant(this.list_inter); 
+    modell.addColumn("Nom", listenom.toArray()); 
+    ArrayList<String> listeprenom = list_prenom_Intervenant(this.list_inter); 
+    modell.addColumn("Prénom", listeprenom.toArray()); 
+    ArrayList<String> listeEmail = list_email_Intervenant(this.list_inter); 
+    modell.addColumn("Email", listeEmail.toArray()); 
+    ArrayList<String> listetelephone= list_telephone_Intervenant(this.list_inter); 
+    modell.addColumn("Téléphone", listetelephone.toArray()); 
+  }
 public void frame_Intervenant(){
     this.titre.setText("Intervenant");
     this.ajouter.setText("Ajouter un Intervenant");
-    jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Nom", "Capacité", 
-            }
-        ));
+    refreshIntervenant();
 }
 //********************
 
@@ -554,7 +613,20 @@ private long id_Salle() {
             Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
-    }    
+    }   
+private long id_Intervenant() {
+        long id = 0;
+        int ligne = jTable1.getSelectedRow();
+        String nom = (jTable1.getValueAt(ligne,0)).toString();
+        String nomPrenom = (jTable1.getValueAt(ligne,1)).toString();
+        String email =(jTable1.getValueAt(ligne,2)).toString();
+        try {
+            id = BD_MySQL.id_Intervenant(nom,nomPrenom,email);
+        } catch (SQLException ex) {
+            Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }   
  private enum Etat{
         UE,
         UE1,
@@ -562,7 +634,8 @@ private long id_Salle() {
         Salle1,
         Etudiant,
         Etudiant1,
-        Intervenant
+        Intervenant,
+        Intervenant1
             
                 
     }
