@@ -61,6 +61,10 @@ public class New_Batiment extends javax.swing.JDialog {
 
         jLabel3.setText("Longitude");
 
+        latitude.setText("0.0");
+
+        longitude.setText("0.0");
+
         valider.setText("Valider");
         valider.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,8 +133,8 @@ public class New_Batiment extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 private void refresh(){
     this.nom.setText("");
-    this.latitude.setText("");
-    this.longitude.setText("");
+    this.latitude.setText("0.0");
+    this.longitude.setText("0.0");
     this.donner.desactive_sup_modif();
     this.batiment = null;
     this.donner.refreshBatiment();

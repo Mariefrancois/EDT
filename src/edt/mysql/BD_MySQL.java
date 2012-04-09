@@ -170,7 +170,7 @@ public class BD_MySQL implements APIMain {
         nb = rs.getInt("nb");
         return nb;
     }
-    public static ArrayList<Long> liste_id_etudiants_promotion(int idPromotion) throws SQLException{
+    public static ArrayList<Long> liste_id_etudiants_promotion(long idPromotion) throws SQLException{
         BD_MySQL.init();
         ArrayList<Long> liste_id_etudiants_promotion = new ArrayList();
         String requete = "SELECT id FROM Etudiant WHERE idPromotion="+idPromotion+" ORDER BY nom, prenom, email, telephone, notificationsActives, idPromotion ,idSpecialite;";
@@ -234,12 +234,14 @@ public class BD_MySQL implements APIMain {
         ArrayList<String> liste_promotion = new ArrayList();
         ArrayList<Long> liste_id_promotion = liste_id_promotion();
         for (long l : liste_id_promotion) {
+            if(l != 0){
             Promotion promo = new Promotion(l);
             liste_promotion.add(promo.getNom());
+            }
         }
         return liste_promotion;
     }
-    public static long id_etudiants_promotion(int numeroEtudiant, String nom, String prenom, int idPromotion) throws SQLException{
+    public static long id_etudiants_promotion(int numeroEtudiant, String nom, String prenom, long idPromotion) throws SQLException{
         BD_MySQL.init();
         String requete = "SELECT id FROM Etudiant WHERE  numeroEtudiant="+numeroEtudiant+" AND nom='"+nom+"' AND prenom='"+prenom+"' AND idPromotion="+idPromotion+";";
         ResultSet rs = executer_requete(requete);
@@ -282,6 +284,13 @@ public class BD_MySQL implements APIMain {
         rs.next();
         return rs.getLong("id");
     }
+    public static long id_Promotion(String nom) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM Promotion WHERE nom='"+nom+"';";
+        ResultSet rs = executer_requete(requete);
+        rs.next();
+        return rs.getLong("id");
+    }
     public static ArrayList<Salle> liste_Salle_promotion() throws SQLException{
         ArrayList<Salle> liste_Salle_promotion = new ArrayList();
         ArrayList<Long> liste_id_Salle_promotion = liste_id_Salle_promotion();
@@ -306,7 +315,16 @@ public class BD_MySQL implements APIMain {
         }
         return liste_intervenant;
     }
-    public static ArrayList<Etudiant> liste_etudiants_promotion(int idPromotion) throws SQLException{
+    public static ArrayList<Promotion> liste_Promotion() throws SQLException{
+        ArrayList<Promotion> liste_Promotion = new ArrayList();
+        ArrayList<Long> liste_id_Promotion = liste_id_promotion();
+        for (long l : liste_id_Promotion) {
+            if(l != 0)
+            liste_Promotion.add(new Promotion(l));
+        }
+        return liste_Promotion;
+    }
+    public static ArrayList<Etudiant> liste_etudiants_promotion(long idPromotion) throws SQLException{
         ArrayList<Etudiant> liste_etudiants_promotion = new ArrayList();
         ArrayList<Long> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
         for (long l : liste_id_etudiants_promotion) {

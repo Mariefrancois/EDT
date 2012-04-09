@@ -4,6 +4,7 @@
 
 package edt;
 
+import edt.Classe.Promotion;
 import edt.mysql.BD_MySQL;
 import edt.EDTAboutBox;
 import edt.EDTApp;
@@ -18,11 +19,12 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.Timer;
-import javax.swing.Icon;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -30,7 +32,8 @@ import javax.swing.JFrame;
  */
 public class EDTView extends FrameView {
     private NewPromotion newPromo;
-    private int id_promo;
+    private long id_promo;
+    private Promotion promo;
     public void init(){
         BD_MySQL.init();
         int nb = 1;
@@ -39,34 +42,45 @@ public class EDTView extends FrameView {
         } catch (SQLException ex) {
             Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(nb == 1){
+        if(nb == 2){
             desactiveBouton();
             etat = Etat.Debut;
         }
         else{
-            activeBouton();
+            desactiveBouton();
             etat = Etat.Debut1;
-            List nom_promo = null;
-            try {
-                nom_promo = BD_MySQL.liste_nom_promotion();
-            } catch (SQLException ex) {
-                Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-           // jList1.addElement("coucou");
+            refreshPromotion();
         }
         
+    }
+    public void refreshPromotion(){
+    this.jList1.doLayout();
+    DefaultListModel modell = new DefaultListModel();
+     
+    this.jList1.setModel(modell);
+    ArrayList<String> listenom = new ArrayList();
+    try {
+        listenom = BD_MySQL.liste_nom_promotion();
+    } catch (SQLException ex) {
+        Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    modell.addElement(" Promotion:"); 
+    for (String l : listenom) {
+        modell.addElement(" - "+l); 
+    }
     }
     public void desactiveBouton(){
         this.UE.setEnabled(false);
         this.Etudiants.setEnabled(false);
-        this.Intervenants.setEnabled(false);
-        this.Salles.setEnabled(false);
+        this.Creneau.setEnabled(false);
     }
     public void activeBouton(){
         this.UE.setEnabled(true);
         this.Etudiants.setEnabled(true);
         this.Intervenants.setEnabled(true);
         this.Salles.setEnabled(true);
+        this.Batiment.setEnabled(true);
+        this.Creneau.setEnabled(true);
     }
     public EDTView(SingleFrameApplication app) {
         super(app);
@@ -173,6 +187,7 @@ public class EDTView extends FrameView {
         statusMessageLabel = new javax.swing.JLabel();
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
+        titre = new javax.swing.JLabel();
 
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setVerifyInputWhenFocusTarget(false);
@@ -192,6 +207,10 @@ public class EDTView extends FrameView {
             }
         });
         jToolBar1.add(ajouter_promotion);
+		
+		titre.setText(resourceMap.getString("titre.text")); // NOI18N
+        titre.setName("titre"); // NOI18N
+		titre.setLocation(300,300);
 		
 		
 		ajouter_cours.setText(resourceMap.getString("ajouter_cours.text")); // NOI18N
@@ -276,11 +295,17 @@ public class EDTView extends FrameView {
             String[] strings = { "EDT" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+            public void addElementAt(String element) { strings[getSize()] = element; }
         });
         jList1.setAutoscrolls(false);
         jList1.setMaximumSize(new java.awt.Dimension(120, 80));
         jList1.setName("jList1"); // NOI18N
         jList1.setPreferredSize(new java.awt.Dimension(33, 120));
+		jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jList1);
 
         donner1.setName("donner1"); // NOI18N
@@ -301,9 +326,13 @@ public class EDTView extends FrameView {
                     .addComponent(UE, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(donner1, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE)
+                    .addComponent(donner1, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE))
                 .addContainerGap())
+			.addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(170, 170, 170)
+                .addComponent(titre)
+                .addContainerGap(210, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,11 +356,19 @@ public class EDTView extends FrameView {
                         .addComponent(Creneau, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(donner1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addContainerGap(500, Short.MAX_VALUE))
+				
+			.addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(donner1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(100, Short.MAX_VALUE))
+			.addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(titre)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
-
+		mainPanel.add(titre);
         menuBar.setName("menuBar"); // NOI18N
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
@@ -394,7 +431,150 @@ public class EDTView extends FrameView {
         setMenuBar(menuBar);
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public void Promo(){
+        Object prom = this.jList1.getSelectedValue();
+        String p = String.valueOf(prom);
+        if(p.compareTo(" Promotion:") != 0){
+            try {
+                this.id_promo = BD_MySQL.id_Promotion(p.substring(3,p.length()));
+            } catch (SQLException ex) {
+                Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                this.promo = new Promotion(this.id_promo);
+            } catch (SQLException ex) {
+                Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else {
+            this.promo = null;
+            this.titre.setText("");
+        }
+    }
+    public String afficherDate(Timestamp tim){
+        String date = String.valueOf(tim);
+        int an = Integer.parseInt(date.substring(0, 4));
+        int mois = Integer.parseInt(date.substring(5, 7));
+        int jour = Integer.parseInt(date.substring(8, 10));
+        return jour+"/"+mois+"/"+an;
+    }
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        switch(etat){
+            case Debut:
+                //interdit
+                break;
+            case Debut1:
+                Promo();
+                if(this.promo != null){
+                    this.titre.setText(this.promo.getNom()+"  "+this.promo.getAnnee()+"  du "+afficherDate(this.promo.getTsDebut())+" au "+afficherDate(this.promo.getTsFin()));
+                    this.id_promo = this.promo.getId();
+                    activeBouton();
+                    this.donner1.setVisible(false);
+                }
+                else{
+                    desactiveBouton();
+                    this.donner1.frame_Promotion();
+                    this.donner1.setVisible(true);
+                    this.donner1.setEtat("Promotion");
+                }
+                etat = Etat.Debut1;
+                break;
+            case UE:
+                Promo();
+                if(this.promo != null){
+                    this.titre.setText(this.promo.getNom()+"  "+this.promo.getAnnee()+"  du "+afficherDate(this.promo.getTsDebut())+" au "+afficherDate(this.promo.getTsFin()));
+                    this.id_promo = this.promo.getId();
+                    activeBouton();
+                    this.donner1.setVisible(false);
+                }
+                else{
+                    desactiveBouton();
+                    this.donner1.frame_Promotion();
+                    this.donner1.setVisible(true);
+                    this.donner1.setEtat("Promotion");
+                }
+                etat = Etat.Debut1;
+                break;
+            case Intervenant:
+                Promo();
+                if(this.promo != null){
+                    this.titre.setText(this.promo.getNom()+"  "+this.promo.getAnnee()+"  du "+afficherDate(this.promo.getTsDebut())+" au "+afficherDate(this.promo.getTsFin()));
+                    this.id_promo = this.promo.getId();
+                    activeBouton();
+                    this.donner1.setVisible(false);
+                }
+                else{
+                    desactiveBouton();
+                    this.donner1.frame_Promotion();
+                    this.donner1.setVisible(true);
+                    this.donner1.setEtat("Promotion");
+                }
+                etat = Etat.Debut1;
+                break;
+            case Salle:
+                if(this.promo != null){
+                    this.titre.setText(this.promo.getNom()+"  "+this.promo.getAnnee()+"  du "+afficherDate(this.promo.getTsDebut())+" au "+afficherDate(this.promo.getTsFin()));
+                    this.id_promo = this.promo.getId();
+                    activeBouton();
+                    this.donner1.setVisible(false);
+                }
+                else{
+                    desactiveBouton();
+                    this.donner1.frame_Promotion();
+                    this.donner1.setVisible(true);
+                    this.donner1.setEtat("Promotion");
+                }
+                etat = Etat.Debut1;
+                break;
+            case Etudiant:
+                if(this.promo != null){
+                    this.titre.setText(this.promo.getNom()+"  "+this.promo.getAnnee()+"  du "+afficherDate(this.promo.getTsDebut())+" au "+afficherDate(this.promo.getTsFin()));
+                    this.id_promo = this.promo.getId();
+                    activeBouton();
+                    this.donner1.setVisible(false);
+                }
+                else{
+                    desactiveBouton();
+                    this.donner1.frame_Promotion();
+                    this.donner1.setVisible(true);
+                    this.donner1.setEtat("Promotion");
+                }
+                etat = Etat.Debut1;
+                break;
+            case Creneau:
+                if(this.promo != null){
+                    this.titre.setText(this.promo.getNom()+"  "+this.promo.getAnnee()+"  du "+afficherDate(this.promo.getTsDebut())+" au "+afficherDate(this.promo.getTsFin()));
+                    this.id_promo = this.promo.getId();
+                    activeBouton();
+                    this.donner1.setVisible(false);
+                }
+                else{
+                    desactiveBouton();
+                    this.donner1.frame_Promotion();
+                    this.donner1.setVisible(true);
+                    this.donner1.setEtat("Promotion");
+                }
+                etat = Etat.Debut1;
+                break;
+            case Batiment:
+                if(this.promo != null){
+                    this.titre.setText(this.promo.getNom()+"  "+this.promo.getAnnee()+"  du "+afficherDate(this.promo.getTsDebut())+" au "+afficherDate(this.promo.getTsFin()));
+                    this.id_promo = this.promo.getId();
+                    activeBouton();
+                    this.donner1.setVisible(false);
+                }
+                else{
+                    desactiveBouton();
+                    this.donner1.frame_Promotion();
+                    this.donner1.setVisible(true);
+                    this.donner1.setEtat("Promotion");
+                }
+                etat = Etat.Debut1;
+                break;
+        }
+	}
     private void EtudiantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EtudiantsActionPerformed
         // TODO add your handling code here:
         switch(etat){
@@ -402,7 +582,7 @@ public class EDTView extends FrameView {
                 //interdit
                 break;
             case Debut1:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -410,7 +590,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case UE:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -418,7 +598,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Intervenant:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -426,7 +606,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Salle:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -434,7 +614,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Etudiant:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -442,7 +622,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Creneau:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -450,7 +630,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Batiment:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -530,7 +710,12 @@ public class EDTView extends FrameView {
         
         switch(etat){
             case Debut:
-                //interdit
+                donner1.frame_Intervenant();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Intervenant");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Intervenant;
+                desactiveBouton();
                 break;
             case Debut1:
                 donner1.frame_Intervenant();
@@ -595,7 +780,12 @@ public class EDTView extends FrameView {
         // TODO add your handling code here:
         switch(etat){
             case Debut:
-                //interdit
+                donner1.frame_Salle();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Salle");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Salle;
+                desactiveBouton();
                 break;
             case Debut1:
                 donner1.frame_Salle();
@@ -666,7 +856,7 @@ public class EDTView extends FrameView {
                 //interdit
                 break;
             case Debut1:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -674,7 +864,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case UE:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -682,7 +872,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Intervenant:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -690,7 +880,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Salle:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -698,7 +888,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Etudiant:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -706,7 +896,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Creneau:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -714,7 +904,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Batiment:
-                this.donner1.frame_Etudiant();
+                this.donner1.frame_Etudiant(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("Etudiant");
                 this.donner1.desactive_sup_modif();
@@ -727,7 +917,12 @@ public class EDTView extends FrameView {
             // TODO add your handling code here:
         switch(etat){
             case Debut:
-                //interdit
+                this.donner1.frame_Batiment();
+                this.donner1.setVisible(true);
+                this.donner1.setEtat("Batiment");
+                this.donner1.desactive_sup_modif();
+                etat = Etat.Batiment;
+                desactiveBouton();
                 break;
             case Debut1:
                 this.donner1.frame_Batiment();
@@ -791,7 +986,7 @@ public class EDTView extends FrameView {
         // TODO add your handling code here:
         switch(etat){
             case Debut:
-                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this.donner1,"Promotion2",0);
                 newPromo.setVisible(true);
                 int nb = 0;
                 try {
@@ -807,48 +1002,56 @@ public class EDTView extends FrameView {
                     activeBouton();
                     etat = Etat.Debut1;
                 }
+                refreshPromotion();
                 break;
             case Debut1:
-                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this.donner1,"Promotion2",0);
                 newPromo.setVisible(true);
                 etat = Etat.Debut1;
-                activeBouton();
+                desactiveBouton();
+                refreshPromotion();
                 break;
             case UE:
-                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this.donner1,"Promotion2",0);
                 newPromo.setVisible(true);
                 etat = Etat.Debut1;
-                activeBouton();
+                desactiveBouton();
+                refreshPromotion();
                 break;
             case Intervenant:
-                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this.donner1,"Promotion2",0);
                 newPromo.setVisible(true);
                 etat = Etat.Debut1;
-                activeBouton();
+                desactiveBouton();
+                refreshPromotion();
                 break;
             case Salle:
-                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this.donner1,"Promotion2",0);
                 newPromo.setVisible(true);
                 etat = Etat.Debut1;
-                activeBouton();
+                desactiveBouton();
+                refreshPromotion();
                 break;
             case Etudiant:
-                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this.donner1,"Promotion2",0);
                 newPromo.setVisible(true);
                 etat = Etat.Debut1;
-                activeBouton();
+                desactiveBouton();
+                refreshPromotion();
                 break;
             case Creneau:
-                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this.donner1,"Promotion2",0);
                 newPromo.setVisible(true);
                 etat = Etat.Debut1;
-                activeBouton();
+                desactiveBouton();
+                refreshPromotion();
                 break;
             case Batiment:
-                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true);
+                newPromo = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this.donner1,"Promotion2",0);
                 newPromo.setVisible(true);
                 etat = Etat.Debut1;
-                activeBouton();
+                desactiveBouton();
+                refreshPromotion();
                 break;
         }
     }//GEN-LAST:event_ajouter_promotionActionPerformed
@@ -873,6 +1076,7 @@ public class EDTView extends FrameView {
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JLabel titre;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;

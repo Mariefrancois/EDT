@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class New_Etudiant extends javax.swing.JDialog {
     private Donner donner;
-    private long id;
+    private long id_promo;
     private Etudiant etudiant;
     /** Creates new form New_Etudiant */
     public New_Etudiant(){
@@ -48,11 +48,12 @@ public class New_Etudiant extends javax.swing.JDialog {
         this.donner = donner;
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     }
-    public New_Etudiant(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id) {
+    public New_Etudiant(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id, long id_promo) {
         super(parent,titre, modal);
         initComponents();
         init(etat,id);
         this.donner = donner;
+        this.id_promo = id_promo;
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     }
     
@@ -279,7 +280,7 @@ private void creer(){
         BD_MySQL.init();
         switch(etat){
             case Etudiant:
-                this.etudiant = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),this.prenom.getText(),this.nom.getText(),this.email.getText(),this.telephone.getText(),true,4,1);
+                this.etudiant = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),this.prenom.getText(),this.nom.getText(),this.email.getText(),this.telephone.getText(),true,this.id_promo,1);
                 this.etudiant.save();
                 refresh();
                 etat = Etat.Etudiant;

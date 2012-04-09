@@ -16,6 +16,7 @@ import edt.Frame.*;
 import edt.mysql.BD_MySQL;
 import java.awt.Frame;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,10 +35,13 @@ public class Donner extends javax.swing.JPanel {
     private New_Etudiant etud;
     private New_Batiment batiment;
     private long id;
+    private long id_promo;
     private ArrayList<Etudiant> list_etu;
     private ArrayList<UE> list_ue;
     private ArrayList<Salle> list_salle;
     private ArrayList<Intervenant> list_inter;
+    private ArrayList<Promotion> list_promo;
+    private NewPromotion promotion;
     /** Creates new form Donner */
     public Donner() {
         initComponents();
@@ -179,7 +183,7 @@ public class Donner extends javax.swing.JPanel {
                 //interdit
                 break;
             case Etudiant1:
-                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant1",this.id);
+                etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant1",this.id,this.id_promo);
                 etud.setVisible(true);
                 etat = Etat.Etudiant;
                 break;
@@ -190,6 +194,14 @@ public class Donner extends javax.swing.JPanel {
                 this.batiment = new New_Batiment(new java.awt.Frame(),"Ajouter un Batiment",true,this,"Batiment1",this.id);
                 this.batiment.setVisible(true);
                 etat = Etat.Batiment;
+                break;
+            case Promotion:
+                //interdit
+                break;
+            case Promotion1:
+                this.promotion = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this,"Promotion1",this.id);
+                this.promotion.setVisible(true);
+                etat = Etat.Promotion;
                 break;
         }
  }
@@ -207,6 +219,7 @@ public class Donner extends javax.swing.JPanel {
                     Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 ue.delete();
+                refreshUE();
                 etat = Etat.UE;
                 break;
             case Intervenant:
@@ -220,6 +233,7 @@ public class Donner extends javax.swing.JPanel {
                     Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 inter.delete();
+                refreshIntervenant();
                 etat = Etat.Intervenant;
                 break;
             case Salle:
@@ -233,6 +247,7 @@ public class Donner extends javax.swing.JPanel {
                     Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 salle.delete();
+                refreshSalle();
                 etat = Etat.Salle;
                 break;
             case Etudiant:
@@ -246,6 +261,7 @@ public class Donner extends javax.swing.JPanel {
                     Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 etu.delete();
+                refreshEtudiant();
                 etat = Etat.Etudiant;
                 break;
             case Batiment:
@@ -259,7 +275,22 @@ public class Donner extends javax.swing.JPanel {
                     Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 bat.delete();
+                refreshBatiment();
                 etat = Etat.Batiment;
+                break;
+            case Promotion:
+                //interdit
+                break;
+            case Promotion1:
+                Promotion promo = null;
+                try {
+                   promo = new Promotion(this.id);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                promo.delete();
+                refreshPromotion();
+                etat = Etat.Promotion;
                 break;
         }
  }
@@ -297,12 +328,12 @@ public class Donner extends javax.swing.JPanel {
                 etat = Etat.Salle;
                 break;
             case Etudiant:
-                this.etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
+                this.etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0,this.id_promo);
                 this.etud.setVisible(true);
                 etat = Etat.Etudiant;
                 break;
             case Etudiant1:
-                this.etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0);
+                this.etud = new New_Etudiant(new java.awt.Frame(),"Ajouter un Etudiant",true,this,"Etudiant",0,this.id_promo);
                 this.etud.setVisible(true);
                 etat = Etat.Etudiant;
                 break;
@@ -315,6 +346,16 @@ public class Donner extends javax.swing.JPanel {
                 this.batiment = new New_Batiment(new java.awt.Frame(),"Ajouter un Batiment",true,this,"Batiment",0);
                 this.batiment.setVisible(true);
                 etat = Etat.Batiment;
+                break;
+            case Promotion:
+                this.promotion = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this,"Promotion",0);
+                this.batiment.setVisible(true);
+                etat = Etat.Promotion;
+                break;
+            case Promotion1:
+                this.promotion = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this,"Promotion",0);
+                this.batiment.setVisible(true);
+                etat = Etat.Promotion;
                 break;
         }
     } 
@@ -380,6 +421,16 @@ public class Donner extends javax.swing.JPanel {
                 this.id = id_Batiment();
                 active_sup_modif();
                 etat = Etat.Batiment1;
+                break;
+            case Promotion:
+                this.id = id_Promotion();
+                active_sup_modif();
+                etat = Etat.Promotion1;
+                break;
+            case Promotion1:
+                this.id = id_Promotion();
+                active_sup_modif();
+                etat = Etat.Promotion1;
                 break;
         }
     }
@@ -540,9 +591,10 @@ public ArrayList<String> list_email_etudiant(ArrayList<Etudiant> liste_etu){
         }
      return liste_etudiants_promotion;
 }
-public void frame_Etudiant(){
+public void frame_Etudiant(long id_promo){
     this.titre.setText("Etudiant");
     this.ajouter.setText("Ajouter un Etudiant");
+    this.id_promo = id_promo;
     refreshEtudiant();
 }
 public void refreshEtudiant(){
@@ -552,7 +604,7 @@ public void refreshEtudiant(){
             new String [] {});	
     jTable1.setModel(modell);
     try {
-        this.list_etu = BD_MySQL.liste_etudiants_promotion(4);
+        this.list_etu = BD_MySQL.liste_etudiants_promotion(this.id_promo);
     } catch (SQLException ex) {
         Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -615,6 +667,64 @@ public void frame_Salle() {
     this.titre.setText("Salle");
     this.ajouter.setText("Ajouter une Salle");
     refreshSalle();
+    
+}
+//**********************
+
+//Tableau Promotion ************
+ public ArrayList<String> list_nom_Promotion(ArrayList<Promotion> list_promo){
+     ArrayList<String> liste_nom_promotion = new ArrayList();
+     for (Promotion l : list_promo) {
+            liste_nom_promotion.add(l.getNom());
+        }
+     return liste_nom_promotion;
+} 
+ public ArrayList<Integer> list_Annee_Promotion(ArrayList<Promotion> list_promo){
+     ArrayList<Integer> liste_annee_promotion = new ArrayList();
+     for (Promotion l : list_promo) {
+            liste_annee_promotion.add(l.getAnnee());
+        }
+     return liste_annee_promotion;
+}
+ public ArrayList<Timestamp> list_debut_Promotion(ArrayList<Promotion> list_promo){
+     ArrayList<Timestamp> list_debut_Promotion = new ArrayList();
+     for (Promotion l : list_promo) {
+            list_debut_Promotion.add(l.getTsDebut());
+        }
+     return list_debut_Promotion;
+}
+  public ArrayList<Timestamp> list_fin_Promotion(ArrayList<Promotion> list_promo){
+     ArrayList<Timestamp> list_fin_Promotion = new ArrayList();
+     for (Promotion l : list_promo) {
+            list_fin_Promotion.add(l.getTsFin());
+        }
+     return list_fin_Promotion;
+}
+public void refreshPromotion() {
+    this.jTable1.doLayout();
+    DefaultTableModel modell = new DefaultTableModel(
+            new Object [4][5] ,
+            new String [] {});	
+    jTable1.setModel(modell);
+    try {
+        this.list_promo = BD_MySQL.liste_Promotion();
+    } catch (SQLException ex) {
+        Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    ArrayList<String> listeNom = list_nom_Promotion(this.list_promo); 
+    modell.addColumn("Nom", listeNom.toArray()); 
+    ArrayList<Integer> listeAnne = list_Annee_Promotion(this.list_promo); 
+    modell.addColumn("Anne", listeAnne.toArray()); 
+    ArrayList<Timestamp> listeDebut = list_debut_Promotion(this.list_promo); 
+    modell.addColumn("Date de début", listeDebut.toArray()); 
+    ArrayList<Timestamp> listefin = list_fin_Promotion(this.list_promo); 
+    modell.addColumn("Date de fin", listefin.toArray()); 
+    
+}
+public void frame_Promotion() {
+    this.titre.setText("Promotion");
+    this.ajouter.setText("Ajouter une Promotion");
+    refreshPromotion();
     
 }
 //**********************
@@ -730,6 +840,17 @@ private long id_Batiment() {
         }
         return id;
     }  
+    private long id_Promotion() {
+        long id = 0;
+        int ligne = jTable1.getSelectedRow();
+        String nom = (jTable1.getValueAt(ligne,0)).toString();
+        try {
+            id = BD_MySQL.id_Promotion(nom);
+        } catch (SQLException ex) {
+            Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
  private enum Etat{
         UE,
         UE1,
@@ -742,7 +863,9 @@ private long id_Batiment() {
         Batiment,
         Batiment1,
         Creneau,
-        Creneau1
+        Creneau1,
+        Promotion,
+        Promotion1
             
                 
     }
@@ -760,5 +883,7 @@ private long id_Batiment() {
             etat = Etat.Batiment;
         else if(n.equals("Creneau"))
             etat = Etat.Creneau;
+        else if(n.equals("Promotion"))
+            etat = Etat.Promotion;
     }
 }

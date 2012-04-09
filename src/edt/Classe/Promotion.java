@@ -33,8 +33,8 @@ public class Promotion implements Model_JDBC {
         this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.annee = rs.getInt("annee");
-        //this.tsDebut = rs.getString("tsDebut");
-        //this.tsFin = rs.getString("tsFin");
+        this.tsDebut = rs.getTimestamp("tsDebut");
+        this.tsFin = rs.getTimestamp("tsFin");
     }
 
     public long getId() {
@@ -123,7 +123,13 @@ public class Promotion implements Model_JDBC {
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;                                      
+        BD_MySQL.init();
+
+        requete = "DELETE FROM Promotion "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
     
 }

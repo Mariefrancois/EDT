@@ -11,8 +11,13 @@
 package edt.Frame;
 
 import edt.Classe.Promotion;
+import edt.mysql.BD_MySQL;
+import edt.view.Donner;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,6 +25,7 @@ import java.sql.Timestamp;
  */
 public class NewPromotion extends javax.swing.JDialog {
     private Promotion promo;
+    private Donner donner;
     /** Creates new form NewPromotion */
     public NewPromotion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -30,6 +36,14 @@ public class NewPromotion extends javax.swing.JDialog {
     public NewPromotion(java.awt.Frame parent, String titre, boolean modal) {
         super(parent, titre, modal);
         initComponents();
+        this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
+    
+    }
+    public NewPromotion(java.awt.Frame parent, String titre, boolean modal,Donner donner, String etat, long id) {
+        super(parent, titre, modal);
+        initComponents();
+        init(etat,id);
+        this.donner = donner;
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     
     }
@@ -149,27 +163,72 @@ public class NewPromotion extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
-        // TODO add your handling code here:
-        
-        String date = this.d_debut.getText();
+private void refresh(){
+    this.nom.setText("");
+    this.annee.setText("");
+    this.d_debut.setText("jj/mm/aaaa");
+    this.d_fin.setText("jj/mm/aaaa");
+    this.donner.desactive_sup_modif();
+    this.promo = null;
+    this.donner.refreshPromotion();
+}
+private void creer(){
+        this.promo.setNom(this.nom.getText());
+        this.promo.setAnnee(Integer.parseInt(this.annee.getText()));
+        this.promo.setTsDebut(afficherTimestamp(this.d_debut.getText()));
+        this.promo.setTsFin(afficherTimestamp(this.d_fin.getText()));
+}  
+private Timestamp afficherTimestamp(String date){
         int an = Integer.parseInt(date.substring(6, 10));
         int mois = Integer.parseInt(date.substring(3, 5));
         int jour = Integer.parseInt(date.substring(0, 2));
-        Timestamp tsDebut = new Timestamp(an-1900,mois-1,jour,0,0,0,0);
-        date = this.d_debut.getText();
-        an = Integer.parseInt(date.substring(6, 10));
-        mois = Integer.parseInt(date.substring(3, 5));
-        jour = Integer.parseInt(date.substring(0, 2));
-       Timestamp tsfin = new Timestamp(an-1900,mois-1,jour,0,0,0,0);
-        this.promo = new Promotion(this.nom.getText(), Integer.parseInt(this.annee.getText()), tsDebut, tsfin);
-        this.promo.save();
-        this.dispose();
+        Timestamp ts = new Timestamp(an-1900,mois-1,jour,0,0,0,0);
+        return ts;
+}
+    private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
+        // TODO add your handling code here:
+        
+        BD_MySQL.init();
+        switch(etat){
+            case Promotion:
+                this.promo = new Promotion(this.nom.getText(), Integer.parseInt(this.annee.getText()), afficherTimestamp(this.d_debut.getText()), afficherTimestamp(this.d_fin.getText()));
+                this.promo.save();
+                refresh();
+                etat = Etat.Promotion;
+                break;
+            case Promotion1:
+                creer();
+                this.promo.save();
+                refresh();
+                this.dispose();
+                break;
+            case Promotion2:
+                this.promo = new Promotion(this.nom.getText(), Integer.parseInt(this.annee.getText()), afficherTimestamp(this.d_debut.getText()), afficherTimestamp(this.d_fin.getText()));
+                this.promo.save();
+                refresh();
+                this.dispose();
+                break;
+                
+        }
     }//GEN-LAST:event_validerActionPerformed
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         // TODO add your handling code here:
+        switch(etat){
+            case Promotion:
                 this.dispose();
+                this.donner.desactive_sup_modif();
+                break;
+            case Promotion1:
+                this.dispose();
+                this.donner.desactive_sup_modif();
+                break;
+            case Promotion2:
+                this.dispose();
+                this.donner.desactive_sup_modif();
+                break;
+                
+        }
     }//GEN-LAST:event_annulerActionPerformed
 
     /**
@@ -227,4 +286,36 @@ public class NewPromotion extends javax.swing.JDialog {
     private javax.swing.JTextField nom;
     private javax.swing.JButton valider;
     // End of variables declaration//GEN-END:variables
+    private enum Etat{
+        Promotion,
+        Promotion1,
+        Promotion2
+    }
+    private Etat etat;
+    public String afficherDate(Timestamp tim){
+        String date = String.valueOf(tim);
+        int an = Integer.parseInt(date.substring(0, 4));
+        int mois = Integer.parseInt(date.substring(5, 7));
+        int jour = Integer.parseInt(date.substring(8, 10));
+        return jour+"/"+mois+"/"+an;
+    }
+    public void init(String n,long id){
+        if(n.equals("Promotion"))
+            etat = Etat.Promotion;
+        else if (n.equals("Promotion2")){
+            etat = Etat.Promotion2;            
+        }
+        else if (n.equals("Promotion1")){
+            etat = Etat.Promotion1;
+            try {
+                this.promo = new Promotion(id);
+            } catch (SQLException ex) {
+                Logger.getLogger(New_Etudiant.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.nom.setText(this.promo.getNom());
+            this.annee.setText(String.valueOf(this.promo.getAnnee()));
+            this.d_debut.setText(afficherDate(this.promo.getTsDebut()));
+            this.d_fin.setText(afficherDate(this.promo.getTsFin()));
+        }
+    }
 }
