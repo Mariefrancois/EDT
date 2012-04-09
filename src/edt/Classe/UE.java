@@ -14,17 +14,17 @@ import java.sql.SQLException;
  * @author Marie
  */
 public class UE implements Model_JDBC {
-    private long id;
+    private int id;
     private String nom;
     private String intitule;
     private int nbHeuresCours;
     private int nbHeuresTD;
     private int nbHeuresTP;
     private int ECTS;
-    private long idPromotion;
+    private int idPromotion;
     private int idIntervenant;
     
-    public UE(String nom, String intitule, int nbHeuresCours, int nbHeuresTD, int nbHeuresTP, int ECTS, long idPromotion){
+    public UE(String nom, String intitule, int nbHeuresCours, int nbHeuresTD, int nbHeuresTP, int ECTS, int idPromotion){
         this.id = 0;
         this.nom = nom;
         this.intitule = intitule;
@@ -37,7 +37,7 @@ public class UE implements Model_JDBC {
     }
  
     
-    public UE(long id) throws SQLException{
+    public UE(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM UE WHERE id="+id);
         rs.next();
         this.id = rs.getInt("id");
@@ -51,7 +51,7 @@ public class UE implements Model_JDBC {
         this.idPromotion = rs.getInt("idPromotion");
     }
     
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -106,7 +106,7 @@ public class UE implements Model_JDBC {
         this.ECTS = ECTS;
     }
     
-    public long getIdPromotion() {
+    public int getIdPromotion() {
         return idPromotion;
     }
     
@@ -209,6 +209,12 @@ public class UE implements Model_JDBC {
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;                                      
+        BD_MySQL.init();
+
+        requete = "DELETE FROM UE "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
 }

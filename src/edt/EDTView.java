@@ -32,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EDTView extends FrameView {
     private NewPromotion newPromo;
-    private long id_promo;
+    private int id_promo;
     private Promotion promo;
     public void init(){
         BD_MySQL.init();
@@ -647,7 +647,7 @@ public class EDTView extends FrameView {
                 //interdit
                 break;
             case Debut1:
-                this.donner1.frame_UE();
+                this.donner1.frame_UE(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
                 this.donner1.desactive_sup_modif();
@@ -655,7 +655,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case UE:
-                this.donner1.frame_UE();
+                this.donner1.frame_UE(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
                 this.donner1.desactive_sup_modif();
@@ -663,7 +663,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Intervenant:
-                this.donner1.frame_UE();
+                this.donner1.frame_UE(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
                 this.donner1.desactive_sup_modif();
@@ -671,7 +671,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Salle:
-                this.donner1.frame_UE();
+                this.donner1.frame_UE(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
                 this.donner1.desactive_sup_modif();
@@ -679,7 +679,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Etudiant:
-                this.donner1.frame_UE();
+                this.donner1.frame_UE(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
                 this.donner1.desactive_sup_modif();
@@ -687,7 +687,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Creneau:
-                this.donner1.frame_UE();
+                this.donner1.frame_UE(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
                 this.donner1.desactive_sup_modif();
@@ -695,7 +695,7 @@ public class EDTView extends FrameView {
                 activeBouton();
                 break;
             case Batiment:
-                this.donner1.frame_UE();
+                this.donner1.frame_UE(this.id_promo);
                 this.donner1.setVisible(true);
                 this.donner1.setEtat("UE");
                 this.donner1.desactive_sup_modif();

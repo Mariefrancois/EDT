@@ -23,11 +23,11 @@ public class Etudiant implements Model_JDBC  {
     private String email;
     private String telephone;
     private boolean notificationsActives;
-    private long idPromotion;
+    private int idPromotion;
     private int idSpecialite;
     
     //c'est plus simple pour moi de me promener avec les int promo et int spe que avec les objets
-    public Etudiant(int num, String prenom, String nom, String email, String telephone, boolean notif, long promo, int spe){
+    public Etudiant(int num, String prenom, String nom, String email, String telephone, boolean notif, int promo, int spe){
         this.id = 0;
         this.numeroEtudiant = num;
         this.prenom = prenom;
@@ -39,7 +39,7 @@ public class Etudiant implements Model_JDBC  {
         this.idSpecialite = spe;//.getId();
     }
     
-    public Etudiant(long idEtudiant) throws SQLException{
+    public Etudiant(int idEtudiant) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Etudiant WHERE id="+idEtudiant);
         rs.next();
         this.id = rs.getInt("id");
@@ -65,7 +65,7 @@ public class Etudiant implements Model_JDBC  {
         return id;
     }
 
-    public long getIdPromotion() {
+    public int getIdPromotion() {
         return idPromotion;
     }
 

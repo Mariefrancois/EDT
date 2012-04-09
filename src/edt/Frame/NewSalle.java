@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class NewSalle extends javax.swing.JDialog {
     private Donner donner;
-    private long id;
+    private int id;
     private Salle salle;
     /** Creates new form NewSalle */
     public NewSalle(java.awt.Frame parent, boolean modal) {
@@ -32,7 +32,7 @@ public class NewSalle extends javax.swing.JDialog {
         initComponents();
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     }
-    public NewSalle(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id) {
+    public NewSalle(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, int id) {
         super(parent, titre, modal);
         initComponents(); 
         this.donner = donner;
@@ -458,7 +458,7 @@ private enum Etat{
         salle1
     }
     private Etat etat;
-    public void init(String n,long id){
+    public void init(String n,int id){
         if(n.equals("Salle"))
             etat = Etat.salle;
         else if (n.equals("Salle1")){

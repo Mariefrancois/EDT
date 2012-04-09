@@ -39,7 +39,7 @@ public class NewPromotion extends javax.swing.JDialog {
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     
     }
-    public NewPromotion(java.awt.Frame parent, String titre, boolean modal,Donner donner, String etat, long id) {
+    public NewPromotion(java.awt.Frame parent, String titre, boolean modal,Donner donner, String etat, int id) {
         super(parent, titre, modal);
         initComponents();
         init(etat,id);
@@ -299,7 +299,7 @@ private Timestamp afficherTimestamp(String date){
         int jour = Integer.parseInt(date.substring(8, 10));
         return jour+"/"+mois+"/"+an;
     }
-    public void init(String n,long id){
+    public void init(String n,int id){
         if(n.equals("Promotion"))
             etat = Etat.Promotion;
         else if (n.equals("Promotion2")){

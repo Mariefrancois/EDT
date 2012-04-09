@@ -27,7 +27,7 @@ public class New_Batiment extends javax.swing.JDialog {
         init("Batiment",0);
         initComponents();
     }
-    public New_Batiment(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id) {
+    public New_Batiment(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, int id) {
         super(parent,titre, modal);
         initComponents();
         init(etat,id);
@@ -244,7 +244,7 @@ private void creer(){
         Batiment1
     }
     private Etat etat;
-    public void init(String n,long id){
+    public void init(String n,int id){
         if(n.equals("Batiment"))
             etat = Etat.Batiment;
         else if (n.equals("Batiment1")){

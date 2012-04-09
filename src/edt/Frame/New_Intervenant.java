@@ -24,14 +24,14 @@ import java.util.logging.Logger;
  */
 public class New_Intervenant extends javax.swing.JDialog {
     private Donner donner;
-    private long id;
+    private int id;
     private Intervenant intervenant;
     /** Creates new form New_Intervenant */
     public New_Intervenant(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-    public New_Intervenant(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id) {
+    public New_Intervenant(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, int id) {
         super(parent,titre, modal);
         initComponents();
         init(etat,id);
@@ -487,7 +487,7 @@ private void creer(){
         Intervenant1
     }
     private Etat etat;
-    public void init(String n,long id){
+    public void init(String n,int id){
         if(n.equals("Intervenant"))
             etat = Etat.Intervenant;
         else if (n.equals("Intervenant1")){

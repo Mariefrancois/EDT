@@ -27,7 +27,7 @@ public class New_Creneau extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    public New_Creneau(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id) {
+    public New_Creneau(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, int id) {
         super(parent,titre, modal);
         initComponents();
         init(etat,id);
@@ -304,7 +304,7 @@ public class New_Creneau extends javax.swing.JDialog {
         Creneau1
     }
     private Etat etat;
-    public void init(String n,long id){
+    public void init(String n,int id){
         if(n.equals("Creneau"))
             etat = Etat.Creneau;
         else if (n.equals("Creneau1")){

@@ -34,8 +34,8 @@ public class Donner extends javax.swing.JPanel {
     private NewSalle salle;
     private New_Etudiant etud;
     private New_Batiment batiment;
-    private long id;
-    private long id_promo;
+    private int id;
+    private int id_promo;
     private ArrayList<Etudiant> list_etu;
     private ArrayList<UE> list_ue;
     private ArrayList<Salle> list_salle;
@@ -159,7 +159,7 @@ public class Donner extends javax.swing.JPanel {
                 //interdit
                 break;
             case UE1:
-                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE1",this.id);
+                ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE1",this.id,this.id_promo);
                 ued.setVisible(true);
                 etat = Etat.UE;
                 break;
@@ -298,12 +298,12 @@ public class Donner extends javax.swing.JPanel {
         // TODO add your handling code here:
         switch(etat){
             case UE:
-                this.ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0);
+                this.ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0,this.id_promo);
                 this.ued.setVisible(true);
                 etat = Etat.UE;
                 break;
             case UE1:
-                this.ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0);
+                this.ued = new New_UE(new java.awt.Frame(),"Ajouter une UE",true,this,"UE",0,this.id_promo);
                 this.ued.setVisible(true);
                 etat = Etat.UE;
                 break;
@@ -477,7 +477,7 @@ public class Donner extends javax.swing.JPanel {
             new String [] {});	
     jTable1.setModel(modell);
     try {
-        this.list_ue = BD_MySQL.liste_UE_promotion(4);
+        this.list_ue = BD_MySQL.liste_UE_promotion(this.id_promo);
     } catch (SQLException ex) {
         Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -492,9 +492,10 @@ public class Donner extends javax.swing.JPanel {
     ArrayList<Integer> listenbTD = list_nbtd_UE(this.list_ue); 
     modell.addColumn("NB Heure TD", listenbTD.toArray()); 
   }
- public void frame_UE(){
+ public void frame_UE(int id_promo){
     this.titre.setText("UE");
     this.ajouter.setText("Ajouter une UE");
+    this.id_promo = id_promo;
     refreshUE();
 }
 //******************
@@ -591,7 +592,7 @@ public ArrayList<String> list_email_etudiant(ArrayList<Etudiant> liste_etu){
         }
      return liste_etudiants_promotion;
 }
-public void frame_Etudiant(long id_promo){
+public void frame_Etudiant(int id_promo){
     this.titre.setText("Etudiant");
     this.ajouter.setText("Ajouter un Etudiant");
     this.id_promo = id_promo;
@@ -779,8 +780,8 @@ public void frame_Batiment() {
 }
 //**********************
 
-    private long id_Etudiant() {
-        long id = 0;
+    private int id_Etudiant() {
+        int id = 0;
         int ligne = jTable1.getSelectedRow();
         int netudiant = Integer.parseInt((jTable1.getValueAt(ligne,2)).toString());
         String nom = (jTable1.getValueAt(ligne,0)).toString();
@@ -792,8 +793,8 @@ public void frame_Batiment() {
         }
         return id;
     }
-private long id_UE() {
-        long id = 0;
+private int id_UE() {
+        int id = 0;
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,0)).toString();
         try {
@@ -803,8 +804,8 @@ private long id_UE() {
         }
         return id;
     }
-private long id_Salle() {
-        long id = 0;
+private int id_Salle() {
+        int id = 0;
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,1)).toString();
         String nomBatiment = (jTable1.getValueAt(ligne,0)).toString();
@@ -816,8 +817,8 @@ private long id_Salle() {
         }
         return id;
     }   
-private long id_Intervenant() {
-        long id = 0;
+private int id_Intervenant() {
+        int id = 0;
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,0)).toString();
         String nomPrenom = (jTable1.getValueAt(ligne,1)).toString();
@@ -829,8 +830,8 @@ private long id_Intervenant() {
         }
         return id;
     } 
-private long id_Batiment() {
-        long id = 0;
+private int id_Batiment() {
+        int id = 0;
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,0)).toString();
         try {
@@ -840,8 +841,8 @@ private long id_Batiment() {
         }
         return id;
     }  
-    private long id_Promotion() {
-        long id = 0;
+    private int id_Promotion() {
+        int id = 0;
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,0)).toString();
         try {

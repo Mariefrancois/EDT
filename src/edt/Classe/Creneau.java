@@ -13,15 +13,15 @@ import java.sql.SQLException;
  */
 public class Creneau implements Model_JDBC {
     
-    private long id;
+    private int id;
     private String nom;
     private int duree;
-    private long idType_Cours;
-    private long idSalle;
-    private long idIntervenant;
-    private long idUE;
+    private int idType_Cours;
+    private int idSalle;
+    private int idIntervenant;
+    private int idUE;
     
-    public Creneau (String nom, int duree, long idType_Cours, long idSalle, long idIntervenant, long idUE){
+    public Creneau (String nom, int duree, int idType_Cours, int idSalle, int idIntervenant, int idUE){
         this.id = 0;
         this.nom = nom;
         this.duree = duree;
@@ -31,16 +31,16 @@ public class Creneau implements Model_JDBC {
         this.idUE = idUE;
     }
     
-    public Creneau(long id) throws SQLException{
+    public Creneau(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Creneau WHERE id="+id);
         rs.next();
-        this.id = rs.getLong("id");
+        this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.duree = rs.getInt("duree");
-        this.idType_Cours = rs.getLong("idType_Cours");
-        this.idSalle = rs.getLong("idSalle");
-        this.idIntervenant = rs.getLong("idIntervenant");
-        this.idUE = rs.getLong("idUE");
+        this.idType_Cours = rs.getInt("idType_Cours");
+        this.idSalle = rs.getInt("idSalle");
+        this.idIntervenant = rs.getInt("idIntervenant");
+        this.idUE = rs.getInt("idUE");
     }
     @Override
     public void save() {
@@ -55,14 +55,14 @@ public class Creneau implements Model_JDBC {
     /**
      * @return the id
      */
-    public long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -97,56 +97,56 @@ public class Creneau implements Model_JDBC {
     /**
      * @return the idType_Cours
      */
-    public long getIdType_Cours() {
+    public int getIdType_Cours() {
         return idType_Cours;
     }
 
     /**
      * @param idType_Cours the idType_Cours to set
      */
-    public void setIdType_Cours(long idType_Cours) {
+    public void setIdType_Cours(int idType_Cours) {
         this.idType_Cours = idType_Cours;
     }
 
     /**
      * @return the idSalle
      */
-    public long getIdSalle() {
+    public int getIdSalle() {
         return idSalle;
     }
 
     /**
      * @param idSalle the idSalle to set
      */
-    public void setIdSalle(long idSalle) {
+    public void setIdSalle(int idSalle) {
         this.idSalle = idSalle;
     }
 
     /**
      * @return the idIntervenant
      */
-    public long getIdIntervenant() {
+    public int getIdIntervenant() {
         return idIntervenant;
     }
 
     /**
      * @param idIntervenant the idIntervenant to set
      */
-    public void setIdIntervenant(long idIntervenant) {
+    public void setIdIntervenant(int idIntervenant) {
         this.idIntervenant = idIntervenant;
     }
 
     /**
      * @return the idUE
      */
-    public long getIdUE() {
+    public int getIdUE() {
         return idUE;
     }
 
     /**
      * @param idUE the idUE to set
      */
-    public void setIdUE(long idUE) {
+    public void setIdUE(int idUE) {
         this.idUE = idUE;
     }
     

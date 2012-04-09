@@ -23,8 +23,9 @@ import java.util.logging.Logger;
  */
 public class New_UE extends javax.swing.JDialog {
     private Donner donner;
-    private long id;
+    private int id;
     private UE ue;
+    private int id_promo;
     /** Creates new form New_UE */
     public New_UE(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -37,11 +38,19 @@ public class New_UE extends javax.swing.JDialog {
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     
     }
-    public New_UE(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id) {
+    public New_UE(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, int id) {
         super(parent,titre, modal);
         initComponents();
         init(etat,id);
         this.donner = donner;
+        this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
+    }
+    public New_UE(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, int id,int id_promo) {
+        super(parent,titre, modal);
+        initComponents();
+        init(etat,id);
+        this.donner = donner;
+        this.id_promo = id_promo;
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     }
 
@@ -198,7 +207,7 @@ private void creer(){
         BD_MySQL.init();
         switch(etat){
             case UE:
-                this.ue = new UE(this.nom.getText(),this.intitule.getText(),Integer.parseInt(this.nb_cour.getText()),Integer.parseInt(this.nb_td.getText()),Integer.parseInt(this.nb_tp.getText()),3,4);
+                this.ue = new UE(this.nom.getText(),this.intitule.getText(),Integer.parseInt(this.nb_cour.getText()),Integer.parseInt(this.nb_td.getText()),Integer.parseInt(this.nb_tp.getText()),3,this.id_promo);
                 this.ue.save();
                 refresh();
                 etat = Etat.UE;
@@ -290,7 +299,7 @@ private void creer(){
         UE1    
     }
     private Etat etat;
-    public void init(String n,long id){
+    public void init(String n,int id){
         if(n.equals("UE"))
             etat = Etat.UE;
         else if (n.equals("UE1")){

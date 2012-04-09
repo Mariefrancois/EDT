@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class Inscription implements Model_JDBC{
     
-    private long idUE;
+    private int idUE;
     private int idEtudiant;
     
     public Inscription(UE ue, Etudiant etudiant){
@@ -25,7 +25,7 @@ public class Inscription implements Model_JDBC{
     /**
      * @return the idUE
      */
-    public long getIdUE() {
+    public int getIdUE() {
         return idUE;
     }
 

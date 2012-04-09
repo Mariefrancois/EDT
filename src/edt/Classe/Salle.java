@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * @author Marie
  */
 public class Salle implements Model_JDBC {
-    private long id;
+    private int id;
     private String nom;
     private int capacite;
     private String batiment;
@@ -27,7 +27,7 @@ public class Salle implements Model_JDBC {
         this.batiment = batiment;
     }
     
-    public Salle(long id) throws SQLException{
+    public Salle(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Salle WHERE id="+id);
         rs.next();
         this.id = rs.getInt("id");
@@ -36,7 +36,7 @@ public class Salle implements Model_JDBC {
         this.batiment = rs.getString("nomBatiment");
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

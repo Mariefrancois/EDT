@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class New_Etudiant extends javax.swing.JDialog {
     private Donner donner;
-    private long id_promo;
+    private int id_promo;
     private Etudiant etudiant;
     /** Creates new form New_Etudiant */
     public New_Etudiant(){
@@ -48,7 +48,7 @@ public class New_Etudiant extends javax.swing.JDialog {
         this.donner = donner;
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     }
-    public New_Etudiant(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, long id, long id_promo) {
+    public New_Etudiant(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, int id, int id_promo) {
         super(parent,titre, modal);
         initComponents();
         init(etat,id);
@@ -385,7 +385,7 @@ private void creer(){
         Etudiant1
     }
     private Etat etat;
-    public void init(String n,long id){
+    public void init(String n,int id){
         if(n.equals("Etudiant"))
             etat = Etat.Etudiant;
         else if (n.equals("Etudiant1")){

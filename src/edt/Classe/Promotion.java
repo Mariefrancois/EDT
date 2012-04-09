@@ -13,7 +13,7 @@ import java.sql.Timestamp;
  * @author Marie
  */
 public class Promotion implements Model_JDBC {
-    private long id;
+    private int id;
     private String nom;
     private int annee;
     private Timestamp tsDebut;
@@ -27,7 +27,7 @@ public class Promotion implements Model_JDBC {
         this.tsFin = tsFin;
     }
     
-    public Promotion(long id) throws SQLException{
+    public Promotion(int id) throws SQLException{
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Promotion WHERE id="+id);
         rs.next();
         this.id = rs.getInt("id");
@@ -37,7 +37,7 @@ public class Promotion implements Model_JDBC {
         this.tsFin = rs.getTimestamp("tsFin");
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
