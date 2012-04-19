@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BD_MySQL implements APIMain {
+public class BD_MySQL {
 
     /*
      * Il faudra mettre les informations de base de donnée 
@@ -331,25 +331,5 @@ public class BD_MySQL implements APIMain {
             liste_etudiants_promotion.add(new Etudiant(l));
         }
         return liste_etudiants_promotion;
-    }
-
-    @Override
-    public ArrayList<Integer> getListIdEtudiantBDD() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public ArrayList<Integer> getListeIdEnseignantBDD() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public ArrayList<Integer> getListeIdEDTBDD() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public ArrayList<Integer> getListIdUEBDD() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

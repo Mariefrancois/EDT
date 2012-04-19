@@ -13,29 +13,30 @@ import java.util.Date;
  * @author v-tech_master
  */
 public class Edt_MySQL extends BD_MySQL implements APIEdT{
+    
+    Request_MySQL bdd;
+
+    Edt_MySQL(Request_MySQL request) {
+        this.bdd = request;
+    }
 
     @Override
-    public Date getDebutPlageHoraireBDD(int id) {
+    public Date getDebutPlageHoraireBDD(int idCours) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Date getFinPlageHoraireBDD(int id) {
+    public Date getFinPlageHoraireBDD(int idCours) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public String getTypeCoursPlageHoraireBDD(int id) {
+    public String getTypeCoursPlageHoraireBDD(int idCours) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void savePlageHoraireBDD(Date deb, Date fin, String type) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public int getIdEDTBDD() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -60,23 +61,28 @@ public class Edt_MySQL extends BD_MySQL implements APIEdT{
     }
 
     @Override
-    public void saveEDT(int idEDT, int numeroEDT, Date debSem, Date finSem, ArrayList<Integer> creneauNonExp, ArrayList<Integer> listeHoraire) {
+    public void saveContrainteEDT(Date debSem, Date finSem) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Date getCreneauExploiteDebBDD(int id) {
+    public Date getCreneauExploiteDebBDD(int idJourNonOuvrable) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Date getCreneauExploiteFinBDD(int id) {
+    public Date getCreneauExploiteFinBDD(int idJourNonOuvrable) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public String getTypeCreneauNonExploitableBDD(int id) {
+    public String getTypeCreneauNonExploitableBDD(int idJourNonOuvrable) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+   
+
+    
+    
     
 }

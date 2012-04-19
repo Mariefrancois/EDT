@@ -14,6 +14,12 @@ import java.util.Date;
  */
 public class Enseignant_MySQL extends BD_MySQL implements APIEnseignant {
 
+    Request_MySQL bdd;
+    
+    Enseignant_MySQL(Request_MySQL request) {
+        this.bdd = request;
+    }
+
     @Override
     public ArrayList<Integer> getListeIdSeanceEnseignantBDD(int id) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -38,5 +44,7 @@ public class Enseignant_MySQL extends BD_MySQL implements APIEnseignant {
     public void savContrainteDispo(int id, Date deb, Date fin) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    
     
 }

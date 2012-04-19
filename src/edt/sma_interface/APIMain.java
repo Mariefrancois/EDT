@@ -10,7 +10,7 @@ public interface APIMain {
 	public ArrayList<Integer> getListeIdEnseignantBDD();
 
 	/* Retourne la liste des id des emplois du temps generee */
-	public ArrayList<Integer> getListeIdEDTBDD();
+	//public ArrayList<Integer> getListeIdEDTBDD();
 
 	/* Retourne la liste des id des UEs */
 	public ArrayList<Integer> getListIdUEBDD();

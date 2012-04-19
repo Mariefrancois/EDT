@@ -12,6 +12,12 @@ import java.util.ArrayList;
  * @author v-tech_master
  */
 public class Etudiant_MySQL extends BD_MySQL implements APIEtudiant {
+    
+    Request_MySQL bdd;
+
+    Etudiant_MySQL(Request_MySQL request) {
+        this.bdd = request;
+    }
 
     @Override
     public ArrayList<Integer> getIdUESuivitBDD(int idEtudiant) {

@@ -12,60 +12,60 @@ import java.util.ArrayList;
  * @author v-tech_master
  */
 public class Cours_MySQL extends BD_MySQL implements APICours {
+    
+    Request_MySQL bdd;
+
+    Cours_MySQL(Request_MySQL request) {
+        this.bdd = request;
+    }
 
     @Override
-    public int getNbCoursBDD(int idUE) {
+    public ArrayList<Integer> getidSeanceCoursBDD(int idUE) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public int getNbTdBDD(int idUE) {
+    public ArrayList<Integer> getidSeanceTdBDD(int idUE) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public int getNbTpBDD(int idUE) {
+    public ArrayList<Integer> getidSeanceTpBDD(int idUE) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public ArrayList<Integer> getIdSeanceBDD(int idUE) {
+    public int getIdPrecedentSeanceBDD(int idSeance) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public int getIdPrecedentSeanceBDD(int id) {
+    public int getDureeSeanceBDD(int idSeance) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public int getDureeSeanceBDD(int id) {
+    public int getCapaciteSeanceBDD(int idSeance) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public int getCapaciteSeanceBDD(int id) {
+    public int getTypeSeanceBDD(int idSeance) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public int getTypeSeanceBDD(int id) {
+    public boolean getEffectueeSeanceBDD(int idSeance) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean getEffectueeSeanceBDD(int id) {
+    public ArrayList<Integer> getListeIdContrainteSalleSeanceBDD(int idSeance) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public ArrayList<Integer> getListeIdContrainteSalleSeanceBDD() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    
 
-    @Override
-    public void saveSeance(int IDseance, int IDprecedent, int IDduree, int IDcapacite, int IDtype, boolean Effect, ArrayList<Integer> IDcontrainteSalle) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    
     
 }
