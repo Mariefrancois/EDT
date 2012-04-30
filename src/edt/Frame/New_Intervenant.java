@@ -10,13 +10,17 @@
  */
 package edt.Frame;
 
+import edt.Classe.Creneau_Intervenant;
 import edt.Classe.Intervenant;
 import edt.mysql.BD_MySQL;
 import edt.view.Donner;
 import java.awt.Toolkit;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,6 +30,8 @@ public class New_Intervenant extends javax.swing.JDialog {
     private Donner donner;
     private int id;
     private Intervenant intervenant;
+    private Creneau_Intervenant creneauInt;
+    private ArrayList<Creneau_Intervenant> list_creneauInter;
     /** Creates new form New_Intervenant */
     public New_Intervenant(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -64,11 +70,11 @@ public class New_Intervenant extends javax.swing.JDialog {
         periode = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         h_debut = new javax.swing.JComboBox();
-        jComboBox1 = new javax.swing.JComboBox();
+        h_fin = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
-        jComboBox3 = new javax.swing.JComboBox();
+        m_debut = new javax.swing.JComboBox();
+        m_fin = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         ajout_dispo = new javax.swing.JButton();
@@ -96,6 +102,7 @@ public class New_Intervenant extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Nom");
         jLabel1.setName("jLabel1");
@@ -138,9 +145,14 @@ public class New_Intervenant extends javax.swing.JDialog {
 
         h_debut.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
         h_debut.setName("h_debut");
+        h_debut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                h_debutActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
-        jComboBox1.setName("jComboBox1");
+        h_fin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        h_fin.setName("h_fin");
 
         jLabel10.setText("h");
         jLabel10.setName("jLabel10");
@@ -148,25 +160,33 @@ public class New_Intervenant extends javax.swing.JDialog {
         jLabel11.setText("h");
         jLabel11.setName("jLabel11");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "15", "30", "45" }));
-        jComboBox2.setName("jComboBox2");
+        m_debut.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "15", "30", "45" }));
+        m_debut.setName("m_debut");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "15", "30", "45" }));
-        jComboBox3.setName("jComboBox3");
+        m_fin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "15", "30", "45" }));
+        m_fin.setName("m_fin");
 
         jScrollPane2.setName("jScrollPane2");
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Date", "Heure Début", "Heure Fin"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable2.setName("jTable2");
         jScrollPane2.setViewportView(jTable2);
 
@@ -226,13 +246,13 @@ public class New_Intervenant extends javax.swing.JDialog {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel10)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(m_debut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(h_fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel11)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(m_fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -321,12 +341,12 @@ public class New_Intervenant extends javax.swing.JDialog {
                     .addComponent(jLabel5)
                     .addComponent(h_debut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(m_debut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(h_fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(m_fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
@@ -337,9 +357,9 @@ public class New_Intervenant extends javax.swing.JDialog {
                     .addComponent(jLabel8)
                     .addComponent(periode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(ajout_dispo)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -355,9 +375,61 @@ private void refresh(){
     this.nom.setText("");
     this.email.setText("");
     this.telephone.setText("");
+    this.periode.setText("jj/mm/aaaa");
+    this.date.setText("");
+    this.recurrence.setSelected(false);
     this.donner.desactive_sup_modif();
     this.intervenant = null;
     this.donner.refreshIntervenant();
+}
+ public ArrayList<String> list_Date(ArrayList<Creneau_Intervenant> liste_CI){
+     ArrayList<String> list_Date = new ArrayList();
+     for (Creneau_Intervenant l : liste_CI) {
+            list_Date.add(afficherDate(l.getTsDebut()));
+        }
+     return list_Date;
+}
+ public ArrayList<String> list_Heure_Debut(ArrayList<Creneau_Intervenant> liste_CI){
+     ArrayList<String> list_Heure_Debut = new ArrayList();
+     for (Creneau_Intervenant l : liste_CI) {
+            list_Heure_Debut.add(afficherHeure(l.getTsDebut()));
+        }
+     return list_Heure_Debut;
+}
+ public ArrayList<String> list_Heure_Fin(ArrayList<Creneau_Intervenant> liste_CI){
+     ArrayList<String> list_Heure_Fin = new ArrayList();
+     for (Creneau_Intervenant l : liste_CI) {
+            list_Heure_Fin.add(afficherHeure(l.getTsFin()));
+        }
+     return list_Heure_Fin;
+ }
+private void refreshRecurence(){
+    
+    this.date.setText("jj/mm/aaaa");
+    this.periode.setText("");
+    this.recurrence.setSelected(false);
+//    this.donner.desactive_sup_modif();
+  //  this.donner.refreshIntervenant();
+  //  this.jTable1.doLayout();
+    DefaultTableModel modell = new DefaultTableModel(
+            new Object [4][5] ,
+            new String [] {});	
+    this.jTable2.setModel(modell);
+    try {
+        this.list_creneauInter = Creneau_Intervenant.liste_Creneau_Intervenant(this.intervenant.getId());
+    } catch (SQLException ex) {
+        Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    ArrayList<String> listeDate = list_Date(this.list_creneauInter); 
+    modell.addColumn("Date", listeDate.toArray()); 
+    System.out.println(listeDate);
+    ArrayList<String> listeheuredebut = list_Heure_Debut(this.list_creneauInter); 
+    modell.addColumn("Heure Début", listeheuredebut.toArray()); 
+    System.out.println(listeheuredebut);
+    ArrayList<String> listheureFin = list_Heure_Fin(this.list_creneauInter); 
+    modell.addColumn("Heure Fin", listheureFin.toArray()); 
+    System.out.println(listheureFin);
 }
 private void creer(){
         this.intervenant.setNom(this.nom.getText());
@@ -365,9 +437,64 @@ private void creer(){
         this.intervenant.setTelephone(this.telephone.getText());
         this.intervenant.setEmail(this.email.getText());
 }
+public String afficherHeure(Timestamp tim){
+    String date = String.valueOf(tim);
+    int h = Integer.parseInt(date.substring(11,13));
+    int min = Integer.parseInt(date.substring(14, 16));
+    return h+" h "+min;
+}
+public String afficherDate(Timestamp tim){
+    String date = String.valueOf(tim);
+    int an = Integer.parseInt(date.substring(0, 4));
+    int mois = Integer.parseInt(date.substring(5, 7));
+    int jour = Integer.parseInt(date.substring(8, 10));
+    return jour+"/"+mois+"/"+an;
+}
+private Timestamp afficherTimestamp(String date,int heure, int minute, int recu){
+        int an = Integer.parseInt(date.substring(6, 10));
+        int mois = Integer.parseInt(date.substring(3, 5));
+        int jour = Integer.parseInt(date.substring(0, 2));
+        Timestamp ts = new Timestamp(an-1900,mois-1,jour+recu,heure,minute,0,0);
+        return ts;
+}
     private void ajout_dispoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajout_dispoActionPerformed
         // TODO add your handling code here:
-        
+        int n;
+        switch(etat){
+            case Intervenant:
+                this.intervenant = new Intervenant(this.nom.getText(),this.prenom.getText(),this.email.getText(),this.telephone.getText(),true,true);
+                this.intervenant.save();
+                n = 1;
+                if(this.recurrence.isSelected()){
+                    n = Integer.parseInt(this.periode.getText());
+                }
+                for(int i = 0;i< n; i++){
+                    this.creneauInt = new Creneau_Intervenant(
+                            this.intervenant.getId(),
+                            afficherTimestamp(this.date.getText(), Integer.parseInt(this.h_debut.getSelectedItem().toString()), Integer.parseInt(this.m_debut.getSelectedItem().toString()), i*7),
+                            afficherTimestamp(this.date.getText(), Integer.parseInt(this.h_fin.getSelectedItem().toString()), Integer.parseInt(this.m_fin.getSelectedItem().toString()), i*7));
+                    this.creneauInt.save();
+                }
+                refreshRecurence();
+                this.etat = Etat.Intervenant1;
+                break;
+            case Intervenant1:
+                n = 1;
+                if(this.recurrence.isSelected()){
+                    n = Integer.parseInt(this.periode.getText());
+                }
+                for(int i = 0;i< n; i++){
+                    this.creneauInt = new Creneau_Intervenant(
+                            this.intervenant.getId(),
+                            afficherTimestamp(this.date.getText(), Integer.parseInt(this.h_debut.getSelectedItem().toString()), Integer.parseInt(this.m_debut.getSelectedItem().toString()), i*7),
+                            afficherTimestamp(this.date.getText(), Integer.parseInt(this.h_fin.getSelectedItem().toString()), Integer.parseInt(this.m_fin.getSelectedItem().toString()), i*7));
+                    this.creneauInt.save();
+                }
+                refreshRecurence();
+                this.etat = Etat.Intervenant1;
+                break;
+                
+        }
     }//GEN-LAST:event_ajout_dispoActionPerformed
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
@@ -404,6 +531,10 @@ private void creer(){
                 
         }
     }//GEN-LAST:event_validerActionPerformed
+
+    private void h_debutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_h_debutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_h_debutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -454,9 +585,7 @@ private void creer(){
     private javax.swing.JTextField date;
     private javax.swing.JTextField email;
     private javax.swing.JComboBox h_debut;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
+    private javax.swing.JComboBox h_fin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -474,6 +603,8 @@ private void creer(){
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JComboBox m_debut;
+    private javax.swing.JComboBox m_fin;
     private javax.swing.JTextField nom;
     private javax.swing.JTextField periode;
     private javax.swing.JTextField prenom;
@@ -501,6 +632,7 @@ private void creer(){
             this.prenom.setText(intervenant.getPrenom());
             this.email.setText(intervenant.getEmail());
             this.telephone.setText(intervenant.getTelephone());
+            refreshRecurence();
         }
     }
 }

@@ -332,4 +332,24 @@ public class BD_MySQL {
         }
         return liste_etudiants_promotion;
     }
+    public static ArrayList<Integer> liste_id_cours_promotion(int idPromotion) throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Integer> liste_id_cours_promotion = new ArrayList();
+        String requete = "SELECT id FROM Cours ;";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        while(rs.next()){
+            liste_id_cours_promotion.add(rs.getInt("id"));
+        }
+        return liste_id_cours_promotion;
+    }
+    
+    public static ArrayList<Cours> liste_Cours_promotion(int idPromotion) throws SQLException{
+        ArrayList<Cours> liste_Cours_promotion = new ArrayList();
+        ArrayList<Integer> liste_id_cours_promotion = liste_id_cours_promotion(idPromotion);
+        for (int l : liste_id_cours_promotion) {
+            liste_Cours_promotion.add(new Cours(l));
+        }
+        return liste_Cours_promotion;
+    }
+    
 }

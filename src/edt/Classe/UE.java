@@ -7,6 +7,7 @@ package edt.Classe;
 import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 /**
@@ -216,5 +217,37 @@ public class UE implements Model_JDBC {
                 +" WHERE id='"+this.id+"';";
         
         this.id = BD_MySQL.executer_update(requete);
+    }
+    public static int id_UE_promotion(String nom, int idPromotion) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM UE WHERE nom='"+nom+"'AND idPromotion="+idPromotion+";";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        rs.next();
+        return rs.getInt("id");
+    }
+    public static ArrayList<UE> liste_UE_promotion(int idPromotion) throws SQLException{
+        ArrayList<UE> liste_UE_promotion = new ArrayList();
+        ArrayList<Integer> liste_id_UE_promotion = liste_id_UE_promotion(idPromotion);
+        for (int l : liste_id_UE_promotion) {
+            liste_UE_promotion.add(new UE(l));
+        }
+        return liste_UE_promotion;
+    }
+    public static ArrayList<Integer> liste_id_UE_promotion(int idPromotion) throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Integer> liste_id_UE_promotion = new ArrayList();
+        String requete = "SELECT id FROM UE WHERE idPromotion="+idPromotion+" ORDER BY nom, intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS;";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        while(rs.next()){
+            liste_id_UE_promotion.add(rs.getInt("id"));
+        }
+        return liste_id_UE_promotion;
+    }
+    public static String nomUE(int id) throws SQLException{
+         BD_MySQL.init();
+         String requete = "SELECT nom FROM UE WHERE id="+id+" ORDER BY  intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS;";
+         ResultSet rs = BD_MySQL.executer_requete(requete);
+         rs.next();
+         return rs.getString("nom");
     }
 }

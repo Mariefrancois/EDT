@@ -5,9 +5,10 @@
 package edt.Classe;
 
 import edt.mysql.BD_MySQL;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 /**
@@ -37,8 +38,8 @@ public class Cours implements Model_JDBC {
         ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Cours WHERE id="+id);
         rs.next();
         this.id = rs.getInt("id");
-        //this.tsDebut = (Timestamp) rs.getString("tsDebut");
-        //this.tsFin = rs.getString("tsFin");
+        this.tsDebut = rs.getTimestamp("tsDebut");
+        this.tsFin = rs.getTimestamp("tsFin");
         this.idUE = rs.getInt("idUE");
         this.idSalle = rs.getInt("idSalle");
         this.idIntervenant = rs.getInt("idIntervenant");
@@ -205,6 +206,24 @@ public class Cours implements Model_JDBC {
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-  
+    
+    public static ArrayList<Integer> liste_id_cours_promotion(int idPromotion) throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Integer> liste_id_cours_promotion = new ArrayList();
+        String requete = "SELECT id FROM Cours ORDER BY idUE, idSalle, idIntervenant, idTypeCours, tsDebut, tsFin;";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        while(rs.next()){
+            liste_id_cours_promotion.add(rs.getInt("id"));
+        }
+        return liste_id_cours_promotion;
+    }
+    
+    public static ArrayList<Cours> liste_Cours_promotion(int idPromotion) throws SQLException{
+        ArrayList<Cours> liste_Cours_promotion = new ArrayList();
+        ArrayList<Integer> liste_id_cours_promotion = liste_id_cours_promotion(idPromotion);
+        for (int l : liste_id_cours_promotion) {
+            liste_Cours_promotion.add(new Cours(l));
+        }
+        return liste_Cours_promotion;
+    }
 }

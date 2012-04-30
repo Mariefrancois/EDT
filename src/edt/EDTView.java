@@ -188,7 +188,20 @@ public class EDTView extends FrameView {
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
         titre = new javax.swing.JLabel();
+		
+		
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jTabbedPane7 = new javax.swing.JTabbedPane();
+        jTabbedPane8 = new javax.swing.JTabbedPane();
 
+        jTabbedPane1.addTab("tab1", jTabbedPane2);
+        jTabbedPane1.addTab("tab2", jTabbedPane7);
+        jTabbedPane1.addTab("tab3", jTabbedPane8);
+
+		edt = new edt.view.Affichage_edt();
+		jTabbedPane1.addTab("tab1",edt);
+		
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setVerifyInputWhenFocusTarget(false);
 
@@ -331,7 +344,9 @@ public class EDTView extends FrameView {
                 .addContainerGap())
 			.addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(170, 170, 170)
-                .addComponent(titre)
+				.addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+					.addComponent(titre)
+					.addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(210, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -366,9 +381,12 @@ public class EDTView extends FrameView {
 			.addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(titre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(100, Short.MAX_VALUE))
         );
 		mainPanel.add(titre);
+		mainPanel.add(jTabbedPane1);
         menuBar.setName("menuBar"); // NOI18N
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
@@ -1077,6 +1095,11 @@ public class EDTView extends FrameView {
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JLabel titre;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane7;
+    private javax.swing.JTabbedPane jTabbedPane8;
+	private edt.view.Affichage_edt edt;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
