@@ -42,6 +42,7 @@ public class Donner extends javax.swing.JPanel {
     private ArrayList<Intervenant> list_inter;
     private ArrayList<Promotion> list_promo;
     private NewPromotion promotion;
+    private New_Seance creneau;
     /** Creates new form Donner */
     public Donner() {
         initComponents();
@@ -203,6 +204,14 @@ public class Donner extends javax.swing.JPanel {
                 this.promotion.setVisible(true);
                 etat = Etat.Promotion;
                 break;
+            case Creneau:
+                //interdit
+                break;
+            case Creneau1:
+                this.creneau = new New_Seance(new java.awt.Frame(),"Ajouter une Creneau",true,this,"Creneau1",this.id, this.id_promo);
+                this.creneau.setVisible(true);
+                etat = Etat.Creneau;
+                break;
         }
  }
  
@@ -292,6 +301,20 @@ public class Donner extends javax.swing.JPanel {
                 refreshPromotion();
                 etat = Etat.Promotion;
                 break;
+            case Creneau:
+                //interdit
+                break;
+            case Creneau1:
+                Seance seance = null;
+                try {
+                   seance = new Seance(this.id);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                seance.delete();
+                refreshPromotion();
+                etat = Etat.Creneau;
+                break;
         }
  }
  private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {                                   
@@ -349,13 +372,23 @@ public class Donner extends javax.swing.JPanel {
                 break;
             case Promotion:
                 this.promotion = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this,"Promotion",0);
-                this.batiment.setVisible(true);
+                this.promotion.setVisible(true);
                 etat = Etat.Promotion;
                 break;
             case Promotion1:
                 this.promotion = new NewPromotion(new java.awt.Frame(),"Ajouter une Promotion",true,this,"Promotion",0);
-                this.batiment.setVisible(true);
+                this.promotion.setVisible(true);
                 etat = Etat.Promotion;
+                break;
+            case Creneau:
+                this.creneau = new New_Seance(new java.awt.Frame(),"Ajouter une Seance",true,this,"Creneau",0, this.id_promo);
+                this.creneau.setVisible(true);
+                etat = Etat.Creneau;
+                break;
+            case Creneau1:
+                this.creneau = new New_Seance(new java.awt.Frame(),"Ajouter une Seance",true,this,"Creneau",0, this.id_promo);
+                this.creneau.setVisible(true);
+                etat = Etat.Creneau;
                 break;
         }
     } 
@@ -432,16 +465,20 @@ public class Donner extends javax.swing.JPanel {
                 active_sup_modif();
                 etat = Etat.Promotion1;
                 break;
+            case Creneau:
+                this.id = id_Creneau();
+                active_sup_modif();
+                etat = Etat.Creneau1;
+                break;
+            case Creneau1:
+                this.id = id_Creneau();
+                active_sup_modif();
+                etat = Etat.Creneau1;
+                break;
         }
     }
  //Tableau UE***************
- public ArrayList<String> list_nom_UE(ArrayList<UE> liste_ue){
-     ArrayList<String> liste_UE_promotion = new ArrayList();
-     for (UE l : liste_ue) {
-            liste_UE_promotion.add(l.getNom());
-        }
-     return liste_UE_promotion;
-}
+
  public ArrayList<String> list_intitule_UE(ArrayList<UE> liste_ue){
      ArrayList<String> liste_UE_promotion = new ArrayList();
      for (UE l : liste_ue) {
@@ -481,7 +518,7 @@ public class Donner extends javax.swing.JPanel {
     } catch (SQLException ex) {
         Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
     }
-    ArrayList<String> listenom = list_nom_UE(this.list_ue); 
+    ArrayList<String> listenom = UE.list_nom_UE(this.id_promo); 
     modell.addColumn("Nom", listenom.toArray()); 
     ArrayList<String> listeintitule = list_intitule_UE(this.list_ue); 
     modell.addColumn("Intitule", listeintitule.toArray()); 
@@ -780,6 +817,78 @@ public void frame_Batiment() {
 }
 //**********************
 
+//Tableau Seance ************
+ public ArrayList<String> list_nom_Seance(ArrayList<Seance> list_sea){
+     ArrayList<String> list_nom_Seance = new ArrayList();
+     for (Seance l : list_sea) {
+            list_nom_Seance.add(l.getNom());
+        }
+     return list_nom_Seance;
+} 
+ public ArrayList<String> list_UE_Seance(ArrayList<Seance> list_sea){
+     ArrayList<String> list_UE_Seance = new ArrayList();
+     for (Seance l : list_sea) {
+            try {
+                list_UE_Seance.add(UE.nomUE(l.getIdUE()));
+            } catch (SQLException ex) {
+                Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+     return list_UE_Seance;
+}
+ public ArrayList<String> list_Intervenant_Seance(ArrayList<Seance> list_sea){
+     ArrayList<String> list_Intervenant_Seance = new ArrayList();
+     for (Seance l : list_sea) {
+            try {
+                list_Intervenant_Seance.add(Intervenant.nomIntervenant(l.getIdIntervenant()));
+            } catch (SQLException ex) {
+                Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+     return list_Intervenant_Seance;
+}
+ public ArrayList<String> list_Precedent_Seance(ArrayList<Seance> list_sea){
+     ArrayList<String> list_Precedent_Seance = new ArrayList();
+     for (Seance l : list_sea) {
+            try {
+                list_Precedent_Seance.add(Seance.nomSeance(l.getIdSeancePrecedente()));
+            } catch (SQLException ex) {
+                Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+     return list_Precedent_Seance;
+}
+public void refreshSeance() {
+    this.jTable1.doLayout();
+    DefaultTableModel modell = new DefaultTableModel(
+            new Object [4][5] ,
+            new String [] {});	
+    jTable1.setModel(modell);
+    ArrayList<Seance> list_seance = null;
+    try {
+        list_seance = Seance.liste_Seance();
+    } catch (SQLException ex) {
+        Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    ArrayList<String> listeUE = list_UE_Seance(list_seance); 
+    modell.addColumn("UE", listeUE.toArray()); 
+    ArrayList<String> listeNom = list_nom_Seance(list_seance); 
+    modell.addColumn("Nom", listeNom.toArray()); 
+    ArrayList<String> listePrecedent = list_Precedent_Seance(list_seance); 
+    modell.addColumn("Précédent", listePrecedent.toArray()); 
+    ArrayList<String> listeIntervenant = list_Intervenant_Seance(list_seance); 
+    modell.addColumn("Intervenant", listeIntervenant.toArray());
+    
+}
+public void frame_Seance(int id_promo) {
+    this.titre.setText("Séance");
+    this.ajouter.setText("Ajouter une Séance");
+    this.id_promo = id_promo;
+    refreshSeance();
+    
+}
+//**********************
+
     private int id_Etudiant() {
         int id = 0;
         int ligne = jTable1.getSelectedRow();
@@ -841,12 +950,23 @@ private int id_Batiment() {
         }
         return id;
     }  
-    private int id_Promotion() {
+private int id_Promotion() {
         int id = 0;
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,0)).toString();
         try {
             id = BD_MySQL.id_Promotion(nom);
+        } catch (SQLException ex) {
+            Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+private int id_Creneau() {
+        int id = 0;
+        int ligne = jTable1.getSelectedRow();
+        String nom = (jTable1.getValueAt(ligne,0)).toString();
+        try {
+            id = Seance.id_Creneau(nom);
         } catch (SQLException ex) {
             Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
         }

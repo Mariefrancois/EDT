@@ -8,6 +8,8 @@ import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -249,5 +251,18 @@ public class UE implements Model_JDBC {
          ResultSet rs = BD_MySQL.executer_requete(requete);
          rs.next();
          return rs.getString("nom");
+    }
+     public static ArrayList<String> list_nom_UE(int id_promo) {
+        ArrayList<UE> list_ue = null;
+        try {
+            list_ue = liste_UE_promotion(id_promo);
+        } catch (SQLException ex) {
+            Logger.getLogger(UE.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ArrayList<String> liste_UE_promotion = new ArrayList();
+        for (UE l : list_ue) {
+                liste_UE_promotion.add(l.getNom());
+            }
+        return liste_UE_promotion;
     }
 }

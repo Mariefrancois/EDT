@@ -7,6 +7,9 @@ package edt.Classe;
 import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -132,4 +135,52 @@ public class Intervenant implements Model_JDBC {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
+    public static String nomIntervenant(int id) throws SQLException{
+         BD_MySQL.init();
+         String requete = "SELECT nom FROM Intervenant WHERE id="+id+" ORDER BY  email, telephone, notificationsactives, actif;";
+         ResultSet rs = BD_MySQL.executer_requete(requete);
+         rs.next();
+         return rs.getString("nom")+" "+rs.getString("prenom");
+    }
+    
+    public static ArrayList<Integer> liste_id_Intervenant() throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Integer> liste_id_Intervenant = new ArrayList();
+        String requete = "SELECT id FROM Intervenant ORDER BY nom, prenom, email;";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        while(rs.next()){
+            liste_id_Intervenant.add(rs.getInt("id"));
+        }
+        return liste_id_Intervenant;
+    }
+    
+    public static int id_Intervenant(String nom, String nomPrenom, String email) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM Intervenant WHERE nom='"+nom+"' AND prenom='"+nomPrenom+"' AND email='"+email+"';";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        rs.next();
+        return rs.getInt("id");
+    }
+    public static ArrayList<String> list_nom_Intervenant() {
+        ArrayList<Intervenant> list_Intervenant = null;
+        try {
+            list_Intervenant = liste_Intervenant();
+        } catch (SQLException ex) {
+            Logger.getLogger(UE.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ArrayList<String> liste_nom_Intervenant = new ArrayList();
+        for (Intervenant l : list_Intervenant) {
+                liste_nom_Intervenant.add(l.getNom()+" "+l.getPrenom());
+            }
+        return liste_nom_Intervenant;
+    }
+    
+    public static ArrayList<Intervenant> liste_Intervenant() throws SQLException{
+        ArrayList<Intervenant> liste_intervenant = new ArrayList();
+        ArrayList<Integer> liste_id_intervenant = liste_id_Intervenant();
+        for (int l : liste_id_intervenant) {
+            liste_intervenant.add(new Intervenant(l));
+        }
+        return liste_intervenant;
+    }
 }

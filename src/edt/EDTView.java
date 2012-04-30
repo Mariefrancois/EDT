@@ -874,59 +874,59 @@ public class EDTView extends FrameView {
                 //interdit
                 break;
             case Debut1:
-                this.donner1.frame_Etudiant(this.id_promo);
+                this.donner1.frame_Seance(this.id_promo);
                 this.donner1.setVisible(true);
-                this.donner1.setEtat("Etudiant");
+                this.donner1.setEtat("Creneau");
                 this.donner1.desactive_sup_modif();
-                etat = Etat.Etudiant;
+                etat = Etat.Creneau;
                 activeBouton();
                 break;
             case UE:
-                this.donner1.frame_Etudiant(this.id_promo);
+                this.donner1.frame_Seance(this.id_promo);
                 this.donner1.setVisible(true);
-                this.donner1.setEtat("Etudiant");
+                this.donner1.setEtat("Creneau");
                 this.donner1.desactive_sup_modif();
-                etat = Etat.Etudiant;
+                etat = Etat.Creneau;
                 activeBouton();
                 break;
             case Intervenant:
-                this.donner1.frame_Etudiant(this.id_promo);
+                this.donner1.frame_Seance(this.id_promo);
                 this.donner1.setVisible(true);
-                this.donner1.setEtat("Etudiant");
+                this.donner1.setEtat("Creneau");
                 this.donner1.desactive_sup_modif();
-                etat = Etat.Etudiant;
+                etat = Etat.Creneau;
                 activeBouton();
                 break;
             case Salle:
-                this.donner1.frame_Etudiant(this.id_promo);
+                this.donner1.frame_Seance(this.id_promo);
                 this.donner1.setVisible(true);
-                this.donner1.setEtat("Etudiant");
+                this.donner1.setEtat("Creneau");
                 this.donner1.desactive_sup_modif();
-                etat = Etat.Etudiant;
+                etat = Etat.Creneau;
                 activeBouton();
                 break;
             case Etudiant:
-                this.donner1.frame_Etudiant(this.id_promo);
+                this.donner1.frame_Seance(this.id_promo);
                 this.donner1.setVisible(true);
-                this.donner1.setEtat("Etudiant");
+                this.donner1.setEtat("Creneau");
                 this.donner1.desactive_sup_modif();
-                etat = Etat.Etudiant;
+                etat = Etat.Creneau;
                 activeBouton();
                 break;
             case Creneau:
-                this.donner1.frame_Etudiant(this.id_promo);
+                this.donner1.frame_Seance(this.id_promo);
                 this.donner1.setVisible(true);
-                this.donner1.setEtat("Etudiant");
+                this.donner1.setEtat("Creneau");
                 this.donner1.desactive_sup_modif();
-                etat = Etat.Etudiant;
+                etat = Etat.Creneau;
                 activeBouton();
                 break;
             case Batiment:
-                this.donner1.frame_Etudiant(this.id_promo);
+                this.donner1.frame_Seance(this.id_promo);
                 this.donner1.setVisible(true);
-                this.donner1.setEtat("Etudiant");
+                this.donner1.setEtat("Creneau");
                 this.donner1.desactive_sup_modif();
-                etat = Etat.Etudiant;
+                etat = Etat.Creneau;
                 activeBouton();
                 break;
         }
