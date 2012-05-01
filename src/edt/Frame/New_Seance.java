@@ -5,6 +5,7 @@
 package edt.Frame;
 
 import edt.Classe.Intervenant;
+import edt.Classe.Salle;
 import edt.Classe.Seance;
 import edt.Classe.UE;
 import edt.mysql.BD_MySQL;
@@ -49,6 +50,8 @@ public class New_Seance extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         cours = new javax.swing.JRadioButton();
         tp = new javax.swing.JRadioButton();
         td = new javax.swing.JRadioButton();
@@ -74,10 +77,7 @@ public class New_Seance extends javax.swing.JDialog {
         tp.setText("TP");
 
         td.setText("TD");
-		buttonGroup1.add(cours);
-		buttonGroup1.add(tp);
-		buttonGroup1.add(td);
-		
+
         jLabel1.setText("UE");
 
         jLabel2.setText("Nom");
@@ -89,6 +89,12 @@ public class New_Seance extends javax.swing.JDialog {
         jLabel5.setText("Durée");
 
         jLabel6.setText("Cours précédent");
+
+        ue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ueActionPerformed(evt);
+            }
+        });
 
         cours_prec.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "......" }));
 
@@ -189,19 +195,52 @@ public class New_Seance extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     private void refresh(){
     this.nom.setText("");
+    this.duree.setText("");
+    desactiveGoupeBouton();
     this.donner.desactive_sup_modif();
     this.creneau = null;
-    this.donner.refreshBatiment();
+    this.donner.refreshSeance();
+    }
+    private void desactiveGoupeBouton(){
+        this.cours.setSelected(false);
+        this.tp.setSelected(false);
+        this.td.setSelected(false);
     }
     private void creer(){
             this.creneau.setNom(this.nom.getText());
+    }
+    
+    private int typeCour(){
+        if(this.cours.isSelected())
+            return 1;
+        else if(this.tp.isSelected())
+            return 3;
+        else if(this.td.isSelected())
+            return 2;
+        return 0;
+    }
+    private int idSalle(){
+        return Salle.id_Salle(
+                this.salle.getSelectedItem().toString().substring(this.salle.getSelectedItem().toString().lastIndexOf(" ")+1, this.salle.getSelectedItem().toString().length()),
+                this.salle.getSelectedItem().toString().substring(0, this.salle.getSelectedItem().toString().lastIndexOf(" ")));
+    }
+    private int idIntervenant(){
+        return Intervenant.id_Intervenant(
+                this.intervenant.getSelectedItem().toString().substring(0, this.intervenant.getSelectedItem().toString().lastIndexOf(" ")),
+                this.intervenant.getSelectedItem().toString().substring(this.intervenant.getSelectedItem().toString().lastIndexOf(" ")+1, this.intervenant.getSelectedItem().toString().length()));
+    }
+    private int idUE(){
+        return UE.id_UE_promotion(this.ue.getSelectedItem().toString(), this.id_promo);
+    }
+    private int idPrec(){
+        return Seance.id_Creneau(this.cours_prec.getSelectedItem().toString());
     }
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
         BD_MySQL.init();
         switch(etat){
             case Creneau:
-                this.creneau = new Seance(this.nom.getText(),2,4,5,6,5,4);
+                this.creneau = new Seance(this.nom.getText(),Integer.parseInt(this.duree.getText()),typeCour(),idSalle(),idIntervenant(),idUE(),idPrec());
                 this.creneau.save();
                 refresh();
                 etat = Etat.Creneau;
@@ -230,6 +269,16 @@ public class New_Seance extends javax.swing.JDialog {
                 
         }
     }//GEN-LAST:event_annulerActionPerformed
+
+    private void ueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ueActionPerformed
+        // TODO add your handling code here:
+        this.cours_prec.removeAllItems();
+        this.cours_prec.addItem(".....");
+        for(String nomSeance : Seance.liste_nom_Seance_UE(idUE())){
+           this.cours_prec.addItem(nomSeance);
+           System.out.println("coucouc");
+        }
+    }//GEN-LAST:event_ueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,6 +332,8 @@ public class New_Seance extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton annuler;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JRadioButton cours;
     private javax.swing.JComboBox cours_prec;
     private javax.swing.JTextField duree;
@@ -323,5 +374,9 @@ public class New_Seance extends javax.swing.JDialog {
          for(String nomIntervenant : Intervenant.list_nom_Intervenant()){
            this.intervenant.addItem(nomIntervenant);
         }
+         for(String nomSalle : Salle.list_nom_Salle()){
+           this.salle.addItem(nomSalle);
+        }
     }
+    
 }

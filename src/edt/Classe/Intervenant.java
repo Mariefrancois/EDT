@@ -137,7 +137,7 @@ public class Intervenant implements Model_JDBC {
     
     public static String nomIntervenant(int id) throws SQLException{
          BD_MySQL.init();
-         String requete = "SELECT nom FROM Intervenant WHERE id="+id+" ORDER BY  email, telephone, notificationsactives, actif;";
+         String requete = "SELECT nom , prenom FROM Intervenant WHERE id="+id+" ORDER BY  email, telephone, notificationsactives, actif;";
          ResultSet rs = BD_MySQL.executer_requete(requete);
          rs.next();
          return rs.getString("nom")+" "+rs.getString("prenom");
@@ -160,6 +160,19 @@ public class Intervenant implements Model_JDBC {
         ResultSet rs = BD_MySQL.executer_requete(requete);
         rs.next();
         return rs.getInt("id");
+    }
+    public static int id_Intervenant(String nom, String nomPrenom){
+            BD_MySQL.init();
+            int id = 0;
+        try {
+            String requete = "SELECT id FROM Intervenant WHERE nom='"+nom+"' AND prenom='"+nomPrenom+"';";
+            ResultSet rs = BD_MySQL.executer_requete(requete);
+            rs.next();
+            id = rs.getInt("id");
+        } catch (SQLException ex) {
+            Logger.getLogger(Intervenant.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return id;
     }
     public static ArrayList<String> list_nom_Intervenant() {
         ArrayList<Intervenant> list_Intervenant = null;

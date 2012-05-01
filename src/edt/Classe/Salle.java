@@ -7,6 +7,9 @@ package edt.Classe;
 import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -131,5 +134,61 @@ public class Salle implements Model_JDBC {
     @Override
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    public static ArrayList<Salle> liste_Salle() throws SQLException{
+        ArrayList<Salle> liste_Salle_promotion = new ArrayList();
+        ArrayList<Integer> liste_id_Salle_promotion = liste_id_Salle_promotion();
+        for (int l : liste_id_Salle_promotion) {
+            liste_Salle_promotion.add(new Salle(l));
+        }
+        return liste_Salle_promotion;
+    }
+    public static int id_Salle(String nom, String nomBatiment, int Capacite) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM Salle WHERE nom='"+nom+"' AND nomBatiment='"+nomBatiment+"' AND capacite="+Capacite+";";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        rs.next();
+        return rs.getInt("id");
+    }
+    public static int id_Salle(String nom, String nomBatiment){
+        BD_MySQL.init();
+        int id = 0;
+        String requete = "SELECT id FROM Salle WHERE nom='"+nom+"' AND nomBatiment='"+nomBatiment+"';";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        try {
+            rs.next();
+        } catch (SQLException ex) {
+            Logger.getLogger(Salle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            id = rs.getInt("id");
+        } catch (SQLException ex) {
+            Logger.getLogger(Salle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+    public static ArrayList<Integer> liste_id_Salle_promotion() throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Integer> liste_id_Salle_promotion = new ArrayList();
+        String requete = "SELECT id FROM Salle ORDER BY nom, nomBatiment;";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        while(rs.next()){
+            liste_id_Salle_promotion.add(rs.getInt("id"));
+        }
+        return liste_id_Salle_promotion;
+    }
+    
+     public static ArrayList<String> list_nom_Salle() {
+        ArrayList<Salle> list_Salle = null;
+        try {
+            list_Salle = liste_Salle();
+        } catch (SQLException ex) {
+            Logger.getLogger(UE.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ArrayList<String> list_nom_Salle = new ArrayList();
+        for (Salle l : list_Salle) {
+                list_nom_Salle.add(l.getBatiment()+" "+l.getNom());
+            }
+        return list_nom_Salle;
     }
 }

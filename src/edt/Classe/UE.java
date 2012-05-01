@@ -220,12 +220,18 @@ public class UE implements Model_JDBC {
         
         this.id = BD_MySQL.executer_update(requete);
     }
-    public static int id_UE_promotion(String nom, int idPromotion) throws SQLException{
-        BD_MySQL.init();
-        String requete = "SELECT id FROM UE WHERE nom='"+nom+"'AND idPromotion="+idPromotion+";";
-        ResultSet rs = BD_MySQL.executer_requete(requete);
-        rs.next();
-        return rs.getInt("id");
+    public static int id_UE_promotion(String nom, int idPromotion){
+            BD_MySQL.init();
+            int id = 0;
+        try {
+            String requete = "SELECT id FROM UE WHERE nom='"+nom+"'AND idPromotion="+idPromotion+";";
+            ResultSet rs = BD_MySQL.executer_requete(requete);
+            rs.next();
+            id = rs.getInt("id");
+        } catch (SQLException ex) {
+            Logger.getLogger(UE.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return id;
     }
     public static ArrayList<UE> liste_UE_promotion(int idPromotion) throws SQLException{
         ArrayList<UE> liste_UE_promotion = new ArrayList();

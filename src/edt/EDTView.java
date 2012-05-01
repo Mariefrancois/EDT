@@ -863,7 +863,7 @@ public class EDTView extends FrameView {
                 break;
         }
     }//GEN-LAST:event_SallesActionPerformed
-	private void ajouter_coursActionPerformed(java.awt.event.ActionEvent evt) {   
+    private void ajouter_coursActionPerformed(java.awt.event.ActionEvent evt) {   
             
 	}
 	

@@ -8,6 +8,8 @@ import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Marie
@@ -42,7 +44,7 @@ public class Seance implements Model_JDBC {
         this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
         this.duree = rs.getInt("duree");
-        this.idType_Cours = rs.getInt("idType_Cours");
+        this.idType_Cours = rs.getInt("idTypeCours");
         this.idSalle = rs.getInt("idSalle");
         this.idIntervenant = rs.getInt("idIntervenant");
         this.idUE = rs.getInt("idUE");
@@ -58,23 +60,23 @@ public class Seance implements Model_JDBC {
             requete = "INSERT INTO Seance (nom, duree, effectue, idUE, idSalle, idIntervenant, idTypeCours, idSeancePrecedente) "
                     + "VALUES ('"+this.nom
                     + "', '"+this.duree
-                    + "', '"+this.getEffectue()
+                    + "', '"+this.effectue
                     + "', '"+this.idUE
                     + "', '"+this.idSalle
                     + "', '"+this.idIntervenant
                     + "', '"+this.idType_Cours
-                    + "', '"+this.getIdSeancePrecedente()
+                    + "', '"+this.idSeancePrecedente
                     +"');";
         }else{
             requete = "UPDATE Seance SET "
                     + "nom='"+this.nom
                     + "', duree='"+this.duree
-                    + "', effectue='"+this.getEffectue()
+                    + "', effectue='"+this.effectue
                     + "', idUE='"+this.idUE
                     + "', idSalle='"+this.idSalle
                     + "', idIntervenant='"+this.idIntervenant
-                    + "', idType_Cours='"+this.idType_Cours
-                    + "', idSeancePrecedente='"+this.getIdSeancePrecedente()
+                    + "', idTypeCours='"+this.idType_Cours
+                    + "', idSeancePrecedente='"+this.idSeancePrecedente
                     +"' WHERE id='"+this.id+"'";
         }
         
@@ -190,17 +192,31 @@ public class Seance implements Model_JDBC {
         this.idUE = idUE;
     }
     
-    public static int id_Creneau(String nom) throws SQLException{
-        BD_MySQL.init();
-        String requete = "SELECT id FROM Seance WHERE nom='"+nom+"';";
-        ResultSet rs = BD_MySQL.executer_requete(requete);
-        rs.next();
-        return rs.getInt("id");
+    public static int id_Creneau(String nom){
+            BD_MySQL.init();
+            int id = 0;
+        try {
+            String requete = "SELECT id FROM Seance WHERE nom='"+nom+"';";
+            ResultSet rs = BD_MySQL.executer_requete(requete);
+            rs.next();
+            id = rs.getInt("id");
+        } catch (SQLException ex) {
+            Logger.getLogger(Seance.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return id;
     }
     
     public static ArrayList<Seance> liste_Seance() throws SQLException{
         ArrayList<Seance> liste_Seance = new ArrayList();
         ArrayList<Integer> liste_id_Seance = liste_id_Seance();
+        for (int l : liste_id_Seance) {
+            liste_Seance.add(new Seance(l));
+        }
+        return liste_Seance;
+    }
+    public static ArrayList<Seance> liste_Seance_UE(int idUE) throws SQLException{
+        ArrayList<Seance> liste_Seance = new ArrayList();
+        ArrayList<Integer> liste_id_Seance = liste_id_Seance_UE(idUE);
         for (int l : liste_id_Seance) {
             liste_Seance.add(new Seance(l));
         }
@@ -217,6 +233,30 @@ public class Seance implements Model_JDBC {
         return liste_id_Batiment;
     }
 
+    public static ArrayList<Integer> liste_id_Seance_UE(int idUE) throws SQLException{
+        BD_MySQL.init();
+        ArrayList<Integer> liste_id_Batiment = new ArrayList();
+        String requete = "SELECT id FROM Seance  WHERE idUE="+idUE+" ORDER BY nom, duree, effectue, idUE, idSalle, idIntervenant, idTypeCours, idSeancePrecedente;";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        while(rs.next()){
+            liste_id_Batiment.add(rs.getInt("id"));
+        }
+        return liste_id_Batiment;
+    }
+    
+    public static ArrayList<String> liste_nom_Seance_UE(int idUE) {
+        ArrayList<Seance> list_Seance = null;
+        try {
+            list_Seance = liste_Seance_UE(idUE);
+        } catch (SQLException ex) {
+            Logger.getLogger(UE.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ArrayList<String> list_nom_Seance = new ArrayList();
+        for (Seance l : list_Seance) {
+                list_nom_Seance.add(l.getNom());
+            }
+        return list_nom_Seance;
+    }
     public static String nomSeance(int id) throws SQLException{
          BD_MySQL.init();
          String requete = "SELECT nom FROM Seance WHERE id="+id+" ORDER BY  duree, effectue, idUE, idSalle, idIntervenant, idTypeCours, idSeancePrecedente;";

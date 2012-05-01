@@ -965,11 +965,7 @@ private int id_Creneau() {
         int id = 0;
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,0)).toString();
-        try {
-            id = Seance.id_Creneau(nom);
-        } catch (SQLException ex) {
-            Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        id = Seance.id_Creneau(nom);
         return id;
     }
  private enum Etat{
