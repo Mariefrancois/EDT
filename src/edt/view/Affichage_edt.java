@@ -26,37 +26,13 @@ import java.util.logging.Logger;
 public class Affichage_edt extends javax.swing.JPanel {
 
     /** Creates new form Affichage_edt */
-    private ArrayList<Cours> liste_Cours_promotion = new ArrayList();
-    private ArrayList<Affichage_cours> liste_Cours ;
     public Affichage_edt() {
         initComponents();
-        /*try {
-            this.liste_Cours_promotion = BD_MySQL.liste_Cours_promotion(0);
-        } catch (SQLException ex) {
-            Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-       // AjoutCour();
     }
     public Affichage_edt(int idPromotion) {
         initComponents();
-        try {
-            this.liste_Cours_promotion = BD_MySQL.liste_Cours_promotion(idPromotion);
-        } catch (SQLException ex) {
-            Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     public void AjoutCour(){
-        String nom = "";
-        for (Cours l : this.liste_Cours_promotion) {
-            try {
-                nom = UE.nomUE(l.getIdUE());
-            } catch (SQLException ex) {
-                Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println(nom +" "+"cours"+" "+l.getTsDebut().getHours()*10+" "+l.getTsFin().getDate()*30);
-           Affichage_cours cr =  new Affichage_cours(nom,"cours",l.getTsDebut().getHours()*10,l.getTsFin().getDay()*30+(l.getTsFin().getDate()/6)*160/*+l.getTsFin().getMonth()*500*/);
-           this.add(cr);
-        }
     }
     /** This method is called from within the constructor to
      * initialize the form.
