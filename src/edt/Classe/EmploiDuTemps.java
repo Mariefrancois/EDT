@@ -96,8 +96,9 @@ public class EmploiDuTemps {
         code += "\t<tr>\n";
         code += "\t\t<th>Jour \\ Heure</th>\n";
         for (int h = 7; h <= 20; h++) {
-            code += "\t\t<th>" + h + "</th><th></th><th></th><th></th>\n";
+            code += "\t\t<th>" + h + "</th>\n\t\t<th></th>\n\t\t<th></th>\n\t\t<th></th>\n";
         }
+        code += "\t</tr>\n";
         
         // Corps du tableau (semaine)
         for (String j : jours) {
@@ -134,7 +135,7 @@ public class EmploiDuTemps {
                     for (Cours c : coursDuJours) {
                         if (c.commence_a_heure(strHeure)) {
                             boolCours = true;
-                            code += EmploiDuTemps.cours_to_html_td(c);
+                            code += "\t\t" + EmploiDuTemps.cours_to_html_td(c);
                             int nbQuartsCours = c.nombre_de_quart_heure();
                             nbQuartsHeure += nbQuartsCours;
                             coursDuJours.remove(c);
@@ -142,7 +143,7 @@ public class EmploiDuTemps {
                         }
                     }
                     if(!boolCours) {
-                        code += "<td></td>";
+                        code += "\t\t<td></td>\n";
                         nbQuartsHeure ++;
                     }
                 }
@@ -170,7 +171,7 @@ public class EmploiDuTemps {
                 + "colspan=\"" + c.nombre_de_quart_heure() + "\" "
                 + ">";
         td += c.getNomUE();
-        td += "</td>";
+        td += "</td>\n";
         
         return td;
     }
