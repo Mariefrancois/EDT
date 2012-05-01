@@ -243,4 +243,16 @@ public class Cours implements Model_JDBC {
         
         return ecarth*4 + ecartm/15;
     }
+    
+    public boolean commence_a_heure(String heure) {
+        // "HH:MM:00"
+        String[] split = heure.split(":");
+        int hours = this.getTsDebut().getHours();
+        int minutes = this.getTsDebut().getMinutes();
+        return (
+                (Integer.parseInt(split[0]) == hours)
+                &&
+                (Integer.parseInt(split[1]) == minutes)
+        );
+    }
 }

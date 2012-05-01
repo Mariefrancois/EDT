@@ -89,13 +89,70 @@ public class EmploiDuTemps {
         HashMap<String, ArrayList<Cours>> listeCours = EmploiDuTemps.liste_cours_promotion_semaine(idPromotion, debutSemaine);
         
         String code = "";
-        code += "<table class=\"edt_semaine\">\n";
+        // Debut du tableau
+        code += "<table border=\"1\" class=\"edt_semaine\">\n";
+        
+        // En tête
         code += "\t<tr>\n";
         code += "\t\t<th>Jour \\ Heure</th>\n";
-        for (int h = 7; h < 20; h++) {
+        for (int h = 7; h <= 20; h++) {
             code += "\t\t<th>" + h + "</th><th></th><th></th><th></th>\n";
         }
-        code += "\t</tr>\n";
+        
+        // Corps du tableau (semaine)
+        for (String j : jours) {
+            ArrayList<Cours> coursDuJours = listeCours.get(j);
+            boolean premierParcours = true; // Gestion des conflits
+            while (premierParcours || coursDuJours.size() > 0) {
+                code += "\t<tr>\n";
+                
+                // Affichage du jour si premier parcours
+                if (premierParcours) {
+                    code += "\t\t<td>"+j+"</td>\n";
+                } else {
+                    code += "\t\t<td></td>\n";
+                }
+                
+                int nbQuartsHeure = 0;
+                while (nbQuartsHeure < (14 * 4)) {
+                    int heure = 7 + ((int)(nbQuartsHeure / 4));
+                    int quart = nbQuartsHeure % 4;
+                    String strHeure = "";
+                    if(heure < 10) {
+                        strHeure += "0" + heure;
+                    } else {
+                        strHeure += heure;
+                    }
+                    switch (quart) {
+                        case 0 : strHeure += ":00:00";
+                        case 1 : strHeure += ":15:00";
+                        case 2 : strHeure += ":30:00";
+                        case 3 : strHeure += ":45:00";
+                        default : strHeure += ":00:00";
+                    }
+                    boolean boolCours = false;
+                    for (Cours c : coursDuJours) {
+                        if (c.commence_a_heure(strHeure)) {
+                            boolCours = true;
+                            code += EmploiDuTemps.cours_to_html_td(c);
+                            int nbQuartsCours = c.nombre_de_quart_heure();
+                            nbQuartsHeure += nbQuartsCours;
+                            coursDuJours.remove(c);
+                            break; // Je sors du for
+                        }
+                    }
+                    if(!boolCours) {
+                        code += "<td></td>";
+                        nbQuartsHeure ++;
+                    }
+                }
+                premierParcours = false;
+                
+                code += "\t</tr>\n";
+            }
+        }
+        
+        // Fin du tableau
         code += "</table>\n";
         
         return code;
@@ -115,7 +172,7 @@ public class EmploiDuTemps {
         td += c.getNomUE();
         td += "</td>";
         
-        return "";
+        return td;
     }
     
     
@@ -123,10 +180,19 @@ public class EmploiDuTemps {
     public static void main(String[] args) throws SQLException, ParseException {
         BD_MySQL.init();
         
+        // Tu fais ta date ou direct le timestamp
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long timeDebut = formatter.parse("2012-02-06 00:00:00").getTime();
+        
+        // La tu récupère le tableau HTML : A mettre dans le jMachin
         String codeHtml = EmploiDuTemps.cours_semaine_promotion_html_table(4, new Timestamp(timeDebut));
         System.out.println(codeHtml);
+        
+        // Et boom ca affiche, une fois que ta ca, je ferais le CSS pour que ca fasse beau
+        // TD
+        
+        // Cordialement,
+        // Dieu
     }
     
 }

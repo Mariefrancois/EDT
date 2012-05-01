@@ -25,7 +25,7 @@ public class Type_cours implements Model_JDBC {
     }
     
     public Type_cours(Long id) throws SQLException{
-        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Type_cours WHERE id="+id);
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Type_Cours WHERE id="+id);
         rs.next();
         this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
@@ -54,11 +54,11 @@ public class Type_cours implements Model_JDBC {
         String requete;
         
         if(this.id == 0){
-            requete = "INSERT INTO Type_cours (nom) "
+            requete = "INSERT INTO Type_Cours (nom) "
                     + "VALUES ('"+this.nom
                     +"')";
         }else{
-            requete = "UPDATE Type_cours SET "
+            requete = "UPDATE Type_Cours SET "
                     + "nom='"+this.nom
                     +"' WHERE id='"+this.id+"'";
         }
@@ -74,7 +74,7 @@ public class Type_cours implements Model_JDBC {
             BD_MySQL.init();
             String nom ="";
         try {
-            String requete = "SELECT nom FROM Type_cours WHERE id="+id+" ";
+            String requete = "SELECT nom FROM Type_Cours WHERE id="+id+" ";
             ResultSet rs = BD_MySQL.executer_requete(requete);
             rs.next();
             nom = rs.getString("nom");
