@@ -226,4 +226,8 @@ public class Cours implements Model_JDBC {
         }
         return liste_Cours_promotion;
     }
+    
+    public int nombre_de_quart_heure() {
+        return 0;
+    }
 }
