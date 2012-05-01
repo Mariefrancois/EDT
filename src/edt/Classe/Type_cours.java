@@ -7,6 +7,8 @@ package edt.Classe;
 import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -68,6 +70,18 @@ public class Type_cours implements Model_JDBC {
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    public static String nomType_cours(int id){
+            BD_MySQL.init();
+            String nom ="";
+        try {
+            String requete = "SELECT nom FROM Type_cours WHERE id="+id+" ";
+            ResultSet rs = BD_MySQL.executer_requete(requete);
+            rs.next();
+            nom = rs.getString("nom");
+        } catch (SQLException ex) {
+            Logger.getLogger(Type_cours.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return nom;
+    }
     
 }

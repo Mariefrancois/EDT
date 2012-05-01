@@ -828,11 +828,7 @@ public void frame_Batiment() {
  public ArrayList<String> list_UE_Seance(ArrayList<Seance> list_sea){
      ArrayList<String> list_UE_Seance = new ArrayList();
      for (Seance l : list_sea) {
-            try {
                 list_UE_Seance.add(UE.nomUE(l.getIdUE()));
-            } catch (SQLException ex) {
-                Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
      return list_UE_Seance;
 }

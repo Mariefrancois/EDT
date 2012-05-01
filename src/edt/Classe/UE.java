@@ -251,12 +251,18 @@ public class UE implements Model_JDBC {
         }
         return liste_id_UE_promotion;
     }
-    public static String nomUE(int id) throws SQLException{
-         BD_MySQL.init();
-         String requete = "SELECT nom FROM UE WHERE id="+id+" ORDER BY  intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS;";
-         ResultSet rs = BD_MySQL.executer_requete(requete);
-         rs.next();
-         return rs.getString("nom");
+    public static String nomUE(int id){
+            BD_MySQL.init();
+            String nom = "";
+        try {
+            String requete = "SELECT nom FROM UE WHERE id="+id+" ORDER BY  intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS;";
+            ResultSet rs = BD_MySQL.executer_requete(requete);
+            rs.next();
+            nom = rs.getString("nom");
+        } catch (SQLException ex) {
+            Logger.getLogger(UE.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return nom;
     }
      public static ArrayList<String> list_nom_UE(int id_promo) {
         ArrayList<UE> list_ue = null;

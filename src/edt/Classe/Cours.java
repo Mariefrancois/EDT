@@ -87,7 +87,9 @@ public class Cours implements Model_JDBC {
     public int getIdUE() {
         return idUE;
     }
-
+    public String getNomUE(){
+        return UE.nomUE(this.idUE);
+    }
     /**
      * @param idUE the idUE to set
      */
@@ -129,7 +131,9 @@ public class Cours implements Model_JDBC {
     public int getIdTypeCours() {
         return idTypeCours;
     }
-
+    public String getNomTypeCours(){
+        return Type_cours.nomType_cours(this.idTypeCours);
+    }
     /**
      * @param idTypeCours the idTypeCours to set
      */
@@ -204,7 +208,13 @@ public class Cours implements Model_JDBC {
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;                                      
+        BD_MySQL.init();
+
+        requete = "DELETE FROM Cours "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
     
     public static ArrayList<Integer> liste_id_cours_promotion(int idPromotion) throws SQLException{
@@ -228,6 +238,9 @@ public class Cours implements Model_JDBC {
     }
     
     public int nombre_de_quart_heure() {
-        return 0;
+        int ecarth = this.tsFin.getHours() - this.tsDebut.getHours();
+        int ecartm = this.tsFin.getMinutes() - this.tsDebut.getMinutes();
+        
+        return ecarth*4 + ecartm/15;
     }
 }
