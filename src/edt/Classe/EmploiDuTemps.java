@@ -176,7 +176,7 @@ public class EmploiDuTemps {
     
     public static String cours_semaine_promotion_html(int idPromotion, Timestamp debutSemaine) throws SQLException {
         String code ="";
-        code += EmploiDuTemps.cours_semaine_promotion_html(idPromotion, debutSemaine);
+        code += EmploiDuTemps.cours_semaine_promotion_html_table(idPromotion, debutSemaine);
         return code;
     }
     
