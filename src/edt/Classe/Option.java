@@ -91,8 +91,8 @@ public class Option implements Model_JDBC{
     }
     
     public static String valeurFromNom(String nom) throws SQLException {
-        ResultSet rs = BD_MySQL.executer_requete("SELECT valeur FROM Option WHERE nom='" + nom + "';");
+        ResultSet rs = BD_MySQL.executer_requete("SELECT valeur FROM Options WHERE nom='"+nom+"';");
         rs.next();
-        return rs.getString("nom");
+        return rs.getString("valeur");
     }
 }

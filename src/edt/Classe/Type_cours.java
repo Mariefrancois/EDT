@@ -7,6 +7,7 @@ package edt.Classe;
 import edt.mysql.BD_MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
  * @author Marie
  */
 public class Type_cours implements Model_JDBC {
+    
     private int id;
     private String nom;
     
@@ -70,6 +72,7 @@ public class Type_cours implements Model_JDBC {
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
     public static String nomType_cours(int id){
             String nom ="";
         try {
@@ -81,6 +84,20 @@ public class Type_cours implements Model_JDBC {
             Logger.getLogger(Type_cours.class.getName()).log(Level.SEVERE, null, ex);
         }
             return nom;
+    }
+    
+    public static ArrayList<String> listeNomType_cours() {
+        ArrayList<String> liste = new ArrayList();
+        try {
+            String requete = "SELECT nom FROM Type_Cours ORDER BY nom;";
+            ResultSet rs = BD_MySQL.executer_requete(requete);
+            while (rs.next()) {
+                liste.add(rs.getString("nom"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Type_cours.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return liste;
     }
     
 }
