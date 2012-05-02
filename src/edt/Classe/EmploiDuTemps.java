@@ -88,7 +88,7 @@ public class EmploiDuTemps {
         
         String code = "";
         // Debut du tableau
-        code += "<table border=\"1\" class=\"edt_semaine\">\n";
+        code += "<table class=\"edt_semaine\">\n";
         
         // En tête
         code += "\t<tr>\n";
@@ -176,7 +176,19 @@ public class EmploiDuTemps {
     
     public static String cours_semaine_promotion_html(int idPromotion, Timestamp debutSemaine) throws SQLException {
         String code ="";
+        code += "<!DOCTYPE html>\n";
+        code += "<head>\n";
+        code += "<meta charset=\"utf-8\" />\n";
+        code += "<style type=\"text/css\">\n";
+        
+        code += "table.edt_semaine { margin: 0px auto 0px auto; border: solid 1px black; ]";
+        
+        code += "</style>\n";
+        code += "</head>\n";
+        code += "<body>\n";
         code += EmploiDuTemps.cours_semaine_promotion_html_table(idPromotion, debutSemaine);
+        code += "</body>\n";
+        code += "</html>\n";
         return code;
     }
     
