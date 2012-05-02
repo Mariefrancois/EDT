@@ -34,7 +34,6 @@ public class Affichage_edt extends javax.swing.JPanel {
     /** Creates new form Affichage_edt */
     public Affichage_edt() {
         initComponents();
-        BD_MySQL.init();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long timeDebut = 0;
         try {

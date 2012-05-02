@@ -99,8 +99,7 @@ public class Promotion implements Model_JDBC {
 
     @Override
     public void save() {
-         String requete;                                      
-        BD_MySQL.init();
+         String requete;   
         
         if(this.id == 0){
             requete = "INSERT INTO Promotion (nom, annee, tsDebut, tsFin) "
@@ -123,8 +122,7 @@ public class Promotion implements Model_JDBC {
 
     @Override
     public void delete() {
-         String requete;                                      
-        BD_MySQL.init();
+         String requete;  
 
         requete = "DELETE FROM Promotion "
                 +" WHERE id='"+this.id+"';";

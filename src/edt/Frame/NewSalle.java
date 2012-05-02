@@ -346,7 +346,6 @@ private void creer(){
 }
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
-        BD_MySQL.init();
         switch(etat){
             case salle:
                 this.salle = new Salle(this.nom.getText(),Integer.parseInt(this.capacite.getText()),"1A");

@@ -237,7 +237,6 @@ public class New_Seance extends javax.swing.JDialog {
     }
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
-        BD_MySQL.init();
         switch(etat){
             case Creneau:
                 this.creneau = new Seance(this.nom.getText(),Integer.parseInt(this.duree.getText()),typeCour(),idSalle(),idIntervenant(),idUE(),idPrec());

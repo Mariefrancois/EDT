@@ -25,6 +25,7 @@ public class EDTApp extends SingleFrameApplication {
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
+        BD_MySQL.init();
         show(new EDTView(this));
     }
 
@@ -48,7 +49,6 @@ public class EDTApp extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) throws SQLException {
-        BD_MySQL.init();
         launch(EDTApp.class, args);
         
         //traitement

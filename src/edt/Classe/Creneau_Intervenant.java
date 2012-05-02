@@ -93,8 +93,7 @@ public class Creneau_Intervenant implements Model_JDBC  {
 
     @Override
     public void save() {
-         String requete;                                      
-        BD_MySQL.init();
+         String requete;  
         
         if(this.id == 0){
             requete = "INSERT INTO Creneau_Intervenant (idIntervenant, tsDebut, tsFin) "
@@ -115,8 +114,7 @@ public class Creneau_Intervenant implements Model_JDBC  {
 
     @Override
     public void delete() {
-         String requete;                                      
-        BD_MySQL.init();
+         String requete;  
 
         requete = "DELETE FROM Creneau_Intervenant "
                 +" WHERE id='"+this.id+"';";
@@ -124,7 +122,6 @@ public class Creneau_Intervenant implements Model_JDBC  {
         this.id = BD_MySQL.executer_update(requete);
     }
     public static ArrayList<Integer> liste_id_Creneau_Intervenant(int idIntervenant) throws SQLException{
-        BD_MySQL.init();
         ArrayList<Integer> liste_id_Creneau_Intervenant = new ArrayList();
         String requete = "SELECT id FROM Creneau_Intervenant WHERE idIntervenant="+idIntervenant+" ORDER BY tsDebut, tsFin ;";
         ResultSet rs = BD_MySQL.executer_requete(requete);

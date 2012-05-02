@@ -208,8 +208,7 @@ public class Cours implements Model_JDBC {
 
     @Override
     public void delete() {
-         String requete;                                      
-        BD_MySQL.init();
+         String requete;     
 
         requete = "DELETE FROM Cours "
                 +" WHERE id='"+this.id+"';";
@@ -218,7 +217,6 @@ public class Cours implements Model_JDBC {
     }
     
     public static ArrayList<Integer> liste_id_cours_promotion(int idPromotion) throws SQLException{
-        BD_MySQL.init();
         ArrayList<Integer> liste_id_cours_promotion = new ArrayList();
         String requete = "SELECT id FROM Cours ORDER BY idUE, idSalle, idIntervenant, idTypeCours, tsDebut, tsFin;";
         ResultSet rs = BD_MySQL.executer_requete(requete);

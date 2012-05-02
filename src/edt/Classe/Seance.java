@@ -53,8 +53,7 @@ public class Seance implements Model_JDBC {
     }
     @Override
     public void save() {
-         String requete;                                      
-        BD_MySQL.init();
+         String requete;    
         
         if(this.id == 0){
             requete = "INSERT INTO Seance (nom, duree, effectue, idUE, idSalle, idIntervenant, idTypeCours, idSeancePrecedente) "
@@ -85,8 +84,7 @@ public class Seance implements Model_JDBC {
 
     @Override
     public void delete() {
-         String requete;                                      
-        BD_MySQL.init();
+         String requete;   
 
         requete = "DELETE FROM Seance "
                 +" WHERE id='"+this.id+"';";
@@ -193,7 +191,6 @@ public class Seance implements Model_JDBC {
     }
     
     public static int id_Creneau(String nom){
-            BD_MySQL.init();
             int id = 0;
         try {
             String requete = "SELECT id FROM Seance WHERE nom='"+nom+"';";
@@ -223,7 +220,6 @@ public class Seance implements Model_JDBC {
         return liste_Seance;
     }
     public static ArrayList<Integer> liste_id_Seance() throws SQLException{
-        BD_MySQL.init();
         ArrayList<Integer> liste_id_Batiment = new ArrayList();
         String requete = "SELECT id FROM Seance ORDER BY nom, duree, effectue, idUE, idSalle, idIntervenant, idTypeCours, idSeancePrecedente;";
         ResultSet rs = BD_MySQL.executer_requete(requete);
@@ -234,7 +230,6 @@ public class Seance implements Model_JDBC {
     }
 
     public static ArrayList<Integer> liste_id_Seance_UE(int idUE) throws SQLException{
-        BD_MySQL.init();
         ArrayList<Integer> liste_id_Batiment = new ArrayList();
         String requete = "SELECT id FROM Seance  WHERE idUE="+idUE+" ORDER BY nom, duree, effectue, idUE, idSalle, idIntervenant, idTypeCours, idSeancePrecedente;";
         ResultSet rs = BD_MySQL.executer_requete(requete);
@@ -258,7 +253,6 @@ public class Seance implements Model_JDBC {
         return list_nom_Seance;
     }
     public static String nomSeance(int id) throws SQLException{
-         BD_MySQL.init();
          String requete = "SELECT nom FROM Seance WHERE id="+id+" ORDER BY  duree, effectue, idUE, idSalle, idIntervenant, idTypeCours, idSeancePrecedente;";
          ResultSet rs = BD_MySQL.executer_requete(requete);
          rs.next();

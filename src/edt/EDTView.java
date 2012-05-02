@@ -35,7 +35,6 @@ public class EDTView extends FrameView {
     private int id_promo;
     private Promotion promo;
     public void init(){
-        BD_MySQL.init();
         int nb = 1;
         try {
             nb = BD_MySQL.nombre_Promotion();

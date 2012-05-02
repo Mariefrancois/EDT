@@ -115,14 +115,12 @@ public class Batiment implements Model_JDBC {
         return liste_Batiment;
     }
     public static int id_Batiment(String nom) throws SQLException{
-        BD_MySQL.init();
         String requete = "SELECT id FROM Batiment WHERE nom='"+nom+"';";
         ResultSet rs = BD_MySQL.executer_requete(requete);
         rs.next();
         return rs.getInt("id");
     }
     public static ArrayList<Integer> liste_id_Batiment() throws SQLException{
-        BD_MySQL.init();
         ArrayList<Integer> liste_id_Batiment = new ArrayList();
         String requete = "SELECT id FROM Batiment ORDER BY nom, lat, lon;";
         ResultSet rs = BD_MySQL.executer_requete(requete);
@@ -132,7 +130,6 @@ public class Batiment implements Model_JDBC {
         return liste_id_Batiment;
     }
     public static String nomBatiment(int id) throws SQLException{
-         BD_MySQL.init();
          String requete = "SELECT nom FROM Batiment WHERE id="+id+" ORDER BY  lat, lon;";
          ResultSet rs = BD_MySQL.executer_requete(requete);
          rs.next();

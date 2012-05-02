@@ -146,7 +146,6 @@ private void creer(){
 }
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
-        BD_MySQL.init();
         switch(etat){
             case Batiment:
                 this.batiment = new Batiment(this.nom.getText(),Double.parseDouble(this.latitude.getText()),Double.parseDouble(this.longitude.getText()));

@@ -212,8 +212,7 @@ public class UE implements Model_JDBC {
 
     @Override
     public void delete() {
-         String requete;                                      
-        BD_MySQL.init();
+         String requete;   
 
         requete = "DELETE FROM UE "
                 +" WHERE id='"+this.id+"';";
@@ -221,7 +220,6 @@ public class UE implements Model_JDBC {
         this.id = BD_MySQL.executer_update(requete);
     }
     public static int id_UE_promotion(String nom, int idPromotion){
-            BD_MySQL.init();
             int id = 0;
         try {
             String requete = "SELECT id FROM UE WHERE nom='"+nom+"'AND idPromotion="+idPromotion+";";
@@ -242,7 +240,6 @@ public class UE implements Model_JDBC {
         return liste_UE_promotion;
     }
     public static ArrayList<Integer> liste_id_UE_promotion(int idPromotion) throws SQLException{
-        BD_MySQL.init();
         ArrayList<Integer> liste_id_UE_promotion = new ArrayList();
         String requete = "SELECT id FROM UE WHERE idPromotion="+idPromotion+" ORDER BY nom, intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS;";
         ResultSet rs = BD_MySQL.executer_requete(requete);
@@ -252,7 +249,6 @@ public class UE implements Model_JDBC {
         return liste_id_UE_promotion;
     }
     public static String nomUE(int id){
-            BD_MySQL.init();
             String nom = "";
         try {
             String requete = "SELECT nom FROM UE WHERE id="+id+" ORDER BY  intitule, nbHeuresCours, nbHeuresTD, nbHeuresTP, ECTS;";

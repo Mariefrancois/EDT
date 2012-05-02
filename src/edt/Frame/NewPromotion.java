@@ -188,7 +188,6 @@ private Timestamp afficherTimestamp(String date){
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
         
-        BD_MySQL.init();
         switch(etat){
             case Promotion:
                 this.promo = new Promotion(this.nom.getText(), Integer.parseInt(this.annee.getText()), afficherTimestamp(this.d_debut.getText()), afficherTimestamp(this.d_fin.getText()));

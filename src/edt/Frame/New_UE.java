@@ -204,7 +204,6 @@ private void creer(){
 }
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
-        BD_MySQL.init();
         switch(etat){
             case UE:
                 this.ue = new UE(this.nom.getText(),this.intitule.getText(),Integer.parseInt(this.nb_cour.getText()),Integer.parseInt(this.nb_td.getText()),Integer.parseInt(this.nb_tp.getText()),3,this.id_promo);

@@ -144,14 +144,12 @@ public class Salle implements Model_JDBC {
         return liste_Salle_promotion;
     }
     public static int id_Salle(String nom, String nomBatiment, int Capacite) throws SQLException{
-        BD_MySQL.init();
         String requete = "SELECT id FROM Salle WHERE nom='"+nom+"' AND nomBatiment='"+nomBatiment+"' AND capacite="+Capacite+";";
         ResultSet rs = BD_MySQL.executer_requete(requete);
         rs.next();
         return rs.getInt("id");
     }
     public static int id_Salle(String nom, String nomBatiment){
-        BD_MySQL.init();
         int id = 0;
         String requete = "SELECT id FROM Salle WHERE nom='"+nom+"' AND nomBatiment='"+nomBatiment+"';";
         ResultSet rs = BD_MySQL.executer_requete(requete);
@@ -168,7 +166,6 @@ public class Salle implements Model_JDBC {
         return id;
     }
     public static ArrayList<Integer> liste_id_Salle_promotion() throws SQLException{
-        BD_MySQL.init();
         ArrayList<Integer> liste_id_Salle_promotion = new ArrayList();
         String requete = "SELECT id FROM Salle ORDER BY nom, nomBatiment;";
         ResultSet rs = BD_MySQL.executer_requete(requete);

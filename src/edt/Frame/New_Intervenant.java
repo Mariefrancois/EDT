@@ -514,7 +514,6 @@ private Timestamp afficherTimestamp(String date,int heure, int minute, int recu)
 
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         // TODO add your handling code here:
-        BD_MySQL.init();
         switch(etat){
             case Intervenant:
                 this.intervenant = new Intervenant(this.nom.getText(),this.prenom.getText(),this.email.getText(),this.telephone.getText(),true,true);

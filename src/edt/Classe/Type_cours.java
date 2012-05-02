@@ -71,7 +71,6 @@ public class Type_cours implements Model_JDBC {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     public static String nomType_cours(int id){
-            BD_MySQL.init();
             String nom ="";
         try {
             String requete = "SELECT nom FROM Type_Cours WHERE id="+id+" ";

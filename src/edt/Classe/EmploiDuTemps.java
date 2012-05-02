@@ -31,13 +31,11 @@ public class EmploiDuTemps {
     public static ArrayList<Integer> liste_id_cours_promotion_entre_dates(
             int idPromotion, Timestamp debut, Timestamp fin) throws SQLException {
         ArrayList<Integer> listeIds = new ArrayList();
-        
         String requete = "SELECT idCours FROM V_Cours_Promotion WHERE tsDebut > '" + debut + "' AND tsFin < '" + fin + "' ORDER BY tsDebut;";
         ResultSet rs = BD_MySQL.executer_requete(requete);
         while(rs.next()){
             listeIds.add(rs.getInt("idCours"));
         }
-        
         return listeIds;
     }
     
@@ -177,23 +175,5 @@ public class EmploiDuTemps {
     }
     
     
-    
-    public static void main(String[] args) throws SQLException, ParseException {
-        BD_MySQL.init();
-        
-        // Tu fais ta date ou direct le timestamp
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long timeDebut = formatter.parse("2012-02-06 00:00:00").getTime();
-        
-        // La tu récupère le tableau HTML : A mettre dans le jMachin
-        String codeHtml = EmploiDuTemps.cours_semaine_promotion_html_table(4, new Timestamp(timeDebut));
-        System.out.println(codeHtml);
-        
-        // Et boom ca affiche, une fois que ta ca, je ferais le CSS pour que ca fasse beau
-        // TD
-        
-        // Cordialement,
-        // Dieu
-    }
     
 }

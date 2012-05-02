@@ -277,7 +277,7 @@ private void creer(){
         this.etudiant.setEmail(this.email.getText());
 }
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
-        BD_MySQL.init();
+        
         switch(etat){
             case Etudiant:
                 this.etudiant = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),this.prenom.getText(),this.nom.getText(),this.email.getText(),this.telephone.getText(),true,this.id_promo,1);
