@@ -11,10 +11,15 @@
 package edt.view;
 
 import edt.Classe.Cours;
+import edt.Classe.EmploiDuTemps;
 import edt.Classe.UE;
 import edt.mysql.BD_MySQL;
 import java.awt.Graphics;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,9 +33,35 @@ public class Affichage_edt extends javax.swing.JPanel {
     /** Creates new form Affichage_edt */
     public Affichage_edt() {
         initComponents();
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long timeDebut = 0;
+        try {
+            timeDebut = formatter.parse("2012-02-06 00:00:00").getTime();
+        } catch (ParseException ex) {
+            Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            // La tu récupère le tableau HTML : A mettre dans le jMachin
+            this.edt.setText(EmploiDuTemps.cours_semaine_promotion_html_table(4, new Timestamp(timeDebut)));
+        } catch (SQLException ex) {
+            Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public Affichage_edt(int idPromotion) {
         initComponents();
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long timeDebut = 0;
+        try {
+            timeDebut = formatter.parse("2012-02-06 00:00:00").getTime();
+        } catch (ParseException ex) {
+            Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            // La tu récupère le tableau HTML : A mettre dans le jMachin
+            this.edt.setText(EmploiDuTemps.cours_semaine_promotion_html_table(4, new Timestamp(timeDebut)));
+        } catch (SQLException ex) {
+            Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void AjoutCour(){
     }
@@ -43,19 +74,63 @@ public class Affichage_edt extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        semaine = new javax.swing.JLabel();
+        prec = new javax.swing.JButton();
+        suiv = new javax.swing.JButton();
+        edt = new javax.swing.JLabel();
+
         setName("Form"); // NOI18N
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("edt/view/Bundle"); // NOI18N
+        semaine.setText(bundle.getString("Affichage_edt.semaine.text")); // NOI18N
+        semaine.setName(bundle.getString("Affichage_edt.semaine.name")); // NOI18N
+
+        prec.setText(bundle.getString("Affichage_edt.prec.text")); // NOI18N
+        prec.setName(bundle.getString("Affichage_edt.prec.name")); // NOI18N
+
+        suiv.setText(bundle.getString("Affichage_edt.suiv.text")); // NOI18N
+        suiv.setName(bundle.getString("Affichage_edt.suiv.name")); // NOI18N
+
+        edt.setText(bundle.getString("Affichage_edt.edt.text")); // NOI18N
+        edt.setName(bundle.getString("Affichage_edt.edt.name")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 848, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(370, 370, 370)
+                        .addComponent(semaine))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(260, 260, 260)
+                        .addComponent(prec)
+                        .addGap(160, 160, 160)
+                        .addComponent(suiv))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(edt)))
+                .addContainerGap(346, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(semaine)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(prec)
+                    .addComponent(suiv))
+                .addGap(42, 42, 42)
+                .addComponent(edt)
+                .addContainerGap(191, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel edt;
+    private javax.swing.JButton prec;
+    private javax.swing.JLabel semaine;
+    private javax.swing.JButton suiv;
     // End of variables declaration//GEN-END:variables
 }
