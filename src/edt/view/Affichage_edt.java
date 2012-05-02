@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JEditorPane;
 
 /**
  *
@@ -33,6 +34,7 @@ public class Affichage_edt extends javax.swing.JPanel {
     /** Creates new form Affichage_edt */
     public Affichage_edt() {
         initComponents();
+        BD_MySQL.init();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long timeDebut = 0;
         try {
@@ -42,7 +44,8 @@ public class Affichage_edt extends javax.swing.JPanel {
         }
         try {
             // La tu récupère le tableau HTML : A mettre dans le jMachin
-            this.edt.setText(EmploiDuTemps.cours_semaine_promotion_html_table(4, new Timestamp(timeDebut)));
+            this.jEditorPane1.setContentType("text/html");
+            this.jEditorPane1.setText(EmploiDuTemps.cours_semaine_promotion_html_table(4, new Timestamp(timeDebut)));
         } catch (SQLException ex) {
             Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -78,6 +81,8 @@ public class Affichage_edt extends javax.swing.JPanel {
         prec = new javax.swing.JButton();
         suiv = new javax.swing.JButton();
         edt = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
 
         setName("Form"); // NOI18N
 
@@ -94,6 +99,11 @@ public class Affichage_edt extends javax.swing.JPanel {
         edt.setText(bundle.getString("Affichage_edt.edt.text")); // NOI18N
         edt.setName(bundle.getString("Affichage_edt.edt.name")); // NOI18N
 
+        jScrollPane1.setName(bundle.getString("Affichage_edt.jScrollPane1.name")); // NOI18N
+
+        jEditorPane1.setName(bundle.getString("Affichage_edt.jEditorPane1.name")); // NOI18N
+        jScrollPane1.setViewportView(jEditorPane1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,17 +111,19 @@ public class Affichage_edt extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(370, 370, 370)
-                        .addComponent(semaine))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edt))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(260, 260, 260)
+                        .addGap(380, 380, 380)
                         .addComponent(prec)
-                        .addGap(160, 160, 160)
+                        .addGap(266, 266, 266)
                         .addComponent(suiv))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(edt)))
-                .addContainerGap(346, Short.MAX_VALUE))
+                        .addGap(529, 529, 529)
+                        .addComponent(semaine)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,13 +134,20 @@ public class Affichage_edt extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(prec)
                     .addComponent(suiv))
-                .addGap(42, 42, 42)
-                .addComponent(edt)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(edt))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel edt;
+    private javax.swing.JEditorPane jEditorPane1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton prec;
     private javax.swing.JLabel semaine;
     private javax.swing.JButton suiv;

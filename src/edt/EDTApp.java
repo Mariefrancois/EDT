@@ -48,9 +48,9 @@ public class EDTApp extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) throws SQLException {
+        BD_MySQL.init();
         launch(EDTApp.class, args);
         
-        BD_MySQL.init();
         //traitement
                
         BD_MySQL.close();
