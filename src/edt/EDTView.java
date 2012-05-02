@@ -37,7 +37,7 @@ public class EDTView extends FrameView {
     public void init(){
         int nb = 1;
         try {
-            nb = BD_MySQL.nombre_Promotion();
+            nb = Promotion.nombre_Promotion();
         } catch (SQLException ex) {
             Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,7 +59,7 @@ public class EDTView extends FrameView {
     this.jList1.setModel(modell);
     ArrayList<String> listenom = new ArrayList();
     try {
-        listenom = BD_MySQL.liste_nom_promotion();
+        listenom = Promotion.liste_nom_promotion();
     } catch (SQLException ex) {
         Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -454,7 +454,7 @@ public class EDTView extends FrameView {
         String p = String.valueOf(prom);
         if(p.compareTo(" Promotion:") != 0){
             try {
-                this.id_promo = BD_MySQL.id_Promotion(p.substring(3,p.length()));
+                this.id_promo = Promotion.id_Promotion(p.substring(3,p.length()));
             } catch (SQLException ex) {
                 Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1007,7 +1007,7 @@ public class EDTView extends FrameView {
                 newPromo.setVisible(true);
                 int nb = 0;
                 try {
-                    nb = BD_MySQL.nombre_Promotion();
+                    nb = Promotion.nombre_Promotion();
                 } catch (SQLException ex) {
                     Logger.getLogger(EDTView.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -188,4 +188,12 @@ public class Salle implements Model_JDBC {
             }
         return list_nom_Salle;
     }
+    public static ArrayList<Salle> liste_Salle_promotion() throws SQLException{
+        ArrayList<Salle> liste_Salle_promotion = new ArrayList();
+        ArrayList<Integer> liste_id_Salle_promotion = liste_id_Salle_promotion();
+        for (int l : liste_id_Salle_promotion) {
+            liste_Salle_promotion.add(new Salle(l));
+        }
+        return liste_Salle_promotion;
+    }
 }

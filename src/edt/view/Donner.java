@@ -514,7 +514,7 @@ public class Donner extends javax.swing.JPanel {
             new String [] {});	
     jTable1.setModel(modell);
     try {
-        this.list_ue = BD_MySQL.liste_UE_promotion(this.id_promo);
+        this.list_ue = UE.liste_UE_promotion(this.id_promo);
     } catch (SQLException ex) {
         Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -573,7 +573,7 @@ public ArrayList<String> list_telephone_Intervenant(ArrayList<Intervenant> liste
             new String [] {});	
     jTable1.setModel(modell);
     try {
-        this.list_inter = BD_MySQL.liste_Intervenant();
+        this.list_inter = Intervenant.liste_Intervenant();
     } catch (SQLException ex) {
         Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -642,7 +642,7 @@ public void refreshEtudiant(){
             new String [] {});	
     jTable1.setModel(modell);
     try {
-        this.list_etu = BD_MySQL.liste_etudiants_promotion(this.id_promo);
+        this.list_etu = Etudiant.liste_etudiants_promotion(this.id_promo);
     } catch (SQLException ex) {
         Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -689,7 +689,7 @@ public void refreshSalle() {
             new String [] {});	
     jTable1.setModel(modell);
     try {
-        this.list_salle = BD_MySQL.liste_Salle_promotion();
+        this.list_salle = Salle.liste_Salle_promotion();
     } catch (SQLException ex) {
         Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -745,7 +745,7 @@ public void refreshPromotion() {
             new String [] {});	
     jTable1.setModel(modell);
     try {
-        this.list_promo = BD_MySQL.liste_Promotion();
+        this.list_promo = Promotion.liste_Promotion();
     } catch (SQLException ex) {
         Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -797,7 +797,7 @@ public void refreshBatiment() {
     jTable1.setModel(modell);
     ArrayList<Batiment> list_bati = null;
     try {
-        list_bati = BD_MySQL.liste_Batiment();
+        list_bati = Batiment.liste_Batiment();
     } catch (SQLException ex) {
         Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -892,7 +892,7 @@ public void frame_Seance(int id_promo) {
         String nom = (jTable1.getValueAt(ligne,0)).toString();
         String prenom = (jTable1.getValueAt(ligne,1)).toString();
         try {
-            id = BD_MySQL.id_etudiants_promotion(netudiant,nom,prenom,4);
+            id = Etudiant.id_etudiants_promotion(netudiant,nom,prenom,4);
         } catch (SQLException ex) {
             Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -902,11 +902,7 @@ private int id_UE() {
         int id = 0;
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,0)).toString();
-        try {
-            id = BD_MySQL.id_UE_promotion(nom,4);
-        } catch (SQLException ex) {
-            Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        id = UE.id_UE_promotion(nom, this.id_promo);
         return id;
     }
 private int id_Salle() {
@@ -916,7 +912,7 @@ private int id_Salle() {
         String nomBatiment = (jTable1.getValueAt(ligne,0)).toString();
         int capacite = Integer.parseInt((jTable1.getValueAt(ligne,2)).toString());
         try {
-            id = BD_MySQL.id_Salle(nom,nomBatiment,capacite);
+            id = Salle.id_Salle(nom,nomBatiment,capacite);
         } catch (SQLException ex) {
             Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -929,7 +925,7 @@ private int id_Intervenant() {
         String nomPrenom = (jTable1.getValueAt(ligne,1)).toString();
         String email =(jTable1.getValueAt(ligne,2)).toString();
         try {
-            id = BD_MySQL.id_Intervenant(nom,nomPrenom,email);
+            id = Intervenant.id_Intervenant(nom,nomPrenom,email);
         } catch (SQLException ex) {
             Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -940,7 +936,7 @@ private int id_Batiment() {
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,0)).toString();
         try {
-            id = BD_MySQL.id_Batiment(nom);
+            id = Batiment.id_Batiment(nom);
         } catch (SQLException ex) {
             Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -951,7 +947,7 @@ private int id_Promotion() {
         int ligne = jTable1.getSelectedRow();
         String nom = (jTable1.getValueAt(ligne,0)).toString();
         try {
-            id = BD_MySQL.id_Promotion(nom);
+            id = Promotion.id_Promotion(nom);
         } catch (SQLException ex) {
             Logger.getLogger(Donner.class.getName()).log(Level.SEVERE, null, ex);
         }

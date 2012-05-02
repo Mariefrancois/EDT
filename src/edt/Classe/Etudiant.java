@@ -216,5 +216,37 @@ public class Etudiant implements Model_JDBC  {
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    public static int nombre_etudiants(int idPromotion) throws SQLException{
+        int nb;
+        String requete = "SELECT COUNT(id) AS nb FROM Etudiant WHERE idPromotion="+idPromotion+";";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        rs.next();
+        nb = rs.getInt("nb");
+        return nb;
+    }
+    public static ArrayList<Integer> liste_id_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<Integer> liste_id_etudiants_promotion = new ArrayList();
+        String requete = "SELECT id FROM Etudiant WHERE idPromotion="+idPromotion+" ORDER BY nom, prenom, email, telephone, notificationsActives, idPromotion ,idSpecialite;";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        while(rs.next()){
+            liste_id_etudiants_promotion.add(rs.getInt("id"));
+        }
+        return liste_id_etudiants_promotion;
+    }
+    public static int id_etudiants_promotion(int numeroEtudiant, String nom, String prenom, int idPromotion) throws SQLException{
+        BD_MySQL.init();
+        String requete = "SELECT id FROM Etudiant WHERE  numeroEtudiant="+numeroEtudiant+" AND nom='"+nom+"' AND prenom='"+prenom+"' AND idPromotion="+idPromotion+";";
+        ResultSet rs = BD_MySQL.executer_requete(requete);
+        rs.next();
+        return rs.getInt("id");
+    }
+    public static ArrayList<Etudiant> liste_etudiants_promotion(int idPromotion) throws SQLException{
+        ArrayList<Etudiant> liste_etudiants_promotion = new ArrayList();
+        ArrayList<Integer> liste_id_etudiants_promotion = liste_id_etudiants_promotion(idPromotion);
+        for (int l : liste_id_etudiants_promotion) {
+            liste_etudiants_promotion.add(new Etudiant(l));
+        }
+        return liste_etudiants_promotion;
+    }
   
 }
