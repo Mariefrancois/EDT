@@ -483,6 +483,7 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.edt.afficher_emploiDuTemps(this.id_promo);
                     this.jTabbedPane1.setVisible(true);
                 }
                 else{
@@ -501,6 +502,7 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.edt.afficher_emploiDuTemps(this.id_promo);
                     this.jTabbedPane1.setVisible(true);
                 }
                 else{
@@ -519,6 +521,7 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.edt.afficher_emploiDuTemps(this.id_promo);
                     this.jTabbedPane1.setVisible(true);
                 }
                 else{
@@ -536,6 +539,7 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.edt.afficher_emploiDuTemps(this.id_promo);
                     this.jTabbedPane1.setVisible(true);
                 }
                 else{
@@ -553,6 +557,7 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.edt.afficher_emploiDuTemps(this.id_promo);
                     this.jTabbedPane1.setVisible(true);
                 }
                 else{
@@ -570,6 +575,7 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.edt.afficher_emploiDuTemps(this.id_promo);
                     this.jTabbedPane1.setVisible(true);
                 }
                 else{
@@ -587,6 +593,7 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.edt.afficher_emploiDuTemps(this.id_promo);
                     this.jTabbedPane1.setVisible(true);
                 }
                 else{
