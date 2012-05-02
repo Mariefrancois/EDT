@@ -28,7 +28,7 @@ public class EmploiDuTemps {
     public static ArrayList<Integer> liste_id_cours_promotion_entre_dates(
             int idPromotion, Timestamp debut, Timestamp fin) throws SQLException {
         ArrayList<Integer> listeIds = new ArrayList();
-        String requete = "SELECT idCours FROM V_Cours_Promotion WHERE tsDebut > '" + debut + "' AND tsFin < '" + fin + "' ORDER BY tsDebut;";
+        String requete = "SELECT idCours FROM V_Cours_Promotion WHERE tsDebut > '" + debut + "' AND tsFin < '" + fin + "' AND idPromotion="+idPromotion+" ORDER BY tsDebut;";
         ResultSet rs = BD_MySQL.executer_requete(requete);
         while(rs.next()){
             listeIds.add(rs.getInt("idCours"));
@@ -218,7 +218,6 @@ public class EmploiDuTemps {
         code += EmploiDuTemps.cours_semaine_promotion_html_table(idPromotion, debutSemaine);
         code += "\t</body>\n";
         code += "</html>\n";
-        System.out.println(code);
         return code;
     }
     
