@@ -90,5 +90,9 @@ public class Option implements Model_JDBC{
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    
+    public static String valeurFromNom(String nom) throws SQLException {
+        ResultSet rs = BD_MySQL.executer_requete("SELECT valeur FROM Option WHERE nom='" + nom + "';");
+        rs.next();
+        return rs.getString("nom");
+    }
 }
