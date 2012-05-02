@@ -180,7 +180,7 @@ public class Salle implements Model_JDBC {
         try {
             list_Salle = liste_Salle();
         } catch (SQLException ex) {
-            Logger.getLogger(UE.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Salle.class.getName()).log(Level.SEVERE, null, ex);
         }
         ArrayList<String> list_nom_Salle = new ArrayList();
         for (Salle l : list_Salle) {

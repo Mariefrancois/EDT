@@ -12,6 +12,7 @@ package edt.Frame;
 
 import edt.mysql.BD_MySQL;
 import edt.Classe.Etudiant;
+import edt.Classe.Specialite;
 import edt.view.Donner;
 import java.awt.Toolkit;
 import java.sql.SQLException;
@@ -51,9 +52,9 @@ public class New_Etudiant extends javax.swing.JDialog {
     public New_Etudiant(java.awt.Frame parent,String titre, boolean modal,Donner donner, String etat, int id, int id_promo) {
         super(parent,titre, modal);
         initComponents();
+        this.id_promo = id_promo;
         init(etat,id);
         this.donner = donner;
-        this.id_promo = id_promo;
         this.setLocation( Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
     }
     
@@ -77,7 +78,7 @@ public class New_Etudiant extends javax.swing.JDialog {
         nEtudiant = new javax.swing.JTextField();
         email = new javax.swing.JTextField();
         telephone = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
+        specialite = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -120,7 +121,7 @@ public class New_Etudiant extends javax.swing.JDialog {
 
         telephone.setName("telephone"); // NOI18N
 
-        jComboBox1.setName("jComboBox1"); // NOI18N
+        specialite.setName("specialite"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -196,7 +197,7 @@ public class New_Etudiant extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(specialite, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nEtudiant)
                             .addComponent(prenom)
                             .addComponent(nom, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
@@ -204,7 +205,7 @@ public class New_Etudiant extends javax.swing.JDialog {
                             .addComponent(email))))
                 .addGap(91, 91, 91))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(179, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(annuler)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(valider)
@@ -236,7 +237,7 @@ public class New_Etudiant extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(specialite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +281,10 @@ private void creer(){
         
         switch(etat){
             case Etudiant:
-                this.etudiant = new Etudiant(Integer.parseInt(this.nEtudiant.getText()),this.prenom.getText(),this.nom.getText(),this.email.getText(),this.telephone.getText(),true,this.id_promo,1);
+                this.etudiant = new Etudiant(Integer.parseInt(this.nEtudiant.getText())
+                        ,this.prenom.getText(),this.nom.getText(),this.email.getText(),
+                        this.telephone.getText(),true,this.id_promo,
+                        Specialite.id_Specialite_promotion(this.specialite.getSelectedItem().toString(),this.id_promo));
                 this.etudiant.save();
                 refresh();
                 etat = Etat.Etudiant;
@@ -361,7 +365,6 @@ private void creer(){
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -376,6 +379,7 @@ private void creer(){
     private javax.swing.JTextField nEtudiant;
     private javax.swing.JTextField nom;
     private javax.swing.JTextField prenom;
+    private javax.swing.JComboBox specialite;
     private javax.swing.JTextField telephone;
     private javax.swing.JButton valider;
     // End of variables declaration//GEN-END:variables
@@ -400,6 +404,9 @@ private void creer(){
             this.email.setText(etudiant.getEmail());
             this.telephone.setText(etudiant.getTelephone());
             this.nEtudiant.setText(String.valueOf(etudiant.getNumeroEtudiant()));
+        }
+         for(String nomSpecialite : Specialite.list_nom_Specialite(this.id_promo)){
+           this.specialite.addItem(nomSpecialite);
         }
     }
 }

@@ -45,6 +45,10 @@ public class Affichage_edt extends javax.swing.JPanel {
     public final void afficher_emploiDuTemps(int idPromotion) {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long timeDebut = 0;
+        /*
+         * il faut récupérer la date d'heujourd'hui pour ensuite 
+         * trouver le lundi et l'envoyer pour l'edt
+         */
         try {
             timeDebut = formatter.parse("2012-02-06 00:00:00").getTime();
         } catch (ParseException ex) {

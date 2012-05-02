@@ -50,6 +50,7 @@ public class EDTView extends FrameView {
             etat = Etat.Debut1;
             refreshPromotion();
         }
+        this.jTabbedPane1.setVisible(false);
         
     }
     public void refreshPromotion(){
@@ -190,15 +191,8 @@ public class EDTView extends FrameView {
 		
 		
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jTabbedPane7 = new javax.swing.JTabbedPane();
-        jTabbedPane8 = new javax.swing.JTabbedPane();
 
-        jTabbedPane1.addTab("tab1", jTabbedPane2);
-        jTabbedPane1.addTab("tab2", jTabbedPane7);
-        jTabbedPane1.addTab("tab3", jTabbedPane8);
-
-		edt = new edt.view.Affichage_edt();
+		edt = new edt.view.Affichage_edt(this.id_promo);
 		jTabbedPane1.addTab("tab1",edt);
 		
         mainPanel.setName("mainPanel"); // NOI18N
@@ -489,11 +483,13 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.jTabbedPane1.setVisible(true);
                 }
                 else{
                     desactiveBouton();
                     this.donner1.frame_Promotion();
                     this.donner1.setVisible(true);
+                    this.jTabbedPane1.setVisible(false);
                     this.donner1.setEtat("Promotion");
                 }
                 etat = Etat.Debut1;
@@ -505,11 +501,13 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.jTabbedPane1.setVisible(true);
                 }
                 else{
                     desactiveBouton();
                     this.donner1.frame_Promotion();
                     this.donner1.setVisible(true);
+                    this.jTabbedPane1.setVisible(false);
                     this.donner1.setEtat("Promotion");
                 }
                 etat = Etat.Debut1;
@@ -521,11 +519,13 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.jTabbedPane1.setVisible(true);
                 }
                 else{
                     desactiveBouton();
                     this.donner1.frame_Promotion();
                     this.donner1.setVisible(true);
+                    this.jTabbedPane1.setVisible(false);
                     this.donner1.setEtat("Promotion");
                 }
                 etat = Etat.Debut1;
@@ -536,11 +536,13 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.jTabbedPane1.setVisible(true);
                 }
                 else{
                     desactiveBouton();
                     this.donner1.frame_Promotion();
                     this.donner1.setVisible(true);
+                    this.jTabbedPane1.setVisible(false);
                     this.donner1.setEtat("Promotion");
                 }
                 etat = Etat.Debut1;
@@ -551,11 +553,13 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.jTabbedPane1.setVisible(true);
                 }
                 else{
                     desactiveBouton();
                     this.donner1.frame_Promotion();
                     this.donner1.setVisible(true);
+                    this.jTabbedPane1.setVisible(false);
                     this.donner1.setEtat("Promotion");
                 }
                 etat = Etat.Debut1;
@@ -566,11 +570,13 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.jTabbedPane1.setVisible(true);
                 }
                 else{
                     desactiveBouton();
                     this.donner1.frame_Promotion();
                     this.donner1.setVisible(true);
+                    this.jTabbedPane1.setVisible(false);
                     this.donner1.setEtat("Promotion");
                 }
                 etat = Etat.Debut1;
@@ -581,11 +587,13 @@ public class EDTView extends FrameView {
                     this.id_promo = this.promo.getId();
                     activeBouton();
                     this.donner1.setVisible(false);
+                    this.jTabbedPane1.setVisible(true);
                 }
                 else{
                     desactiveBouton();
                     this.donner1.frame_Promotion();
                     this.donner1.setVisible(true);
+                    this.jTabbedPane1.setVisible(false);
                     this.donner1.setEtat("Promotion");
                 }
                 etat = Etat.Debut1;
@@ -1095,9 +1103,6 @@ public class EDTView extends FrameView {
     private javax.swing.JPanel statusPanel;
     private javax.swing.JLabel titre;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane7;
-    private javax.swing.JTabbedPane jTabbedPane8;
 	private edt.view.Affichage_edt edt;
     // End of variables declaration//GEN-END:variables
 

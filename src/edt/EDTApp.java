@@ -27,7 +27,6 @@ public class EDTApp extends SingleFrameApplication {
     @Override protected void startup() {
         BD_MySQL.init();
         show(new EDTView(this));
-        BD_MySQL.close();
     }
 
     /**
@@ -51,6 +50,7 @@ public class EDTApp extends SingleFrameApplication {
      */
     public static void main(String[] args) throws SQLException {
         launch(EDTApp.class, args);
+        BD_MySQL.close();
         
     }
 }

@@ -176,7 +176,7 @@ public class EmploiDuTemps {
     
     public static String cours_semaine_promotion_html(int idPromotion, Timestamp debutSemaine) throws SQLException {
         String code ="";
-        code += "<!DOCTYPE html>\n";
+       /* code += "<!DOCTYPE html>\n";
         code += "<head>\n";
         code += "<meta charset=\"utf-8\" />\n";
         code += "<style type=\"text/css\">\n";
@@ -188,7 +188,7 @@ public class EmploiDuTemps {
         code += "<body>\n";
         code += EmploiDuTemps.cours_semaine_promotion_html_table(idPromotion, debutSemaine);
         code += "</body>\n";
-        code += "</html>\n";
+        code += "</html>\n";*/
         return code;
     }
     
