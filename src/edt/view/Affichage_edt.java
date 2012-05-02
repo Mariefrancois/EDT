@@ -34,23 +34,15 @@ public class Affichage_edt extends javax.swing.JPanel {
     /** Creates new form Affichage_edt */
     public Affichage_edt() {
         initComponents();
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long timeDebut = 0;
-        try {
-            timeDebut = formatter.parse("2012-02-06 00:00:00").getTime();
-        } catch (ParseException ex) {
-            Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            // La tu récupère le tableau HTML : A mettre dans le jMachin
-            this.jEditorPane1.setContentType("text/html");
-            this.jEditorPane1.setText(EmploiDuTemps.cours_semaine_promotion_html_table(4, new Timestamp(timeDebut)));
-        } catch (SQLException ex) {
-            Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.afficher_emploiDuTemps(4);
     }
+    
     public Affichage_edt(int idPromotion) {
         initComponents();
+        this.afficher_emploiDuTemps(idPromotion);
+    }
+    
+    public final void afficher_emploiDuTemps(int idPromotion) {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long timeDebut = 0;
         try {
@@ -60,11 +52,12 @@ public class Affichage_edt extends javax.swing.JPanel {
         }
         try {
             // La tu récupère le tableau HTML : A mettre dans le jMachin
-            this.edt.setText(EmploiDuTemps.cours_semaine_promotion_html_table(4, new Timestamp(timeDebut)));
+            this.edt.setText(EmploiDuTemps.cours_semaine_promotion_html(idPromotion, new Timestamp(timeDebut)));
         } catch (SQLException ex) {
             Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     public void AjoutCour(){
     }
     /** This method is called from within the constructor to
@@ -130,9 +123,9 @@ public class Affichage_edt extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addComponent(semaine)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(prec)
-                    .addComponent(suiv))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(suiv, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(prec))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
