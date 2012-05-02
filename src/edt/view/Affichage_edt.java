@@ -52,7 +52,8 @@ public class Affichage_edt extends javax.swing.JPanel {
         }
         try {
             // La tu récupère le tableau HTML : A mettre dans le jMachin
-            this.edt.setText(EmploiDuTemps.cours_semaine_promotion_html(idPromotion, new Timestamp(timeDebut)));
+            this.jEditorPane1.setContentType("text/html");
+            this.jEditorPane1.setText(EmploiDuTemps.cours_semaine_promotion_html_table(idPromotion, new Timestamp(timeDebut)));
         } catch (SQLException ex) {
             Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
         }
