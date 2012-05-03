@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JEditorPane;
+import java.util.Calendar;
 
 /**
  *
@@ -32,6 +33,10 @@ import javax.swing.JEditorPane;
 public class Affichage_edt extends javax.swing.JPanel {
 
     /** Creates new form Affichage_edt */
+        private long timeDebut = 0;
+        private int idPromo;
+        Calendar today = Calendar.getInstance();
+        Calendar datefin = Calendar.getInstance();
     public Affichage_edt() {
         initComponents();
         this.afficher_emploiDuTemps(4);
@@ -40,31 +45,50 @@ public class Affichage_edt extends javax.swing.JPanel {
     public Affichage_edt(int idPromotion) {
         initComponents();
         this.afficher_emploiDuTemps(idPromotion);
+        this.idPromo = idPromotion;
     }
     
     public final void afficher_emploiDuTemps(int idPromotion) {
        
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long timeDebut = 0;
         /*
          * il faut récupérer la date d'heujourd'hui pour ensuite 
          * trouver le lundi et l'envoyer pour l'edt
          */
-        try {
-            timeDebut = formatter.parse("2012-02-06 00:00:00").getTime();
-        } catch (ParseException ex) {
-            Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        date();
+        this.idPromo = idPromotion;
         try {
             // La tu récupère le tableau HTML : A mettre dans le jMachin
             this.jEditorPane1.setContentType("text/html");
-            this.jEditorPane1.setText(EmploiDuTemps.cours_semaine_promotion_html(idPromotion, new Timestamp(timeDebut)));
+            this.jEditorPane1.setText(EmploiDuTemps.cours_semaine_promotion_html(this.idPromo, new Timestamp(this.timeDebut)));
         } catch (SQLException ex) {
             Logger.getLogger(Affichage_edt.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void AjoutCour(){
+    public void date(){
+        today.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+        today.set(Calendar.HOUR_OF_DAY,0);
+        today.set(Calendar.MINUTE,0);
+        today.set(Calendar.SECOND,0);
+        today.set(Calendar.MILLISECOND,0);
+        datefin.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+        datefin.add(Calendar.DATE,4);
+        datefin.set(Calendar.HOUR_OF_DAY,23);
+        datefin.set(Calendar.MINUTE,0);
+        datefin.set(Calendar.SECOND,0);
+        datefin.set(Calendar.MILLISECOND,0);
+        
+        this.timeDebut =today.getTime().getTime();
+        this.semaine.setText(today.getTime().toString()+" à "+datefin.getTime().toString());
+    }
+    public void datesuivant(){
+        today.add(Calendar.DATE,7);
+        datefin.add(Calendar.DATE,7);
+        this.timeDebut =today.getTime().getTime();
+    }
+    public void dateprec(){
+        today.add(Calendar.DATE,-7);
+        datefin.add(Calendar.DATE,-7);
+        this.timeDebut =today.getTime().getTime();
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -90,9 +114,19 @@ public class Affichage_edt extends javax.swing.JPanel {
 
         prec.setText(bundle.getString("Affichage_edt.prec.text")); // NOI18N
         prec.setName(bundle.getString("Affichage_edt.prec.name")); // NOI18N
+        prec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precActionPerformed(evt);
+            }
+        });
 
         suiv.setText(bundle.getString("Affichage_edt.suiv.text")); // NOI18N
         suiv.setName(bundle.getString("Affichage_edt.suiv.name")); // NOI18N
+        suiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                suivActionPerformed(evt);
+            }
+        });
 
         edt.setText(bundle.getString("Affichage_edt.edt.text")); // NOI18N
         edt.setName(bundle.getString("Affichage_edt.edt.name")); // NOI18N
@@ -119,16 +153,16 @@ public class Affichage_edt extends javax.swing.JPanel {
                         .addGap(266, 266, 266)
                         .addComponent(suiv))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(529, 529, 529)
+                        .addGap(394, 394, 394)
                         .addComponent(semaine)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(19, 19, 19)
                 .addComponent(semaine)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(suiv, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(prec))
@@ -142,6 +176,19 @@ public class Affichage_edt extends javax.swing.JPanel {
                 .addContainerGap(33, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void suivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suivActionPerformed
+        // TODO add your handling code here:
+        datesuivant();
+        afficher_emploiDuTemps(this.idPromo);
+    }//GEN-LAST:event_suivActionPerformed
+
+    private void precActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precActionPerformed
+        // TODO add your handling code here:
+        dateprec();
+        afficher_emploiDuTemps(this.idPromo);
+    }//GEN-LAST:event_precActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel edt;
     private javax.swing.JEditorPane jEditorPane1;

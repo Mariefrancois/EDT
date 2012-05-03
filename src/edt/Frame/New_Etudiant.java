@@ -13,11 +13,14 @@ package edt.Frame;
 import edt.mysql.BD_MySQL;
 import edt.Classe.Etudiant;
 import edt.Classe.Specialite;
+import edt.Classe.UE;
 import edt.view.Donner;
 import java.awt.Toolkit;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -27,6 +30,8 @@ public class New_Etudiant extends javax.swing.JDialog {
     private Donner donner;
     private int id_promo;
     private Etudiant etudiant;
+       private DefaultListModel modell = new DefaultListModel();
+       private DefaultListModel modellinscrit = new DefaultListModel();
     /** Creates new form New_Etudiant */
     public New_Etudiant(){
         super();
@@ -80,16 +85,16 @@ public class New_Etudiant extends javax.swing.JDialog {
         telephone = new javax.swing.JTextField();
         specialite = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jListUE = new javax.swing.JList();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        jListUEInscrit = new javax.swing.JList();
         jLabel7 = new javax.swing.JLabel();
         valider = new javax.swing.JButton();
         annuler = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        inscrit = new javax.swing.JButton();
+        ttinscrit = new javax.swing.JButton();
+        desincrit = new javax.swing.JButton();
+        ttdesinscrit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -125,13 +130,31 @@ public class New_Etudiant extends javax.swing.JDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jList1.setName("jList1"); // NOI18N
-        jScrollPane1.setViewportView(jList1);
+        jListUE.setName("jListUE"); // NOI18N
+        jListUE.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jListUEAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(jListUE);
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jList2.setName("jList2"); // NOI18N
-        jScrollPane2.setViewportView(jList2);
+        jListUEInscrit.setName("jListUEInscrit"); // NOI18N
+        jListUEInscrit.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jListUEInscritAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane2.setViewportView(jListUEInscrit);
 
         jLabel7.setText("UE");
         jLabel7.setName("jLabel7"); // NOI18N
@@ -152,17 +175,37 @@ public class New_Etudiant extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText(">");
-        jButton1.setName("jButton1"); // NOI18N
+        inscrit.setText(">");
+        inscrit.setName("inscrit"); // NOI18N
+        inscrit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inscritActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText(">>");
-        jButton2.setName("jButton2"); // NOI18N
+        ttinscrit.setText(">>");
+        ttinscrit.setName("ttinscrit"); // NOI18N
+        ttinscrit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ttinscritActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("<");
-        jButton3.setName("jButton3"); // NOI18N
+        desincrit.setText("<");
+        desincrit.setName("desincrit"); // NOI18N
+        desincrit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                desincritActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("<<");
-        jButton4.setName("jButton4"); // NOI18N
+        ttdesinscrit.setText("<<");
+        ttdesinscrit.setName("ttdesinscrit"); // NOI18N
+        ttdesinscrit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ttdesinscritActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -188,10 +231,10 @@ public class New_Etudiant extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(inscrit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ttinscrit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ttdesinscrit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(desincrit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -245,13 +288,13 @@ public class New_Etudiant extends javax.swing.JDialog {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(inscrit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(ttinscrit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(desincrit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(ttdesinscrit)))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(valider)
@@ -315,6 +358,39 @@ private void creer(){
         }
     }//GEN-LAST:event_annulerActionPerformed
 
+    private void inscritActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscritActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inscritActionPerformed
+
+    private void ttinscritActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ttinscritActionPerformed
+        // TODO add your handling code here:
+        this.jListUE.doLayout();
+        modell.removeAllElements();
+        this.jListUE.setModel(modell);
+        
+        refreshUEinscrit();
+    }//GEN-LAST:event_ttinscritActionPerformed
+
+    private void desincritActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desincritActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_desincritActionPerformed
+
+    private void ttdesinscritActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ttdesinscritActionPerformed
+        // TODO add your handling code here:
+        this.jListUEInscrit.doLayout();
+        modellinscrit.removeAllElements();
+        this.jListUEInscrit.setModel(modellinscrit);
+        this.refreshUE();
+    }//GEN-LAST:event_ttdesinscritActionPerformed
+
+    private void jListUEAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jListUEAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jListUEAncestorAdded
+
+    private void jListUEInscritAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jListUEInscritAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jListUEInscritAncestorAdded
+
     /**
      * @param args the command line arguments
      */
@@ -360,11 +436,9 @@ private void creer(){
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton annuler;
+    private javax.swing.JButton desincrit;
     private javax.swing.JTextField email;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton inscrit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -372,8 +446,8 @@ private void creer(){
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
+    private javax.swing.JList jListUE;
+    private javax.swing.JList jListUEInscrit;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField nEtudiant;
@@ -381,6 +455,8 @@ private void creer(){
     private javax.swing.JTextField prenom;
     private javax.swing.JComboBox specialite;
     private javax.swing.JTextField telephone;
+    private javax.swing.JButton ttdesinscrit;
+    private javax.swing.JButton ttinscrit;
     private javax.swing.JButton valider;
     // End of variables declaration//GEN-END:variables
 
@@ -389,6 +465,26 @@ private void creer(){
         Etudiant1
     }
     private Etat etat;
+    public void refreshUE(){
+        this.jListUE.doLayout();
+        this.jListUE.setModel(modell);
+        ArrayList<String> listenom = new ArrayList();
+        listenom = UE.list_nom_UE(this.id_promo);
+        for (String l : listenom) {
+            modell.addElement(l); 
+        }
+        
+    }
+    public void refreshUEinscrit(){
+        this.jListUEInscrit.doLayout();
+        this.jListUEInscrit.setModel(modellinscrit);
+        ArrayList<String> listenom = new ArrayList();
+        listenom = UE.list_nom_UE(this.id_promo);
+        for (String l : listenom) {
+            modellinscrit.addElement(l); 
+        }
+        
+    }
     public void init(String n,int id){
         if(n.equals("Etudiant"))
             etat = Etat.Etudiant;
@@ -408,5 +504,6 @@ private void creer(){
          for(String nomSpecialite : Specialite.list_nom_Specialite(this.id_promo)){
            this.specialite.addItem(nomSpecialite);
         }
+        refreshUE();
     }
 }

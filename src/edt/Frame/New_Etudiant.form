@@ -46,10 +46,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jButton1" max="32767" attributes="1"/>
-                          <Component id="jButton2" alignment="0" max="32767" attributes="1"/>
-                          <Component id="jButton4" alignment="0" max="32767" attributes="1"/>
-                          <Component id="jButton3" alignment="0" max="32767" attributes="1"/>
+                          <Component id="inscrit" max="32767" attributes="1"/>
+                          <Component id="ttinscrit" alignment="0" max="32767" attributes="1"/>
+                          <Component id="ttdesinscrit" alignment="0" max="32767" attributes="1"/>
+                          <Component id="desincrit" alignment="0" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="74" max="-2" attributes="0"/>
@@ -118,13 +118,13 @@
                       <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="inscrit" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="ttinscrit" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                      <Component id="desincrit" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                      <Component id="ttdesinscrit" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
@@ -217,13 +217,16 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="jList1">
+        <Component class="javax.swing.JList" name="jListUE">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="0"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="jList1" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jListUE" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jListUEAncestorAdded"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -237,13 +240,16 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="jList2">
+        <Component class="javax.swing.JList" name="jListUEInscrit">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="0"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="jList2" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jListUEInscrit" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jListUEInscritAncestorAdded"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -271,29 +277,41 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="annulerActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="inscrit">
       <Properties>
         <Property name="text" type="java.lang.String" value="&gt;"/>
-        <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="inscrit" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inscritActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="ttinscrit">
       <Properties>
         <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
-        <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="ttinscrit" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ttinscritActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="desincrit">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;"/>
-        <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="desincrit" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="desincritActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="ttdesinscrit">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
-        <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="ttdesinscrit" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ttdesinscritActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
