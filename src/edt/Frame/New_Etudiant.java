@@ -320,6 +320,11 @@ private void creer(){
         this.etudiant.setTelephone(this.telephone.getText());
         this.etudiant.setEmail(this.email.getText());
 }
+/*
+ * A ajouter:
+ * lors de la validation l'inscription des UE doit se faire 
+ * suivant la liste des UE sélectionné
+ */
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         
         switch(etat){

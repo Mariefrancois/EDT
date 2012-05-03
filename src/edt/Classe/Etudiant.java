@@ -214,7 +214,12 @@ public class Etudiant implements Model_JDBC  {
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;   
+
+        requete = "DELETE FROM Etudiant "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
     public static int nombre_etudiants(int idPromotion) throws SQLException{
         int nb;

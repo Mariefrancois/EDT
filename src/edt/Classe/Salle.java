@@ -133,7 +133,12 @@ public class Salle implements Model_JDBC {
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;   
+
+        requete = "DELETE FROM Salle "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
     public static ArrayList<Salle> liste_Salle() throws SQLException{
         ArrayList<Salle> liste_Salle_promotion = new ArrayList();

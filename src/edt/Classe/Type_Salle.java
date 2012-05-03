@@ -66,7 +66,12 @@ public class Type_Salle implements Model_JDBC {
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;   
+
+        requete = "DELETE FROM Type_Salle "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
 
     

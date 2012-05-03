@@ -85,7 +85,12 @@ public class Groupe_Etudiants implements Model_JDBC {
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;   
+
+        requete = "DELETE FROM Groupe_Etudiants "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
     
 }

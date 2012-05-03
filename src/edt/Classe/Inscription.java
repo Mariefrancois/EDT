@@ -40,7 +40,7 @@ public class Inscription implements Model_JDBC{
     public void save() {
         String requete;
         
-        requete = "INSERT INTO Type_cours (idUE, idEtudiant) "
+        requete = "INSERT INTO Inscription (idUE, idEtudiant) "
                 + "VALUES ('"+this.idUE
                 +"', '"+this.idEtudiant
                 +"')";
@@ -50,7 +50,12 @@ public class Inscription implements Model_JDBC{
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;   
+
+        requete = "DELETE FROM Inscription "
+                +" WHERE id='"+this.idUE+"' AND idEtudiant='"+this.idEtudiant+"';";
+        
+        this.idUE = BD_MySQL.executer_update(requete);
     }
      
 }

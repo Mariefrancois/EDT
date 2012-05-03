@@ -94,7 +94,12 @@ public class Specialite implements Model_JDBC {
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;   
+
+        requete = "DELETE FROM Specialite "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
     public static int id_Specialite_promotion(String nom, int idPromotion){
             int id = 0;

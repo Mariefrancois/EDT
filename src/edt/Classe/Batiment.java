@@ -83,6 +83,12 @@ public class Batiment implements Model_JDBC {
 
     @Override
     public void delete() {
+         String requete;   
+
+        requete = "DELETE FROM Batiment "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
         
     }
 

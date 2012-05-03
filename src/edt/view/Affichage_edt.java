@@ -71,7 +71,7 @@ public class Affichage_edt extends javax.swing.JPanel {
         today.set(Calendar.SECOND,0);
         today.set(Calendar.MILLISECOND,0);
         datefin.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
-        datefin.add(Calendar.DATE,4);
+        datefin.add(Calendar.DATE,5);
         datefin.set(Calendar.HOUR_OF_DAY,23);
         datefin.set(Calendar.MINUTE,0);
         datefin.set(Calendar.SECOND,0);

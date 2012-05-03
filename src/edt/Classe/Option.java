@@ -24,7 +24,7 @@ public class Option implements Model_JDBC{
     }
     
     public Option(int id) throws SQLException{
-        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Option WHERE id="+id);
+        ResultSet rs = BD_MySQL.executer_requete("SELECT * FROM Options WHERE id="+id);
         rs.next();
         this.id = rs.getInt("id");
         this.nom = rs.getString("nom");
@@ -71,12 +71,12 @@ public class Option implements Model_JDBC{
         String requete;
         
         if(this.id == 0){
-            requete = "INSERT INTO Option (nom, valeur) "
+            requete = "INSERT INTO Options (nom, valeur) "
                     + "VALUES ('"+this.nom
                     +"', '"+this.valeur
                     +"')";
         }else{
-            requete = "UPDATE Option SET "
+            requete = "UPDATE Options SET "
                     + "nom='"+this.nom
                     +"', valeur='"+this.valeur
                     +"' WHERE id='"+this.id+"'";
@@ -87,7 +87,12 @@ public class Option implements Model_JDBC{
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String requete;   
+
+        requete = "DELETE FROM Options "
+                +" WHERE id='"+this.id+"';";
+        
+        this.id = BD_MySQL.executer_update(requete);
     }
     
     public static String valeurFromNom(String nom) throws SQLException {
